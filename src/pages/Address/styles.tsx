@@ -1,0 +1,30 @@
+import {StyleSheet} from 'react-native';
+import {moderateScale} from '../../utils/scale';
+import {colors} from '../../utils/colors';
+import {fonts} from '../../utils/fonts';
+
+const styles = StyleSheet.create({
+  container: {
+    padding: moderateScale(16),
+  },
+  scroll: {
+    paddingVertical: moderateScale(8),
+  },
+  btnAddress: {
+    backgroundColor: colors.orange,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: moderateScale(10),
+    height: moderateScale(50),
+    marginVertical: moderateScale(14),
+  },
+  txt: {
+    color: colors.white,
+    fontFamily: fonts.PoppinsSemiBold,
+    fontSize: moderateScale(16),
+    marginTop: moderateScale(3),
+  },
+});
+
+export default styles;

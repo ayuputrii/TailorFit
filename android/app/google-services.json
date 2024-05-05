@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "480896482312",
+    "project_id": "tailorfit-app",
+    "storage_bucket": "tailorfit-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480896482312:android:f7821a91d64504df5a25bd",
+        "android_client_info": {
+          "package_name": "com.tailorfit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEuJARgj76_qWq7RMmVCAcI_z-ty8UBHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
