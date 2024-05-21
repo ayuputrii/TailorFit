@@ -16,7 +16,7 @@ interface BackHeaderProps {
 
 const BackHeader = ({goBack, title, icon, children}: BackHeaderProps) => {
   return (
-    <>
+    <React.Fragment>
       <View style={styles.container}>
         <Buttons onPress={goBack} style={styles}>
           <Icon name="chevron-back" size={moderateScale(22)} />
@@ -25,7 +25,7 @@ const BackHeader = ({goBack, title, icon, children}: BackHeaderProps) => {
         <View style={styles.content}>{icon}</View>
       </View>
       {children}
-    </>
+    </React.Fragment>
   );
 };
 

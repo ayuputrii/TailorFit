@@ -16,6 +16,7 @@ import Chat from './Chat';
 import Favorite from './Favorite';
 import Address from './Address';
 import Payment from './Payment';
+import Profile from './Profile';
 
 export {
   SplashScreenPage,
@@ -36,4 +37,5 @@ export {
   Favorite,
   Address,
   Payment,
+  Profile,
 };

@@ -159,10 +159,10 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
           )}
         />
         {errorOTP && (
-          <>
+          <React.Fragment>
             <Gap height={moderateScale(30)} width={0} />
             <Text style={styles.error}>{errorOTP}</Text>
-          </>
+          </React.Fragment>
         )}
 
         <Buttons

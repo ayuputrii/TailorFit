@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {BackgroundWithImage, HeaderNotLogin} from '../../components/commons';
 import {RegisterSections} from '../../sections';
@@ -11,11 +11,13 @@ import {ModalConfirmation} from '../../components';
 const Register = ({navigation}: RegisterProps) => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
   const [errorFullName, setErrorFullName] = useState('');
+  const [errorPhone, setErrorPhone] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -27,9 +29,11 @@ const Register = ({navigation}: RegisterProps) => {
     const data = {
       email,
       fullName,
+      phone,
       password,
       role: 'CUSTOMER',
     };
+    console.log('data', data);
     if (email === '') {
       setErrorEmail('Email harap diisi');
     } else {
@@ -40,18 +44,24 @@ const Register = ({navigation}: RegisterProps) => {
     } else {
       setErrorFullName('');
     }
+    if (phone === '') {
+      setErrorPhone('Phone Number harap diisi');
+    } else {
+      setErrorPhone('');
+    }
     if (password === '') {
       setErrorPassword('Password harap diisi');
     } else {
       setErrorPassword('');
     }
 
-    if (email && fullName && password) {
+    if (email && fullName && phone && password) {
       setLoading(true);
+      setDisabled(true);
 
       try {
         const response: any = await postData(BASE_URL + API_REGISTER, data);
-        console.log('response regist', response);
+        console.log('ini response register', response);
         if (response?.data?.success) {
           setLoading(false);
           setDisabled(false);
@@ -65,7 +75,11 @@ const Register = ({navigation}: RegisterProps) => {
           setErrors(true);
           setShowModal(true);
           setTitle('Register is Failed');
-          setMessage(response?.data?.message || response?.data?.error?.message);
+          setMessage(
+            response?.data?.message ||
+              response?.data?.error?.message ||
+              "Server is encountered with problem! We'll fix it soon.",
+          );
         }
       } catch (error: any) {
         setLoading(false);
@@ -73,39 +87,54 @@ const Register = ({navigation}: RegisterProps) => {
         setErrors(true);
         setShowModal(true);
         setTitle('Register is Failed');
-        setMessage("Server is encountered with problem! We'll fix it soon.");
+        setMessage(error?.data?.message);
       }
+    } else {
+      setLoading(false);
+      setDisabled(false);
+      setShowModal(false);
     }
   };
+
+  const onGoogle = () => {};
 
   return (
     <BackgroundWithImage
       backgroundChildren={false}
       src={require('../../assets/images/img-rainbow.png')}>
-      <ScrollView style={styles.scroll}>
-        <HeaderNotLogin
-          title="Sign Up"
-          subTitle={`Please enter your fullname, email, ${'\n'} userName and enter password.`}
-          fontSizeSub={12}
-          subColor={colors.lightgray}
-          marginTop={0}
-        />
+      <ScrollView
+        style={styles.scroll}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+          <HeaderNotLogin
+            title="Sign Up"
+            subTitle={`Please enter your fullname, email, ${'\n'} userName and enter password.`}
+            fontSizeSub={12}
+            subColor={colors.lightgray}
+            marginTop={0}
+          />
 
-        <RegisterSections
-          email={email}
-          setEmail={setEmail}
-          fullName={fullName}
-          setFullName={setFullName}
-          password={password}
-          setPassword={setPassword}
-          navigation={navigation}
-          onRegister={onRegister}
-          disabled={disabled}
-          errorEmail={errorEmail}
-          errorFullName={errorFullName}
-          errorPassword={errorPassword}
-          loading={loading}
-        />
+          <RegisterSections
+            email={email}
+            setEmail={setEmail}
+            fullName={fullName}
+            setFullName={setFullName}
+            password={password}
+            setPassword={setPassword}
+            phone={phone}
+            setPhone={setPhone}
+            navigation={navigation}
+            onRegister={onRegister}
+            onGoogle={onGoogle}
+            disabled={disabled}
+            errorEmail={errorEmail}
+            errorFullName={errorFullName}
+            errorPhone={errorPhone}
+            errorPassword={errorPassword}
+            loading={loading}
+          />
+        </View>
       </ScrollView>
       <ModalConfirmation
         isVisible={showModal}

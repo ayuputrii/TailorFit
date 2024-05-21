@@ -33,7 +33,7 @@ const Settings = ({navigation}: SettingsProps) => {
           showsHorizontalScrollIndicator={false}>
           <Gap height={moderateScale(8)} width={0} />
           {MenuSettings?.map(items => (
-            <>
+            <React.Fragment>
               <Gap height={verticalScale(8)} width={0} />
               <CardCommons
                 title={''}
@@ -45,7 +45,7 @@ const Settings = ({navigation}: SettingsProps) => {
                 <Text style={styles.text}>{items?.label}</Text>
                 {items?.icon}
               </CardCommons>
-            </>
+            </React.Fragment>
           ))}
           <Gap height={moderateScale(8)} width={0} />
         </ScrollView>

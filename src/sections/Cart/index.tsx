@@ -1,6 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Buttons, CardCommons, Gap, ImageNotFound, Text} from '../../components';
+import {
+  Buttons,
+  CardCommons,
+  Gap,
+  ImageWithNotFound,
+  Text,
+} from '../../components';
 import styles from './styles';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {moderateScale} from '../../utils/scale';
@@ -46,7 +52,7 @@ const CartSections = ({onPress, check, setCheck}: CartSectionsProps) => {
 
           <Gap height={0} width={moderateScale(8)} />
 
-          <ImageNotFound uri={false} style={{}} />
+          <ImageWithNotFound uri={false} style={{}} />
 
           <Gap height={0} width={moderateScale(8)} />
 

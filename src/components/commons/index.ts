@@ -10,7 +10,9 @@ import BackgroundWithImage from './BackgroundWithImage';
 import SocialMedia from './SocialMedia';
 import Text from './Text';
 import MenuButtons from './MenuButtons';
-import ImageNotFound from './ImageNotFound';
+import ImageWithNotFound from './ImageWithNotFound';
+import Shimmer from './Shimmer';
+import ImageWithNotData from './ImaageWithNotData';
 
 export {
   Header,
@@ -25,5 +27,7 @@ export {
   SocialMedia,
   Text,
   MenuButtons,
-  ImageNotFound,
+  ImageWithNotFound,
+  Shimmer,
+  ImageWithNotData,
 };

@@ -4,8 +4,7 @@ import {colors} from '../../utils/colors';
 
 const styles = StyleSheet.create({
   container: {
-    padding: moderateScale(16),
-    marginTop: verticalScale(8),
+    paddingTop: moderateScale(16),
     paddingHorizontal: moderateScale(16),
     backgroundColor: colors.basebg,
     flex: 1,

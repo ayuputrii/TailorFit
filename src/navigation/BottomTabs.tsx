@@ -58,7 +58,7 @@ const BottomTabs = ({
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
                   <ImageBackground
                     source={require('../assets/images/img-rectangle-menu.png')}
@@ -70,7 +70,7 @@ const BottomTabs = ({
                 ) : (
                   <IconAwesome name="home" size={28} color={color} />
                 )}
-              </>
+              </React.Fragment>
             );
           },
         }}
@@ -81,7 +81,7 @@ const BottomTabs = ({
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
                   <ImageBackground
                     source={require('../assets/images/img-rectangle-menu.png')}
@@ -101,7 +101,7 @@ const BottomTabs = ({
                     color={color}
                   />
                 )}
-              </>
+              </React.Fragment>
             );
           },
         }}
@@ -112,7 +112,7 @@ const BottomTabs = ({
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
                   <ImageBackground
                     source={require('../assets/images/img-rectangle-menu.png')}
@@ -128,7 +128,7 @@ const BottomTabs = ({
                 ) : (
                   <IconIo name="cart-outline" size={28} color={color} />
                 )}
-              </>
+              </React.Fragment>
             );
           },
         }}
@@ -139,7 +139,7 @@ const BottomTabs = ({
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
                   <ImageBackground
                     source={require('../assets/images/img-rectangle-menu.png')}
@@ -155,7 +155,7 @@ const BottomTabs = ({
                 ) : (
                   <IconAwesome name="heart-o" size={28} color={color} />
                 )}
-              </>
+              </React.Fragment>
             );
           },
         }}
@@ -166,7 +166,7 @@ const BottomTabs = ({
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
                   <ImageBackground
                     source={require('../assets/images/img-rectangle-menu.png')}
@@ -182,7 +182,7 @@ const BottomTabs = ({
                 ) : (
                   <IconIo name="settings-outline" size={28} color={color} />
                 )}
-              </>
+              </React.Fragment>
             );
           },
         }}
@@ -199,14 +199,6 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(-40),
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: moderateScale(Platform.OS === 'ios' ? 4 : 4),
-    shadowOpacity: moderateScale(Platform.OS === 'ios' ? 0.2 : 0.8),
-    shadowRadius: moderateScale(Platform.OS === 'ios' ? 6 : 3),
-    shadowOffset: {
-      width: moderateScale(0),
-      height: verticalScale(Platform.OS === 'ios' ? -5 : -10),
-    },
-    shadowColor: colors.black,
   },
   viewIcon: {
     backgroundColor: colors.black,

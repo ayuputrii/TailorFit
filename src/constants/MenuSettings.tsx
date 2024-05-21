@@ -11,12 +11,18 @@ const navigation = useNavigation();
 export const MenuSettings = [
   {
     id: 1,
-    label: 'Favorite',
-    onChange: () => navigation.navigate('Favorite'),
-    icon: <IconAwesome name="heart" size={24} color={colors.darkgray} />,
+    label: 'Edit Profile',
+    onChange: () => navigation.navigate('Profile'),
+    icon: <IconAwesome name="user-o" size={24} color={colors.darkgray} />,
   },
   {
     id: 2,
+    label: 'Favorite',
+    onChange: () => navigation.navigate('Favorite'),
+    icon: <IconAwesome name="heart-o" size={24} color={colors.darkgray} />,
+  },
+  {
+    id: 3,
     label: 'History Transaction',
     onChange: () => navigation.navigate('HistoryTransaction'),
     icon: (
@@ -28,19 +34,19 @@ export const MenuSettings = [
     ),
   },
   {
-    id: 3,
+    id: 4,
     label: 'Change Password',
     onChange: () => navigation.navigate('ChangePassword'),
     icon: <IconFeather name="lock" size={24} color={colors.darkgray} />,
   },
   {
-    id: 4,
+    id: 5,
     label: 'About Apps',
     onChange: () => navigation.navigate('About'),
     icon: <IconFeather name="info" size={24} color={colors.darkgray} />,
   },
   {
-    id: 5,
+    id: 6,
     label: 'Rating Apps',
     onChange: () => navigation.navigate('Rating'),
     icon: <IconFeather name="star" size={24} color={colors.darkgray} />,

@@ -25,6 +25,7 @@ import {
   Favorite,
   Address,
   Payment,
+  Profile,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
@@ -39,6 +40,7 @@ export type NavigationParam = {
   NewPassword: undefined;
   Home: undefined;
   Settings: undefined;
+  Profile: undefined;
   ChangePassword: undefined;
   About: undefined;
   HistoryTransaction: undefined;
@@ -103,6 +105,16 @@ type SettingsRouteProp = RouteProp<NavigationParam, 'Settings'>;
 export type SettingsProps = {
   navigation: SettingsNavigationProp;
   route: SettingsRouteProp;
+};
+
+type ProfileNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'Profile'
+>;
+type ProfileRouteProp = RouteProp<NavigationParam, 'Profile'>;
+export type ProfileProps = {
+  navigation: ProfileNavigationProp;
+  route: ProfileRouteProp;
 };
 
 type ChangePasswordNavigationProp = StackNavigationProp<
@@ -343,6 +355,14 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
+      name="Profile"
+      component={Profile}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
       name="HistoryTransaction"
       component={HistoryTransaction}
     />
@@ -393,7 +413,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer independent={true} ref={navigationRef}>
       <StatusBar
-        animated={true}
+        animated={false}
         backgroundColor={colors.white}
         barStyle="dark-content"
       />

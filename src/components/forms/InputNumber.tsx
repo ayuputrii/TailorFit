@@ -5,7 +5,7 @@ import {moderateScale} from '../../utils/scale';
 import {Gap, Text} from '../commons';
 import {fonts} from '../../utils/fonts';
 
-interface InputTextProps {
+interface InputNumberProps {
   value: string;
   onChangeText: Dispatch<SetStateAction<string>>;
   onSubmitEditing: () => void;
@@ -16,7 +16,7 @@ interface InputTextProps {
   error: any;
 }
 
-const InputText = forwardRef<TextInput, InputTextProps>(
+const InputNumber = forwardRef<TextInput, InputNumberProps>(
   (
     {
       value,
@@ -27,7 +27,7 @@ const InputText = forwardRef<TextInput, InputTextProps>(
       styleInput,
       styleText,
       error,
-    }: InputTextProps,
+    }: InputNumberProps,
     ref,
   ) => {
     return (
@@ -36,7 +36,8 @@ const InputText = forwardRef<TextInput, InputTextProps>(
           <TextInput
             ref={ref}
             value={value}
-            style={[styles.inputText, styleText]}
+            keyboardType="number-pad"
+            style={[styles.InputNumber, styleText]}
             placeholder={placeholder}
             placeholderTextColor={placeholderTextColor}
             onChangeText={onChangeText}
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: moderateScale(8),
   },
-  inputText: {
+  InputNumber: {
     color: colors.black,
     fontFamily: 'Poppins-Regular',
     width: '100%',
@@ -75,4 +76,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(12),
   },
 });
-export default InputText;
+export default InputNumber;

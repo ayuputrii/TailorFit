@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {BackgroundWithImage, HeaderNotLogin} from '../../components/commons';
 import LoginSections from '../../sections/Login';
@@ -9,6 +9,7 @@ import {API_LOGIN, BASE_URL, postData} from '../../api';
 import {ModalConfirmation} from '../../components';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {removeData, saveData} from '../../utils/async-storage';
+import {KeyboardAvoidingView} from 'react-native';
 
 const Login = ({navigation}: LoginProps) => {
   const [email, setEmail] = useState('');
@@ -41,7 +42,9 @@ const Login = ({navigation}: LoginProps) => {
     }
 
     if (email && password) {
+      console.log('MASUK');
       setLoading(true);
+      setDisabled(true);
 
       try {
         const response: any = await postData(BASE_URL + API_LOGIN, data);
@@ -54,6 +57,7 @@ const Login = ({navigation}: LoginProps) => {
           } else {
             await removeData('USER_LOGIN');
           }
+          await saveData('USER_DATA_LOGIN', response?.data?.data);
           await saveData('ACCESS_TOKEN', response.data.data.accessToken);
           navigation.replace('MainTabs');
         } else {
@@ -61,16 +65,25 @@ const Login = ({navigation}: LoginProps) => {
           setDisabled(false);
           setShowModal(true);
           setTitle('Login is Failed');
-          setMessage(response?.data?.message || response?.data?.error?.message);
+          setMessage(
+            response?.data?.message ||
+              response?.data?.error?.message ||
+              "Server is encountered with problem! We'll fix it soon.",
+          );
         }
       } catch (error: any) {
-        console.log('ERROR__', error);
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
         setTitle('Login is Failed');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
+      setTitle('Login is Failed');
+      setMessage("Server is encountered with problem! We'll fix it soon.");
+    } else {
+      setLoading(false);
+      setDisabled(false);
+      setShowModal(false);
     }
   };
 
@@ -98,31 +111,38 @@ const Login = ({navigation}: LoginProps) => {
     <BackgroundWithImage
       backgroundChildren={false}
       src={require('../../assets/images/img-rainbow.png')}>
-      <ScrollView style={styles.scroll}>
-        <HeaderNotLogin
-          title="Sign In"
-          subTitle="Please enter your email and enter password."
-          fontSizeSub={12}
-          subColor={colors.lightgray}
-          marginTop={0}
-        />
+      <KeyboardAvoidingView behavior={'height'} style={styles.container}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.content}>
+            <HeaderNotLogin
+              title="Sign In"
+              subTitle="Please enter your email and enter password."
+              fontSizeSub={12}
+              subColor={colors.lightgray}
+              marginTop={0}
+            />
 
-        <LoginSections
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          showRemember={showRemember}
-          setShowRemember={() => setShowRemember(!showRemember)}
-          navigation={navigation}
-          onLogin={onLogin}
-          loading={loading}
-          disabled={disabled}
-          errorEmail={errorEmail}
-          errorPassword={errorPassword}
-          loginWithGoogle={loginWithGoogle}
-        />
-      </ScrollView>
+            <LoginSections
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              showRemember={showRemember}
+              setShowRemember={() => setShowRemember(!showRemember)}
+              navigation={navigation}
+              onLogin={onLogin}
+              loading={loading}
+              disabled={disabled}
+              errorEmail={errorEmail}
+              errorPassword={errorPassword}
+              loginWithGoogle={loginWithGoogle}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+
       <ModalConfirmation
         isVisible={showModal}
         onClose={() => setShowModal(false)}

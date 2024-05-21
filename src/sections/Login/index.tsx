@@ -1,5 +1,5 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import React, {Dispatch, SetStateAction, useRef} from 'react';
+import {ActivityIndicator, View, TextInput} from 'react-native';
 import {
   Buttons,
   Gap,
@@ -44,9 +44,13 @@ const LoginSections = ({
   errorPassword,
   loginWithGoogle,
 }: LoginSectionsProps) => {
+  const refEmail = useRef<TextInput>(null);
+  const refPassword = useRef<TextInput>(null);
+
   return (
     <View style={styles.content}>
       <InputText
+        ref={refEmail}
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
@@ -54,13 +58,16 @@ const LoginSections = ({
         styleInput={undefined}
         styleText={undefined}
         error={errorEmail}
+        onSubmitEditing={() => refPassword.current?.focus()}
       />
       <InputPassword
+        ref={refPassword}
         value={password}
         onChangeText={setPassword}
         placeholder="Password"
         placeholderTextColor={colors.gray}
         error={errorPassword}
+        onSubmitEditing={onLogin}
       />
       <View style={styles.viewRemember}>
         <Buttons
@@ -119,12 +126,12 @@ const LoginSections = ({
         disabled={false}
         onPress={() => navigation.navigate('Register')}
         children={
-          <>
+          <React.Fragment>
             <Text style={[styles.txt, styles.colorLightBlack]}>
               You Don’t have an account ?
             </Text>
             <Text style={[styles.txt, styles.colorBoldBlack]}> Sign Up</Text>
-          </>
+          </React.Fragment>
         }
       />
     </View>

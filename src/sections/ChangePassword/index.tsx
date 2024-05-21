@@ -36,35 +36,33 @@ const ChangePasswordSections = ({
         placeholder="Current Password"
         placeholderTextColor={colors.gray}
       />
-      <Gap height={16} width={0} />
       <InputPassword
         value={newPassword}
         onChangeText={setNewPassword}
         placeholder="New-Password"
         placeholderTextColor={colors.gray}
       />
-      <Gap height={16} width={0} />
       <InputPassword
         value={rePassword}
         onChangeText={setRePassword}
         placeholder="Re-Password"
         placeholderTextColor={colors.gray}
       />
-      <Gap height={24} width={0} />
       <Buttons
+        disabled={false}
         onPress={onChangePassword}
         style={styles.btn}
         children={
           <View style={styles.flexRow}>
             {btnLoading && (
-              <>
+              <React.Fragment>
                 <ActivityIndicator
                   animating={true}
                   color={colors.white}
                   size={moderateScale(16)}
                 />
                 <Gap height={0} width={moderateScale(8)} />
-              </>
+              </React.Fragment>
             )}
             <Text style={styles.text}>Change Password</Text>
           </View>

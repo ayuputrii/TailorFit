@@ -1,18 +1,18 @@
 import React from 'react';
 import Buttons from './Buttons';
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Gap from './Gap';
 import Text from './Text';
 import {colors} from '../../utils/colors';
 import {moderateScale, verticalScale} from '../../utils/scale';
 import {fonts} from '../../utils/fonts';
-
 interface MenuButtonsProps {
   activeMenuIndex: number;
   setActiveMenuIndex: (index: number) => void;
   index: number;
   item: any;
   onPress: () => void;
+  disabled: boolean;
 }
 
 const MenuButtons = ({
@@ -21,10 +21,12 @@ const MenuButtons = ({
   index,
   item,
   onPress,
+  disabled,
 }: MenuButtonsProps) => {
   return (
-    <>
+    <React.Fragment>
       <Buttons
+        disabled={disabled}
         style={[
           styles.button,
           {
@@ -43,11 +45,12 @@ const MenuButtons = ({
               color: activeMenuIndex === index ? colors.white : colors.black,
             },
           ]}>
-          {item?.label}
+          {item?.name}
         </Text>
       </Buttons>
+
       <Gap width={moderateScale(6)} height={0} />
-    </>
+    </React.Fragment>
   );
 };
 
@@ -57,8 +60,8 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(20),
     justifyContent: 'center',
     alignItems: 'center',
-    height: verticalScale(Platform.OS === 'ios' ? 35 : 40),
-    marginBottom: moderateScale(Platform.OS === 'ios' ? 24 : 16),
+    height: verticalScale(40),
+    marginBottom: moderateScale(16),
   },
   text: {
     fontSize: moderateScale(14),

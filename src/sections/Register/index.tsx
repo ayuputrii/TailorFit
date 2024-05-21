@@ -1,9 +1,10 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import React, {Dispatch, SetStateAction, useRef} from 'react';
+import {ActivityIndicator, TextInput, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {
   Buttons,
   Gap,
+  InputNumber,
   InputPassword,
   InputText,
   SocialMedia,
@@ -17,15 +18,19 @@ interface RegisterSectionsProps {
   setEmail: Dispatch<SetStateAction<string>>;
   fullName: string;
   setFullName: Dispatch<SetStateAction<string>>;
+  phone: string;
+  setPhone: Dispatch<SetStateAction<string>>;
   password: string;
   setPassword: Dispatch<SetStateAction<string>>;
   navigation: any;
   onRegister: () => void;
   errorEmail: string;
   errorFullName: string;
+  errorPhone: string;
   errorPassword: string;
   disabled: boolean;
   loading: boolean;
+  onGoogle: () => void;
 }
 
 const RegisterSections = ({
@@ -33,19 +38,29 @@ const RegisterSections = ({
   setEmail,
   fullName,
   setFullName,
+  phone,
+  setPhone,
   password,
   setPassword,
   navigation,
   onRegister,
   errorEmail,
   errorFullName,
+  errorPhone,
   errorPassword,
   disabled,
   loading,
+  onGoogle,
 }: RegisterSectionsProps) => {
+  const refFullName = useRef<TextInput>(null);
+  const refEmail = useRef<TextInput>(null);
+  const refphone = useRef<TextInput>(null);
+  const refPassword = useRef<TextInput>(null);
+
   return (
     <View style={styles.content}>
       <InputText
+        ref={refFullName}
         value={fullName}
         onChangeText={setFullName}
         placeholder="Fullname"
@@ -53,8 +68,10 @@ const RegisterSections = ({
         styleInput={undefined}
         styleText={undefined}
         error={errorFullName}
+        onSubmitEditing={() => refEmail.current?.focus()}
       />
       <InputText
+        ref={refEmail}
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
@@ -62,13 +79,27 @@ const RegisterSections = ({
         styleInput={undefined}
         styleText={undefined}
         error={errorEmail}
+        onSubmitEditing={() => refphone.current?.focus()}
+      />
+      <InputNumber
+        ref={refphone}
+        value={phone}
+        onChangeText={setPhone}
+        placeholder="Phone Number"
+        placeholderTextColor={colors.gray}
+        styleInput={undefined}
+        styleText={undefined}
+        error={errorPhone}
+        onSubmitEditing={() => refPassword.current?.focus()}
       />
       <InputPassword
+        ref={refPassword}
         value={password}
         onChangeText={setPassword}
         placeholder="Password"
         placeholderTextColor={colors.gray}
         error={errorPassword}
+        onSubmitEditing={onRegister}
       />
       <Buttons
         onPress={onRegister}
@@ -89,18 +120,18 @@ const RegisterSections = ({
         </Text>
         <View style={styles.borderTop} />
       </View>
-      <SocialMedia />
+      <SocialMedia onPress={onGoogle} />
       <Buttons
         style={styles.signIn}
         disabled={false}
         onPress={() => navigation.navigate('Login')}
         children={
-          <>
+          <React.Fragment>
             <Text style={[styles.txt, styles.colorLightBlack]}>
               You have an account ?
             </Text>
             <Text style={[styles.txt, styles.colorBoldBlack]}> Sign In</Text>
-          </>
+          </React.Fragment>
         }
       />
     </View>

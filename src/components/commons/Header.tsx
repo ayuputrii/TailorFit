@@ -1,10 +1,12 @@
-import React, {ReactNode} from 'react';
+import React, {createRef, ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import PhotoWithNotFound from './PhotoWithNotFound';
 import {colors} from '../../utils/colors';
-import {moderateScale} from '../../utils/scale';
+import {moderateScale, verticalScale} from '../../utils/scale';
 import Text from './Text';
 import {fonts} from '../../utils/fonts';
+import Shimmer from './Shimmer';
+import Gap from './Gap';
 
 interface HeaderProps {
   title: string;
@@ -12,23 +14,44 @@ interface HeaderProps {
   icon: ReactNode;
   image: string | undefined;
   children: ReactNode;
+  loading: boolean;
 }
 
-const Header = ({title, subTitle, icon, image, children}: HeaderProps) => {
+const Header = ({
+  title,
+  subTitle,
+  icon,
+  image,
+  children,
+  loading,
+}: HeaderProps) => {
+  const titleRef = createRef();
+  const subRef = createRef();
+
   return (
-    <>
+    <React.Fragment>
       <View style={styles.container}>
         <View style={styles.content}>
-          <PhotoWithNotFound image={image} />
+          <PhotoWithNotFound image={image} loading={loading} />
           <View style={styles.headerContent}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.subTitle}>{subTitle}</Text>
+            {loading ? (
+              <React.Fragment>
+                <Shimmer ref={titleRef} style={styles.shimmer} />
+                <Gap height={verticalScale(6)} width={0} />
+                <Shimmer ref={subRef} style={styles.shimmer} />
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.subTitle}>{subTitle}</Text>
+              </React.Fragment>
+            )}
           </View>
         </View>
         {icon && <View style={styles.content}>{icon}</View>}
       </View>
       {children}
-    </>
+    </React.Fragment>
   );
 };
 
@@ -65,6 +88,9 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(50),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  shimmer: {
+    width: '100%',
   },
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {CardCommons, Gap, ImageNotFound, Text} from '../../components';
+import {CardCommons, Gap, ImageWithNotFound, Text} from '../../components';
 import {View} from 'react-native';
 import {moderateScale} from '../../utils/scale';
 import styles from './styles';
@@ -17,7 +17,7 @@ const ProductCheckout = () => {
         <View style={styles.contentProduct}>
           <Gap height={0} width={moderateScale(8)} />
 
-          <ImageNotFound uri={false} style={{}} />
+          <ImageWithNotFound uri={false} style={{}} />
 
           <Gap height={0} width={moderateScale(8)} />
 
