@@ -3,13 +3,18 @@ import {BackHeader, Gap} from '../../components';
 import IconANT from 'react-native-vector-icons/AntDesign';
 import {colors} from '../../utils/colors';
 import {moderateScale} from '../../utils/scale';
-import {ScrollView, View} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import styles from './styles';
 import {ChatProps} from '../../navigation';
 
 const Chat = ({navigation}: ChatProps) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        animated={false}
+        backgroundColor={colors.basebg}
+        barStyle="dark-content"
+      />
       <BackHeader
         title="Chat"
         goBack={() => navigation?.goBack()}
@@ -28,7 +33,7 @@ const Chat = ({navigation}: ChatProps) => {
           <Gap height={moderateScale(8)} width={0} />
         </ScrollView>
       </BackHeader>
-    </View>
+    </SafeAreaView>
   );
 };
 
