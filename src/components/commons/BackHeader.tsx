@@ -18,7 +18,7 @@ const BackHeader = ({goBack, title, icon, children}: BackHeaderProps) => {
   return (
     <React.Fragment>
       <View style={styles.container}>
-        <Buttons onPress={goBack} style={styles}>
+        <Buttons disabled={false} onPress={goBack} style={styles}>
           <Icon name="chevron-back" size={moderateScale(22)} />
         </Buttons>
         <Text style={styles.title}>{title}</Text>
