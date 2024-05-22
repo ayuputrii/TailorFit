@@ -30,7 +30,6 @@ export const postDataWithToken = async (
     const json = await response?.json();
     return json;
   } catch (error: any) {
-    console.log('eror postData', error?.response);
     return error.response;
   }
 };
@@ -40,14 +39,11 @@ export const postData = async (url: string, data: any) => {
     let response = await axios.post(url, data, {
       headers: {
         Accept: 'application/json',
-        //'Content-Type': 'application/json',
       },
     });
 
     return response;
   } catch (error: any) {
-    console.log('ERROR', error);
-    console.error(error);
     return error.response;
   }
 };
@@ -60,6 +56,24 @@ export const getDataResponse = async (url: string, token: string) => {
       },
     });
     return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const putData = async (url: string, data: any, token: string) => {
+  try {
+    let response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: data,
+    });
+    const json = await response?.json();
+    return json;
   } catch (error: any) {
     return error.response;
   }
