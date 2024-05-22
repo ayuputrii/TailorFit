@@ -10,6 +10,7 @@ export interface UserDataTypes {
   email: string;
   fullName: string;
   role: string;
+  phone: string;
 }
 
 export interface CategoryTypes {
@@ -31,7 +32,7 @@ export interface PromotionTypes {
 
 export interface ProductsTypes {
   name: string;
-  images: string;
+  images: any;
   description: string;
   price: number;
   duration: number;
