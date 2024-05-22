@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
@@ -6,25 +6,28 @@ import {moderateScale} from '../../utils/scale';
 import Shimmer from './Shimmer';
 
 interface PhotoWithNotFoundProps {
-  image: string | undefined;
+  image: string | any;
   loading: boolean;
+  style: any;
 }
 
-const PhotoWithNotFound = ({image, loading}: PhotoWithNotFoundProps) => {
-  const avatarRef = createRef();
-
+const PhotoWithNotFound = ({image, loading, style}: PhotoWithNotFoundProps) => {
   return (
     <View style={styles.container}>
       {loading ? (
-        <Shimmer ref={avatarRef} style={styles.image} />
-      ) : !image ? (
-        <IconAwesome name="user-circle-o" size={50} color={colors.black} />
-      ) : (
+        <Shimmer style={[styles.image, style]} />
+      ) : image && isNaN(image) ? (
         <Image
           source={{uri: image}}
           width={60}
           height={60}
-          style={styles.image}
+          style={[styles.image, style]}
+        />
+      ) : (
+        <IconAwesome
+          name="user-circle-o"
+          size={moderateScale(50)}
+          color={colors.black}
         />
       )}
     </View>
@@ -37,7 +40,6 @@ const styles = StyleSheet.create({
     height: moderateScale(60),
     backgroundColor: colors.white,
     borderRadius: moderateScale(60),
-    marginRight: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },
