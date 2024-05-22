@@ -26,6 +26,7 @@ import {
   Address,
   Payment,
   Profile,
+  ProductDetail,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
@@ -51,6 +52,7 @@ export type NavigationParam = {
   Favorite: undefined;
   Address: undefined;
   Payment: undefined;
+  ProductDetail: undefined;
 };
 
 type MainTabsNavigationProp = BottomTabNavigationProp<
@@ -142,6 +144,16 @@ type HomeRouteProp = RouteProp<NavigationParam, 'Home'>;
 export type HomeProps = {
   navigation: HomeNavigationProp;
   route: HomeRouteProp;
+};
+
+type ProductDetailNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'ProductDetail'
+>;
+type ProductDetailRouteProp = RouteProp<NavigationParam, 'ProductDetail'>;
+export type ProductDetailProps = {
+  navigation: ProductDetailNavigationProp;
+  route: ProductDetailRouteProp;
 };
 
 type VerifyOTPNavigationProp = StackNavigationProp<
@@ -317,6 +329,14 @@ const RootStackScreen = () => (
       }}
       name="Chat"
       component={Chat}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="ProductDetail"
+      component={ProductDetail}
     />
     <RootStack.Screen
       options={{

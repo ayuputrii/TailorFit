@@ -17,6 +17,7 @@ import Favorite from './Favorite';
 import Address from './Address';
 import Payment from './Payment';
 import Profile from './Profile';
+import ProductDetail from './ProductDetail';
 
 export {
   SplashScreenPage,
@@ -38,4 +39,5 @@ export {
   Address,
   Payment,
   Profile,
+  ProductDetail,
 };
