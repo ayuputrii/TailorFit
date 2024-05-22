@@ -1,4 +1,4 @@
-import React, {createRef, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import PhotoWithNotFound from './PhotoWithNotFound';
 import {colors} from '../../utils/colors';
@@ -25,20 +25,22 @@ const Header = ({
   children,
   loading,
 }: HeaderProps) => {
-  const titleRef = createRef();
-  const subRef = createRef();
-
   return (
     <React.Fragment>
       <View style={styles.container}>
         <View style={styles.content}>
-          <PhotoWithNotFound image={image} loading={loading} />
+          <PhotoWithNotFound
+            image={image}
+            loading={loading}
+            style={undefined}
+          />
+          <Gap width={moderateScale(6)} height={0} />
           <View style={styles.headerContent}>
             {loading ? (
               <React.Fragment>
-                <Shimmer ref={titleRef} style={styles.shimmer} />
+                <Shimmer style={styles.shimmer} />
                 <Gap height={verticalScale(6)} width={0} />
-                <Shimmer ref={subRef} style={styles.shimmer} />
+                <Shimmer style={styles.shimmer} />
               </React.Fragment>
             ) : (
               <React.Fragment>
