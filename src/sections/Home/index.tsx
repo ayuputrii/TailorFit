@@ -23,8 +23,10 @@ interface HomeSectionsProps {
   activeMenuIndex: number;
   handleMenuPress: any;
   addFavorite: (index: number) => void;
-  goDetailProduct: () => void;
+  navigation: any;
   loading: boolean;
+  showSearch: boolean;
+  isEmpty: boolean;
 }
 
 const HomeSections = ({
@@ -37,9 +39,15 @@ const HomeSections = ({
   activeMenuIndex,
   handleMenuPress,
   addFavorite,
-  goDetailProduct,
+  navigation,
   loading,
+  showSearch,
+  isEmpty,
 }: HomeSectionsProps) => {
+  const goDetailProduct = (item: ProductsTypes) => {
+    navigation?.navigate('ProductDetail', item);
+  };
+
   return (
     <ScrollView
       refreshControl={
@@ -57,61 +65,69 @@ const HomeSections = ({
               <Shimmer key={index} style={styles.category} />
             ))}
           </View>
-          <View style={styles.flexWrapRow}>
-            {[1, 2, 3, 4]?.map((_item, index) => (
+          <FlatList
+            data={[1, 2, 3, 4]}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            renderItem={({index}) => (
               <Shimmer
                 key={index}
                 style={[styles.contentProduct, styles.productShimmer]}
               />
-            ))}
-          </View>
-        </View>
-      ) : (
-        <React.Fragment>
-          <Carousel
-            loop
-            width={width}
-            height={verticalScale(180)}
-            autoPlay={true}
-            data={promotion}
-            scrollAnimationDuration={1000}
-            onSnapToItem={index => console.log('current index:', index)}
-            renderItem={({item, index}) => {
-              return (
-                <ImageWithNotFound
-                  key={index}
-                  uri={item?.image}
-                  style={styles.imgPromo}
-                />
-              );
-            }}
-          />
-          <Gap height={verticalScale(14)} width={0} />
-
-          <FlatList
-            data={category}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            renderItem={({
-              item,
-              index,
-            }: {
-              item: CategoryTypes;
-              index: number;
-            }) => (
-              <MenuButtons
-                key={index}
-                activeMenuIndex={activeMenuIndex}
-                setActiveMenuIndex={() => handleMenuPress(index, item?._id)}
-                index={index}
-                item={item}
-                onPress={() => {}}
-                disabled={false}
-              />
             )}
             keyExtractor={(_item, index) => index.toString()}
           />
+        </View>
+      ) : (
+        <React.Fragment>
+          {showSearch ? null : (
+            <>
+              <Carousel
+                loop
+                width={width}
+                height={verticalScale(180)}
+                autoPlay={true}
+                data={promotion}
+                scrollAnimationDuration={1000}
+                renderItem={({item, index}) => {
+                  return (
+                    <ImageWithNotFound
+                      key={index}
+                      uri={item?.image}
+                      style={styles.imgPromo}
+                    />
+                  );
+                }}
+              />
+              <Gap height={verticalScale(14)} width={0} />
+
+              <FlatList
+                data={category}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                renderItem={({
+                  item,
+                  index,
+                }: {
+                  item: CategoryTypes;
+                  index: number;
+                }) => (
+                  <MenuButtons
+                    key={index}
+                    activeMenuIndex={activeMenuIndex}
+                    setActiveMenuIndex={() => handleMenuPress(index, item?._id)}
+                    index={index}
+                    item={item}
+                    onPress={() => {}}
+                    disabled={false}
+                  />
+                )}
+                keyExtractor={(_item, index) => index.toString()}
+              />
+            </>
+          )}
           {filteredProducts?.length ? (
             <FlatList
               data={filteredProducts}
@@ -129,16 +145,16 @@ const HomeSections = ({
                 return (
                   <ProductsSections
                     key={index}
-                    goDetailProduct={goDetailProduct}
+                    goDetailProduct={() => goDetailProduct({...item})}
                     addFavorite={() => addFavorite(index)}
                     data={item}
                   />
                 );
               }}
             />
-          ) : (
+          ) : isEmpty ? (
             <ImageWithNotData />
-          )}
+          ) : null}
         </React.Fragment>
       )}
 

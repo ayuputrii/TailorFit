@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Dimensions, SafeAreaView, StatusBar} from 'react-native';
 import {Buttons, Gap, Header} from '../../components';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Octicons from 'react-native-vector-icons/Octicons';
 import {moderateScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
 import styles from './styles';
 import {HomeProps} from '../../navigation';
-import {HomeSections} from '../../sections';
+import {HomeSections, ProductSearch} from '../../sections';
+import {useDebounce} from 'use-debounce';
 import {
   API_CATEGORY,
   API_PRODUCT,
@@ -31,6 +33,8 @@ const Home = ({navigation}: HomeProps) => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
+  const [isInitialSearch, setIsInitialSearch] = useState(true);
 
   const [userData, setUserData] = useState<UserDataTypes>({} as UserDataTypes);
   const [promotion, setPromotion] = useState<PromotionTypes[]>([]);
@@ -39,6 +43,12 @@ const Home = ({navigation}: HomeProps) => {
 
   const [filteredProducts, setFilteredProducts] = useState<ProductsTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('');
+  const [keyword, setKeyword] = useState<string>('');
+  const [textSearch] = useDebounce(keyword, 500);
+  const [page, setPage] = useState<number>(1);
+  const [perPage, setPerPage] = useState<number>(10);
+
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const firstName = `${
     userData?.fullName?.split(' ')[0] + ' ' + userData?.fullName?.split(' ')[1]
@@ -89,9 +99,35 @@ const Home = ({navigation}: HomeProps) => {
       );
       if (response?.data?.data) {
         setProducts(response?.data?.data);
+        if (response?.data?.data?.length) {
+          setIsEmpty(false);
+        } else {
+          setIsEmpty(true);
+        }
       }
     } catch (error) {
-      console.log('Get promotion error...', error);
+      console.log('Get products error...', error);
+    }
+  };
+
+  const getSearchProduct = async () => {
+    try {
+      const token = await getData('ACCESS_TOKEN');
+      const response = await getDataResponse(
+        BASE_URL +
+          `${API_PRODUCT}?page=${page}&perPage=${perPage}&q=${keyword}`,
+        token,
+      );
+      if (response?.data?.data) {
+        setFilteredProducts(response?.data?.data);
+        if (response?.data?.data?.length) {
+          setIsEmpty(false);
+        } else {
+          setIsEmpty(true);
+        }
+      }
+    } catch (error) {
+      return [];
     }
   };
 
@@ -105,7 +141,22 @@ const Home = ({navigation}: HomeProps) => {
     setIsFavorite(index);
   };
 
-  const goDetailProduct = () => {};
+  const onShowSearch = () => {
+    setShowSearch(true);
+  };
+
+  const onCloseSearch = () => {
+    setShowSearch(false);
+    setFilteredProducts([]);
+    setIsInitialSearch(false);
+    setIsEmpty(false);
+  };
+
+  const onSearchDelete = () => {
+    setFilteredProducts([]);
+  };
+
+  const onNotifications = () => {};
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -119,17 +170,6 @@ const Home = ({navigation}: HomeProps) => {
       setRefreshing(false);
     }, 500);
   };
-
-  useEffect(() => {
-    if (selectedCategory !== null) {
-      const filtered = products.filter(
-        product => product?.category === selectedCategory,
-      );
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts(products);
-    }
-  }, [selectedCategory, products]);
 
   useEffect(() => {
     const getDataAsync = async () => {
@@ -148,6 +188,18 @@ const Home = ({navigation}: HomeProps) => {
     setRefreshing(false);
   }, []);
 
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (textSearch) {
+        await getSearchProduct();
+      } else {
+        setFilteredProducts([]);
+      }
+    };
+    handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textSearch]);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -155,46 +207,60 @@ const Home = ({navigation}: HomeProps) => {
         backgroundColor={colors.basebg}
         barStyle="dark-content"
       />
-      <Header
-        title="Halo, "
-        subTitle={userData?.fullName ? firstName : '-'}
-        image={undefined}
-        icon={
-          <React.Fragment>
-            <Buttons disabled={false} onPress={() => {}} style={{}}>
-              <Icon
-                name="search-outline"
-                size={moderateScale(30)}
-                color={colors.black}
-              />
-            </Buttons>
+      {showSearch ? (
+        <ProductSearch
+          value={textSearch}
+          onChangeText={setKeyword}
+          onSubmitEditing={() => {}}
+          onClose={onCloseSearch}
+          onNotifications={onNotifications}
+          onSearchDelete={onSearchDelete}
+        />
+      ) : (
+        <Header
+          children={false}
+          title="Halo, "
+          subTitle={userData?.fullName ? firstName : '-'}
+          image={undefined}
+          icon={
+            <React.Fragment>
+              <Buttons disabled={false} onPress={onShowSearch} style={{}}>
+                <Icon
+                  name="search"
+                  size={moderateScale(28)}
+                  color={colors.black}
+                />
+              </Buttons>
 
-            <Gap width={moderateScale(14)} height={0} />
+              <Gap width={moderateScale(14)} height={0} />
 
-            <Buttons disabled={false} onPress={() => {}} style={{}}>
-              <Icon
-                name="notifications-outline"
-                size={moderateScale(30)}
-                color={colors.black}
-              />
-            </Buttons>
-          </React.Fragment>
-        }
-        loading={loading || refreshing}>
-        <HomeSections
-          category={category}
-          width={width}
-          activeMenuIndex={activeMenuIndex}
-          handleMenuPress={handleMenuPress}
-          addFavorite={addFavorite}
-          goDetailProduct={goDetailProduct}
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          promotion={promotion}
-          filteredProducts={products}
+              <Buttons disabled={false} onPress={() => {}} style={{}}>
+                <Octicons
+                  name="bell"
+                  size={moderateScale(24)}
+                  color={colors.black}
+                />
+              </Buttons>
+            </React.Fragment>
+          }
           loading={loading || refreshing}
         />
-      </Header>
+      )}
+      <HomeSections
+        category={category}
+        width={width}
+        activeMenuIndex={activeMenuIndex}
+        handleMenuPress={handleMenuPress}
+        addFavorite={addFavorite}
+        navigation={navigation}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        promotion={promotion}
+        filteredProducts={showSearch ? filteredProducts : products}
+        loading={loading || refreshing}
+        showSearch={showSearch}
+        isEmpty={isEmpty}
+      />
     </SafeAreaView>
   );
 };

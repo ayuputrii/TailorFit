@@ -47,9 +47,12 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   productShimmer: {
-    flexDirection: 'row',
+    height: verticalScale(180),
+    borderRadius: moderateScale(8),
+    marginRight: moderateScale(14),
+    marginBottom: moderateScale(8),
     paddingHorizontal: moderateScale(0),
     paddingVertical: moderateScale(0),
-    width: moderateScale(165),
+    backgroundColor: colors.white,
   },
 });
