@@ -13,6 +13,8 @@ import MenuButtons from './MenuButtons';
 import ImageWithNotFound from './ImageWithNotFound';
 import Shimmer from './Shimmer';
 import ImageWithNotData from './ImaageWithNotData';
+import ButtonLogin from './ButtonLogin';
+import ImageWithNotLogin from './ImageWithNotLogin';
 
 export {
   Header,
@@ -30,4 +32,6 @@ export {
   ImageWithNotFound,
   Shimmer,
   ImageWithNotData,
+  ButtonLogin,
+  ImageWithNotLogin,
 };

@@ -1,15 +1,23 @@
 import React from 'react';
 import ProductsSections from '../Products';
-import {ImageWithNotData} from '../../components';
-import {FlatList} from 'react-native';
+import {ImageWithNotData, ImageWithNotLogin} from '../../components';
+import {FlatList, View} from 'react-native';
 import {ProductsTypes} from '../../types';
+import {colors} from '../../utils/colors';
+import IlustrationAccount from '../../assets/ilustration/il-access-account.svg';
+import {moderateScale} from '../../utils/scale';
 
 interface FavoriteSectionsProps {
   data: ProductsTypes[];
   isEmpty: boolean;
+  navigation: any;
 }
 
-const FavoriteSections = ({data, isEmpty}: FavoriteSectionsProps) => {
+const FavoriteSections = ({
+  data,
+  isEmpty,
+  navigation,
+}: FavoriteSectionsProps) => {
   const goDetailProduct = (item: ProductsTypes) => {
     console.log('items', item);
   };
@@ -39,7 +47,9 @@ const FavoriteSections = ({data, isEmpty}: FavoriteSectionsProps) => {
         />
       ) : isEmpty ? (
         <ImageWithNotData />
-      ) : null}
+      ) : (
+        <ImageWithNotLogin navigation={navigation} />
+      )}
     </>
   );
 };

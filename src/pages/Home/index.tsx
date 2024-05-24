@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Dimensions, SafeAreaView, StatusBar} from 'react-native';
-import {Buttons, Gap, Header} from '../../components';
+import {ButtonLogin, Buttons, Gap, Header, Text} from '../../components';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {moderateScale} from '../../utils/scale';
@@ -24,9 +24,12 @@ import {
   PromotionTypes,
   UserDataTypes,
 } from '../../types';
+import {fonts} from '../../utils/fonts';
 
 const Home = ({navigation}: HomeProps) => {
   const width = Dimensions.get('window').width;
+
+  const isLogin = false;
 
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(0);
@@ -220,27 +223,35 @@ const Home = ({navigation}: HomeProps) => {
         <Header
           children={false}
           title="Halo, "
-          subTitle={userData?.fullName ? firstName : '-'}
+          subTitle={
+            isLogin ? (userData?.fullName ? firstName : '-') : 'Welcome!'
+          }
           image={undefined}
           icon={
             <React.Fragment>
-              <Buttons disabled={false} onPress={onShowSearch} style={{}}>
-                <Icon
-                  name="search"
-                  size={moderateScale(28)}
-                  color={colors.black}
-                />
-              </Buttons>
+              {isLogin ? (
+                <React.Fragment>
+                  <Buttons disabled={false} onPress={onShowSearch} style={{}}>
+                    <Icon
+                      name="search"
+                      size={moderateScale(28)}
+                      color={colors.black}
+                    />
+                  </Buttons>
 
-              <Gap width={moderateScale(14)} height={0} />
+                  <Gap width={moderateScale(14)} height={0} />
 
-              <Buttons disabled={false} onPress={() => {}} style={{}}>
-                <Octicons
-                  name="bell"
-                  size={moderateScale(24)}
-                  color={colors.black}
-                />
-              </Buttons>
+                  <Buttons disabled={false} onPress={() => {}} style={{}}>
+                    <Octicons
+                      name="bell"
+                      size={moderateScale(24)}
+                      color={colors.black}
+                    />
+                  </Buttons>
+                </React.Fragment>
+              ) : (
+                <ButtonLogin navigation={navigation} />
+              )}
             </React.Fragment>
           }
           loading={loading || refreshing}
