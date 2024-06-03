@@ -5,9 +5,15 @@ import {BackgroundWithImage, HeaderNotLogin} from '../../components/commons';
 import {RegisterSections} from '../../sections';
 import styles from './styles';
 import {RegisterProps} from '../../navigation';
-import {API_REGISTER, BASE_URL, postData} from '../../api';
+import {
+  API_GOOGLE_REGISTER_LOGIN,
+  API_REGISTER,
+  BASE_URL,
+  postData,
+} from '../../api';
 import {ModalConfirmation} from '../../components';
 import {images} from '../../assets';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const Register = ({navigation}: RegisterProps) => {
   const [email, setEmail] = useState('');
@@ -62,7 +68,6 @@ const Register = ({navigation}: RegisterProps) => {
 
       try {
         const response: any = await postData(BASE_URL + API_REGISTER, data);
-        console.log('ini response register', response);
         if (response?.data?.success) {
           setLoading(false);
           setDisabled(false);
@@ -88,7 +93,10 @@ const Register = ({navigation}: RegisterProps) => {
         setErrors(true);
         setShowModal(true);
         setTitle('Register is Failed');
-        setMessage(error?.data?.message);
+        setMessage(
+          error?.data?.message ||
+            "Server is encountered with problem! We'll fix it soon.",
+        );
       }
     } else {
       setLoading(false);
@@ -97,7 +105,51 @@ const Register = ({navigation}: RegisterProps) => {
     }
   };
 
-  const onGoogle = () => {};
+  const onGoogle = async () => {
+    const userInfo = await GoogleSignin.signIn();
+
+    try {
+      const data = {
+        fullName: userInfo?.user?.name,
+        email: userInfo?.user?.email,
+        profilePicture: userInfo?.user?.photo,
+      };
+
+      const response = await postData(
+        BASE_URL + API_GOOGLE_REGISTER_LOGIN,
+        data,
+      );
+      if (response?.data?.success) {
+        setLoading(false);
+        setDisabled(false);
+        setErrors(false);
+        setShowModal(true);
+        setTitle('Register is Success');
+        setMessage(response?.data?.message);
+      } else {
+        setLoading(false);
+        setDisabled(false);
+        setErrors(true);
+        setShowModal(true);
+        setTitle('Register is Failed');
+        setMessage(
+          response?.data?.message ||
+            response?.data?.error?.message ||
+            "Server is encountered with problem! We'll fix it soon.",
+        );
+      }
+    } catch (error: any) {
+      setLoading(false);
+      setDisabled(false);
+      setErrors(true);
+      setShowModal(true);
+      setTitle('Register is Failed');
+      setMessage(
+        error?.data?.message ||
+          "Server is encountered with problem! We'll fix it soon.",
+      );
+    }
+  };
 
   return (
     <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
