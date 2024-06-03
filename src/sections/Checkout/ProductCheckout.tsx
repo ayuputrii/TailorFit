@@ -11,13 +11,15 @@ const ProductCheckout = () => {
       subTitle={''}
       titleStyle={false}
       subTitleStyle={false}
-      onPress={() => {}}
+      onPress={false}
       style={styles.card}>
       <View style={styles.flexRowBetween}>
         <View style={styles.contentProduct}>
-          <Gap height={0} width={moderateScale(8)} />
-
-          <ImageWithNotFound uri={false} style={{}} />
+          <ImageWithNotFound
+            uri={false}
+            style={{}}
+            styleNoData={styles.notFound}
+          />
 
           <Gap height={0} width={moderateScale(8)} />
 
@@ -28,7 +30,6 @@ const ProductCheckout = () => {
           </View>
         </View>
         <Text style={styles.text}>x1</Text>
-        <Gap height={0} width={moderateScale(0)} />
       </View>
     </CardCommons>
   );

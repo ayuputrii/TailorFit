@@ -1,21 +1,27 @@
-import React, {useEffect, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState, useContext} from 'react';
 import {Dimensions, SafeAreaView, StatusBar} from 'react-native';
-import {ButtonLogin, Buttons, Gap, Header, Text} from '../../components';
+import {Buttons, Gap, Header, ModalNotif} from '../../components';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Octicons from 'react-native-vector-icons/Octicons';
+import IconANT from 'react-native-vector-icons/AntDesign';
 import {moderateScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
 import styles from './styles';
 import {HomeProps} from '../../navigation';
 import {HomeSections, ProductSearch} from '../../sections';
-import {useDebounce} from 'use-debounce';
+import {useDebouncedCallback} from 'use-debounce';
+import {AuthContext} from '../../context/AuthContext';
 import {
   API_CATEGORY,
+  API_FAVORITE,
   API_PRODUCT,
   API_PROFILE,
   API_PROMOTION,
   BASE_URL,
+  deleteWithToken,
   getDataResponse,
+  getDataWithToken,
+  postDataWithToken,
 } from '../../api';
 import {getData} from '../../utils/async-storage';
 import {
@@ -24,34 +30,33 @@ import {
   PromotionTypes,
   UserDataTypes,
 } from '../../types';
-import {fonts} from '../../utils/fonts';
 
 const Home = ({navigation}: HomeProps) => {
+  const ctx = useContext(AuthContext);
+  const isLogin = ctx?.isLogin;
+
   const width = Dimensions.get('window').width;
 
-  const isLogin = false;
-
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(0);
 
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showSearch, setShowSearch] = useState(false);
-  const [isInitialSearch, setIsInitialSearch] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [showModalNotif, setShowModalNotif] = useState(false);
+  const [errorFavorite, setErrorFavorite] = useState(false);
 
   const [userData, setUserData] = useState<UserDataTypes>({} as UserDataTypes);
   const [promotion, setPromotion] = useState<PromotionTypes[]>([]);
   const [category, setCategory] = useState<CategoryTypes[]>([]);
   const [products, setProducts] = useState<ProductsTypes[]>([]);
 
+  const [titleModalNotif, setTitleModalNotif] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<ProductsTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('');
   const [keyword, setKeyword] = useState<string>('');
-  const [textSearch] = useDebounce(keyword, 500);
   const [page, setPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(10);
-
-  const [isEmpty, setIsEmpty] = useState(false);
 
   const firstName = `${
     userData?.fullName?.split(' ')[0] + ' ' + userData?.fullName?.split(' ')[1]
@@ -60,7 +65,7 @@ const Home = ({navigation}: HomeProps) => {
   const getProfile = async () => {
     try {
       const token = await getData('ACCESS_TOKEN');
-      const response = await getDataResponse(BASE_URL + API_PROFILE, token);
+      const response = await getDataWithToken(BASE_URL + API_PROFILE, token);
       if (response?.data?.data) {
         setUserData(response?.data?.data);
       }
@@ -71,8 +76,7 @@ const Home = ({navigation}: HomeProps) => {
 
   const getPromotion = async () => {
     try {
-      const token = await getData('ACCESS_TOKEN');
-      const response = await getDataResponse(BASE_URL + API_PROMOTION, token);
+      const response = await getDataResponse(BASE_URL + API_PROMOTION);
       if (response?.data?.data) {
         setPromotion(response?.data?.data);
       }
@@ -83,8 +87,7 @@ const Home = ({navigation}: HomeProps) => {
 
   const getCategory = async () => {
     try {
-      const token = await getData('ACCESS_TOKEN');
-      const response = await getDataResponse(BASE_URL + API_CATEGORY, token);
+      const response = await getDataResponse(BASE_URL + API_CATEGORY);
       if (response?.data?.data) {
         setCategory([{_id: '', name: 'All'}, ...response?.data?.data]);
       }
@@ -94,9 +97,9 @@ const Home = ({navigation}: HomeProps) => {
   };
 
   const getProducts = async (cat?: string) => {
+    const token = await getData('ACCESS_TOKEN');
     try {
-      const token = await getData('ACCESS_TOKEN');
-      const response = await getDataResponse(
+      const response = await getDataWithToken(
         BASE_URL + `${API_PRODUCT}?category=${cat || selectedCategory}`,
         token,
       );
@@ -109,14 +112,14 @@ const Home = ({navigation}: HomeProps) => {
         }
       }
     } catch (error) {
-      console.log('Get products error...', error);
+      setIsEmpty(true);
     }
   };
 
   const getSearchProduct = async () => {
+    const token = await getData('ACCESS_TOKEN');
     try {
-      const token = await getData('ACCESS_TOKEN');
-      const response = await getDataResponse(
+      const response = await getDataWithToken(
         BASE_URL +
           `${API_PRODUCT}?page=${page}&perPage=${perPage}&q=${keyword}`,
         token,
@@ -133,6 +136,7 @@ const Home = ({navigation}: HomeProps) => {
       return [];
     }
   };
+  const debouncedSearchProduct = useDebouncedCallback(getSearchProduct, 500);
 
   const handleMenuPress = (index: number, id: string) => {
     setActiveMenuIndex(index);
@@ -140,8 +144,53 @@ const Home = ({navigation}: HomeProps) => {
     getProducts(id);
   };
 
-  const addFavorite = (index: number) => {
-    setIsFavorite(index);
+  const addFavorite = async (id: string | any) => {
+    try {
+      const token = await getData('ACCESS_TOKEN');
+      const response = await postDataWithToken(
+        BASE_URL + API_FAVORITE,
+        {productId: id},
+        token,
+      );
+      if (response?.data?.success) {
+        getProducts();
+        setShowModalNotif(true);
+        setErrorFavorite(false);
+        setTitleModalNotif(response?.data?.message || 'Favorite added!');
+      } else {
+        setShowModalNotif(true);
+        setErrorFavorite(true);
+        setTitleModalNotif('Failed add favorite!');
+      }
+    } catch (error) {
+      setShowModalNotif(true);
+      setErrorFavorite(true);
+      setTitleModalNotif('Failed add favorite!');
+    }
+  };
+
+  const deleteFavorite = async (id: string) => {
+    try {
+      const token = await getData('ACCESS_TOKEN');
+      const response = await deleteWithToken(
+        BASE_URL + API_FAVORITE + '/' + id,
+        token,
+      );
+      if (response?.data?.success) {
+        getProducts();
+        setShowModalNotif(true);
+        setErrorFavorite(false);
+        setTitleModalNotif(response?.data?.message || 'Favorite deleted!');
+      } else {
+        setShowModalNotif(true);
+        setErrorFavorite(true);
+        setTitleModalNotif('Failed deleted favorite!');
+      }
+    } catch (error) {
+      setShowModalNotif(true);
+      setErrorFavorite(true);
+      setTitleModalNotif('Failed deleted favorite!');
+    }
   };
 
   const onShowSearch = () => {
@@ -151,15 +200,12 @@ const Home = ({navigation}: HomeProps) => {
   const onCloseSearch = () => {
     setShowSearch(false);
     setFilteredProducts([]);
-    setIsInitialSearch(false);
     setIsEmpty(false);
   };
 
   const onSearchDelete = () => {
     setFilteredProducts([]);
   };
-
-  const onNotifications = () => {};
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -193,15 +239,14 @@ const Home = ({navigation}: HomeProps) => {
 
   useEffect(() => {
     const handleSearch = async () => {
-      if (textSearch) {
-        await getSearchProduct();
+      if (keyword) {
+        debouncedSearchProduct();
       } else {
         setFilteredProducts([]);
       }
     };
     handleSearch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [textSearch]);
+  }, [keyword]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -212,12 +257,13 @@ const Home = ({navigation}: HomeProps) => {
       />
       {showSearch ? (
         <ProductSearch
-          value={textSearch}
+          value={keyword}
           onChangeText={setKeyword}
           onSubmitEditing={() => {}}
           onClose={onCloseSearch}
-          onNotifications={onNotifications}
+          onClearText={() => setKeyword('')}
           onSearchDelete={onSearchDelete}
+          isLogin={isLogin}
         />
       ) : (
         <Header
@@ -226,31 +272,27 @@ const Home = ({navigation}: HomeProps) => {
           subTitle={
             isLogin ? (userData?.fullName ? firstName : '-') : 'Welcome!'
           }
-          image={undefined}
+          image={userData?.profilePicture}
           icon={
             <React.Fragment>
-              {isLogin ? (
+              <Buttons disabled={false} onPress={onShowSearch} style={{}}>
+                <Icon
+                  name="search"
+                  size={moderateScale(28)}
+                  color={colors.black}
+                />
+              </Buttons>
+              {isLogin && (
                 <React.Fragment>
-                  <Buttons disabled={false} onPress={onShowSearch} style={{}}>
-                    <Icon
-                      name="search"
-                      size={moderateScale(28)}
-                      color={colors.black}
-                    />
-                  </Buttons>
-
-                  <Gap width={moderateScale(14)} height={0} />
-
+                  <Gap width={moderateScale(10)} height={0} />
                   <Buttons disabled={false} onPress={() => {}} style={{}}>
-                    <Octicons
-                      name="bell"
+                    <IconANT
+                      name="logout" //"bell"
                       size={moderateScale(24)}
                       color={colors.black}
                     />
                   </Buttons>
                 </React.Fragment>
-              ) : (
-                <ButtonLogin navigation={navigation} />
               )}
             </React.Fragment>
           }
@@ -271,6 +313,16 @@ const Home = ({navigation}: HomeProps) => {
         loading={loading || refreshing}
         showSearch={showSearch}
         isEmpty={isEmpty}
+        isLogin={isLogin}
+        deleteFavorite={deleteFavorite}
+      />
+
+      <ModalNotif
+        isVisible={showModalNotif}
+        onClose={() => setShowModalNotif(false)}
+        title={titleModalNotif}
+        style={{}}
+        error={errorFavorite}
       />
     </SafeAreaView>
   );

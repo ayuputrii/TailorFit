@@ -17,12 +17,6 @@ export const MenuSettings = [
   },
   {
     id: 2,
-    label: 'Favorite',
-    onChange: () => navigation.navigate('Favorite'),
-    icon: <IconAwesome name="heart-o" size={24} color={colors.darkgray} />,
-  },
-  {
-    id: 3,
     label: 'History Transaction',
     onChange: () => navigation.navigate('HistoryTransaction'),
     icon: (
@@ -34,21 +28,27 @@ export const MenuSettings = [
     ),
   },
   {
-    id: 4,
+    id: 3,
     label: 'Change Password',
     onChange: () => navigation.navigate('ChangePassword'),
     icon: <IconFeather name="lock" size={24} color={colors.darkgray} />,
   },
   {
+    id: 4,
+    label: 'Change Email',
+    onChange: () => navigation.navigate('ChangeEmail'),
+    icon: <IconFeather name="info" size={24} color={colors.darkgray} />,
+  },
+  {
     id: 5,
-    label: 'About Apps',
-    onChange: () => navigation.navigate('About'),
+    label: 'Change Phone Number',
+    onChange: () => navigation.navigate('ChangePhoneNumber'),
     icon: <IconFeather name="info" size={24} color={colors.darkgray} />,
   },
   {
     id: 6,
-    label: 'Rating Apps',
-    onChange: () => navigation.navigate('Rating'),
-    icon: <IconFeather name="star" size={24} color={colors.darkgray} />,
+    label: 'About Apps',
+    onChange: () => navigation.navigate('About'),
+    icon: <IconFeather name="info" size={24} color={colors.darkgray} />,
   },
 ];

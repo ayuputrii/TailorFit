@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     backgroundColor: colors.white,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     paddingVertical: moderateScale(16),
   },
   flexRowBetween: {

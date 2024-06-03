@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: '#DCDCDC',
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     marginBottom: moderateScale(4),
     justifyContent: 'center',

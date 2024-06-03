@@ -7,6 +7,7 @@ import styles from './styles';
 import {RegisterProps} from '../../navigation';
 import {API_REGISTER, BASE_URL, postData} from '../../api';
 import {ModalConfirmation} from '../../components';
+import {images} from '../../assets';
 
 const Register = ({navigation}: RegisterProps) => {
   const [email, setEmail] = useState('');
@@ -35,22 +36,22 @@ const Register = ({navigation}: RegisterProps) => {
     };
     console.log('data', data);
     if (email === '') {
-      setErrorEmail('Email harap diisi');
+      setErrorEmail('Email is required');
     } else {
       setErrorEmail('');
     }
     if (fullName === '') {
-      setErrorFullName('FullName harap diisi');
+      setErrorFullName('FullName is required');
     } else {
       setErrorFullName('');
     }
     if (phone === '') {
-      setErrorPhone('Phone Number harap diisi');
+      setErrorPhone('Phone Number is required');
     } else {
       setErrorPhone('');
     }
     if (password === '') {
-      setErrorPassword('Password harap diisi');
+      setErrorPassword('Password is required');
     } else {
       setErrorPassword('');
     }
@@ -99,9 +100,7 @@ const Register = ({navigation}: RegisterProps) => {
   const onGoogle = () => {};
 
   return (
-    <BackgroundWithImage
-      backgroundChildren={false}
-      src={require('../../assets/images/img-rainbow.png')}>
+    <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
       <ScrollView
         style={styles.scroll}
         showsHorizontalScrollIndicator={false}

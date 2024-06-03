@@ -24,6 +24,7 @@ import {
 } from '../../api';
 import {moderateScale} from '../../utils/scale';
 import {VerifyOTPProps} from '../../navigation';
+import {images} from '../../assets';
 
 const CELL_COUNT = 6;
 
@@ -58,7 +59,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
     };
 
     if (value === '') {
-      setErrorOTP('OTP harap diisi');
+      setErrorOTP('OTP is required');
     } else {
       setErrorOTP('');
     }
@@ -128,9 +129,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
   };
 
   return (
-    <BackgroundWithImage
-      backgroundChildren={false}
-      src={require('../../assets/images/img-rainbow.png')}>
+    <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
       <ScrollView style={styles.scroll}>
         <HeaderNotLogin
           title="Verify Your Email"

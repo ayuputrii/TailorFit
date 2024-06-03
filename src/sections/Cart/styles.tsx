@@ -1,44 +1,27 @@
 import {StyleSheet} from 'react-native';
-import {moderateScale, verticalScale} from '../../utils/scale';
-import {colors} from '../../utils/colors';
+import {moderateScale} from '../../utils/scale';
 import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     paddingTop: moderateScale(14),
-    width: '100%',
-    height: verticalScale(80),
-    backgroundColor: colors.white,
-    borderRadius: moderateScale(10),
-  },
-  flexRowBetween: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
   },
   contentProduct: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '85%',
+    width: '90%',
+  },
+  notFound: {
+    width: moderateScale(60),
+    height: moderateScale(60),
+    resizeMode: 'cover',
+    borderRadius: moderateScale(8),
   },
   viewDesc: {
-    marginLeft: moderateScale(8),
-    width: '70%',
+    width: '40%',
   },
-  viewBottom: {
-    marginLeft: moderateScale(8),
-    width: '60%',
-  },
-  viewImage: {
-    backgroundColor: colors.black,
-    width: moderateScale(40),
-    height: verticalScale(38),
-    borderRadius: moderateScale(4),
-    marginLeft: moderateScale(6),
+  numericInputStyle: {
+    marginRight: moderateScale(16),
   },
   title: {
     fontSize: moderateScale(12),

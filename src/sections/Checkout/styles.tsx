@@ -14,13 +14,17 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     backgroundColor: colors.white,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     paddingVertical: moderateScale(16),
   },
   flexRowBetween: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  flexRowCenter: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   content: {
     flexDirection: 'row',
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
   contentDelivery: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '80%',
+    width: '25%',
   },
   title: {
     fontSize: moderateScale(12),
@@ -78,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orange,
     height: moderateScale(32),
     width: moderateScale(90),
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     justifyContent: 'center',
     alignItems: 'center',
     elevation: moderateScale(2),
@@ -94,6 +98,12 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fonts.PoppinsSemiBold,
     fontSize: moderateScale(12),
+  },
+  notFound: {
+    width: moderateScale(80),
+    height: moderateScale(80),
+    resizeMode: 'cover',
+    borderRadius: moderateScale(8),
   },
 });
 

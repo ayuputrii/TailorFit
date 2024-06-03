@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(100),
     backgroundColor: colors.white,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
   },
   text1: {
     fontSize: moderateScale(12),
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orange,
     width: moderateScale(120),
     height: moderateScale(40),
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     justifyContent: 'center',
     alignItems: 'center',
     elevation: moderateScale(2),

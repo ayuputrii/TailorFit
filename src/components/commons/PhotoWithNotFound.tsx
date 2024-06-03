@@ -9,9 +9,19 @@ interface PhotoWithNotFoundProps {
   image: string | any;
   loading: boolean;
   style: any;
+  width: number;
+  height: number;
+  size: number;
 }
 
-const PhotoWithNotFound = ({image, loading, style}: PhotoWithNotFoundProps) => {
+const PhotoWithNotFound = ({
+  image,
+  loading,
+  style,
+  width = 60,
+  height = 60,
+  size = moderateScale(50),
+}: PhotoWithNotFoundProps) => {
   return (
     <View style={styles.container}>
       {loading ? (
@@ -19,16 +29,12 @@ const PhotoWithNotFound = ({image, loading, style}: PhotoWithNotFoundProps) => {
       ) : image && isNaN(image) ? (
         <Image
           source={{uri: image}}
-          width={60}
-          height={60}
+          width={width}
+          height={height}
           style={[styles.image, style]}
         />
       ) : (
-        <IconAwesome
-          name="user-circle-o"
-          size={moderateScale(50)}
-          color={colors.black}
-        />
+        <IconAwesome name="user-circle-o" size={size} color={colors.black} />
       )}
     </View>
   );

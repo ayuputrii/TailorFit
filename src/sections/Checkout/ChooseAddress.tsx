@@ -9,9 +9,10 @@ import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 
 interface ChooseAddressProps {
   onPress: () => void;
+  data: any;
 }
 
-const ChooseAddress = ({onPress}: ChooseAddressProps) => {
+const ChooseAddress = ({onPress, data}: ChooseAddressProps) => {
   return (
     <CardCommons
       title={''}
@@ -31,14 +32,14 @@ const ChooseAddress = ({onPress}: ChooseAddressProps) => {
           <Gap height={0} width={moderateScale(8)} />
 
           <View>
-            <Text style={styles.title}>Delivery Address</Text>
+            <Text style={styles.title}>{data?.name || '-'}</Text>
+            <Text style={styles.text}>(+62) {data?.phone || '-'}</Text>
             <Text style={styles.text}>
-              Ayu Armadani Putri Mahirun | (+62) 8158285006 | Jl. Americ RT
-              04/RW 02. | CINERE, KOTA DEPOK, JAWA BARAT, ID 16514
+              {data?.addressDetail || '-'} | {data?.postalCode || '-'}
             </Text>
           </View>
         </View>
-        <Buttons onPress={onPress} style={{}}>
+        <Buttons disabled={false} onPress={onPress} style={{}}>
           <IconMaterial
             name="keyboard-arrow-right"
             size={moderateScale(28)}

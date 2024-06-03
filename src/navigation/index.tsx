@@ -27,6 +27,7 @@ import {
   Payment,
   Profile,
   ProductDetail,
+  Review,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
@@ -53,6 +54,7 @@ export type NavigationParam = {
   Address: undefined;
   Payment: undefined;
   ProductDetail: undefined;
+  Review: undefined;
 };
 
 type MainTabsNavigationProp = BottomTabNavigationProp<
@@ -244,6 +246,13 @@ export type PaymentProps = {
   route: PaymentRouteProp;
 };
 
+type ReviewNavigationProp = BottomTabNavigationProp<NavigationParam, 'Review'>;
+type ReviewRouteProp = RouteProp<NavigationParam, 'Review'>;
+export type ReviewProps = {
+  navigation: ReviewNavigationProp;
+  route: ReviewRouteProp;
+};
+
 const navigationRef = React.createRef();
 
 export function navigate(name: string, params: string) {
@@ -273,6 +282,14 @@ const RootStackScreen = () => (
       }}
       name="SplashScreenPage"
       component={SplashScreenPage}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="MainTabs"
+      component={MainTabs}
     />
     <RootStack.Screen
       options={{
@@ -313,14 +330,6 @@ const RootStackScreen = () => (
       }}
       name="NewPassword"
       component={NewPassword}
-    />
-    <RootStack.Screen
-      options={{
-        headerShown: false,
-        animationEnabled: false,
-      }}
-      name="MainTabs"
-      component={MainTabs}
     />
     <RootStack.Screen
       options={{
@@ -425,6 +434,14 @@ const RootStackScreen = () => (
       }}
       name="Payment"
       component={Payment}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="Review"
+      component={Review}
     />
   </RootStack.Navigator>
 );

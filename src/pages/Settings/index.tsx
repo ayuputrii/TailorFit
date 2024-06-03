@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   BackHeader,
   CardCommons,
@@ -13,14 +13,18 @@ import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import {MenuSettings} from '../../constants/MenuSettings';
 import styles from './styles';
 import {SettingsProps} from '../../navigation';
-import {removeData} from '../../utils/async-storage';
+import {AuthContext} from '../../context/AuthContext';
 
 const Settings = ({navigation}: SettingsProps) => {
-  const isLogin = false;
+  const ctx = useContext(AuthContext);
+  const isLogin = ctx?.isLogin;
+  const onLogout = ctx?.onLogout;
 
   const handleLogout = async () => {
-    await removeData('ACCESS_TOKEN');
-    navigation.replace('Login');
+    if (onLogout) {
+      onLogout();
+    }
+    navigation.replace('MainTabs');
   };
 
   return (
@@ -34,12 +38,14 @@ const Settings = ({navigation}: SettingsProps) => {
         title="Settings"
         goBack={() => navigation?.goBack()}
         icon={
-          <IconANT
-            name="logout"
-            color={colors.black}
-            size={moderateScale(20)}
-            onPress={handleLogout}
-          />
+          isLogin && (
+            <IconANT
+              name="logout"
+              color={colors.black}
+              size={moderateScale(20)}
+              onPress={handleLogout}
+            />
+          )
         }>
         <ScrollView
           showsVerticalScrollIndicator={false}

@@ -6,12 +6,13 @@ import IconIo from 'react-native-vector-icons/Ionicons';
 import {ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {moderateScale, verticalScale} from '../utils/scale';
 import {colors} from '../utils/colors';
+import {images} from '../assets';
 
 const Tab = createBottomTabNavigator();
 
 interface BottomTabsProps {
   Home: any;
-  Chat: any;
+  // Chat: any;
   Favorite: any;
   Cart: any;
   Settings: any;
@@ -19,7 +20,7 @@ interface BottomTabsProps {
 
 const BottomTabs = ({
   Home,
-  Chat,
+  // Chat,
   Favorite,
   Cart,
   Settings,
@@ -61,21 +62,21 @@ const BottomTabs = ({
               <React.Fragment>
                 {focused ? (
                   <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
+                    source={images.imgRectangleMenu}
                     style={styles.focused}>
                     <View style={styles.viewIcon}>
-                      <IconAwesome name="home" size={28} color={colors.cream} />
+                      <IconAwesome name="home" size={24} color={colors.cream} />
                     </View>
                   </ImageBackground>
                 ) : (
-                  <IconAwesome name="home" size={28} color={color} />
+                  <IconAwesome name="home" size={24} color={color} />
                 )}
               </React.Fragment>
             );
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Chat"
         component={Chat}
         options={{
@@ -84,12 +85,12 @@ const BottomTabs = ({
               <React.Fragment>
                 {focused ? (
                   <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
+                    source={images.imgRectangleMenu}
                     style={styles.focused}>
                     <View style={styles.viewIcon}>
                       <IconIo
                         name="chatbox-ellipses-outline"
-                        size={28}
+                        size={24}
                         color={colors.cream}
                       />
                     </View>
@@ -97,7 +98,7 @@ const BottomTabs = ({
                 ) : (
                   <IconIo
                     name="chatbox-ellipses-outline"
-                    size={28}
+                    size={24}
                     color={color}
                   />
                 )}
@@ -105,7 +106,7 @@ const BottomTabs = ({
             );
           },
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Cart"
         component={Cart}
@@ -115,18 +116,18 @@ const BottomTabs = ({
               <React.Fragment>
                 {focused ? (
                   <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
+                    source={images.imgRectangleMenu}
                     style={styles.focused}>
                     <View style={styles.viewIcon}>
                       <IconIo
                         name="cart-outline"
-                        size={28}
+                        size={24}
                         color={colors.cream}
                       />
                     </View>
                   </ImageBackground>
                 ) : (
-                  <IconIo name="cart-outline" size={28} color={color} />
+                  <IconIo name="cart-outline" size={24} color={color} />
                 )}
               </React.Fragment>
             );
@@ -142,18 +143,18 @@ const BottomTabs = ({
               <React.Fragment>
                 {focused ? (
                   <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
+                    source={images.imgRectangleMenu}
                     style={styles.focused}>
                     <View style={styles.viewIcon}>
                       <IconAwesome
                         name="heart-o"
-                        size={28}
+                        size={24}
                         color={colors.cream}
                       />
                     </View>
                   </ImageBackground>
                 ) : (
-                  <IconAwesome name="heart-o" size={28} color={color} />
+                  <IconAwesome name="heart-o" size={24} color={color} />
                 )}
               </React.Fragment>
             );
@@ -169,18 +170,18 @@ const BottomTabs = ({
               <React.Fragment>
                 {focused ? (
                   <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
+                    source={images.imgRectangleMenu}
                     style={styles.focused}>
                     <View style={styles.viewIcon}>
                       <IconIo
                         name="settings-outline"
-                        size={28}
+                        size={24}
                         color={colors.cream}
                       />
                     </View>
                   </ImageBackground>
                 ) : (
-                  <IconIo name="settings-outline" size={28} color={color} />
+                  <IconIo name="settings-outline" size={24} color={color} />
                 )}
               </React.Fragment>
             );
@@ -193,10 +194,10 @@ const BottomTabs = ({
 
 const styles = StyleSheet.create({
   focused: {
-    width: moderateScale(80),
+    width: '100%',
     flex: 1,
-    height: moderateScale(80),
-    marginTop: moderateScale(-40),
+    height: moderateScale(70),
+    marginTop: moderateScale(-35),
     justifyContent: 'center',
     alignItems: 'center',
   },

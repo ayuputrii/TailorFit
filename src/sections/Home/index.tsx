@@ -2,16 +2,17 @@ import React from 'react';
 import {FlatList, RefreshControl, ScrollView, View} from 'react-native';
 import {styles} from './styles';
 import {
+  CarouselImage,
   Gap,
   ImageWithNotData,
-  ImageWithNotFound,
   MenuButtons,
   Shimmer,
 } from '../../components';
 import {verticalScale} from '../../utils/scale';
-import Carousel from 'react-native-reanimated-carousel';
 import {CategoryTypes, ProductsTypes, PromotionTypes} from '../../types';
 import ProductsSections from '../Products';
+import {ImagePreview} from 'react-native-images-preview';
+import {images} from '../../assets';
 
 interface HomeSectionsProps {
   filteredProducts: ProductsTypes[];
@@ -22,11 +23,13 @@ interface HomeSectionsProps {
   width: number;
   activeMenuIndex: number;
   handleMenuPress: any;
-  addFavorite: (index: number) => void;
+  addFavorite: (id: string) => void;
   navigation: any;
   loading: boolean;
   showSearch: boolean;
   isEmpty: boolean;
+  isLogin: boolean | undefined;
+  deleteFavorite: (id: string) => void;
 }
 
 const HomeSections = ({
@@ -43,6 +46,8 @@ const HomeSections = ({
   loading,
   showSearch,
   isEmpty,
+  isLogin,
+  deleteFavorite,
 }: HomeSectionsProps) => {
   const goDetailProduct = (item: ProductsTypes) => {
     navigation?.navigate('ProductDetail', item);
@@ -51,13 +56,16 @@ const HomeSections = ({
   return (
     <ScrollView
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        <RefreshControl
+          refreshing={!showSearch ? false : refreshing}
+          onRefresh={onRefresh}
+        />
       }
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       style={styles.scroll}>
-      {loading ? (
-        <View>
+      {loading && !showSearch ? (
+        <>
           <Shimmer style={styles.imgShimmerPromo} />
           <Gap height={verticalScale(14)} width={0} />
           <View style={styles.flexRow}>
@@ -71,61 +79,98 @@ const HomeSections = ({
             showsVerticalScrollIndicator={false}
             numColumns={2}
             renderItem={({index}) => (
-              <Shimmer
-                key={index}
-                style={[styles.contentProduct, styles.productShimmer]}
-              />
+              <View style={styles.productShimmerContainer}>
+                <Shimmer key={index} style={styles.productShimmer} />
+              </View>
             )}
             keyExtractor={(_item, index) => index.toString()}
           />
-        </View>
+        </>
       ) : (
         <React.Fragment>
           {showSearch ? null : (
             <>
-              <Carousel
-                loop
-                width={width}
-                height={verticalScale(180)}
-                autoPlay={true}
-                data={promotion}
-                scrollAnimationDuration={1000}
-                renderItem={({item, index}) => {
-                  return (
-                    <ImageWithNotFound
-                      key={index}
-                      uri={item?.image}
-                      style={styles.imgPromo}
-                    />
-                  );
-                }}
-              />
-              <Gap height={verticalScale(14)} width={0} />
+              {promotion?.length ? (
+                <CarouselImage
+                  loop={true}
+                  width={width}
+                  height={verticalScale(180)}
+                  autoPlay={true}
+                  data={promotion}
+                  renderItem={({
+                    item,
+                    index,
+                  }: {
+                    item: PromotionTypes;
+                    index: number;
+                  }) => {
+                    return (
+                      <View style={styles.viewImages}>
+                        <ImagePreview
+                          key={index}
+                          imageSource={
+                            item ? {uri: item?.image} : images.imgNoData
+                          }
+                          imageStyle={styles.imgPromo}
+                        />
+                      </View>
+                    );
+                  }}
+                />
+              ) : (
+                <CarouselImage
+                  loop={true}
+                  width={width}
+                  height={verticalScale(180)}
+                  autoPlay={true}
+                  data={[1, 2, 3, 4]}
+                  renderItem={({index}: {index: number}) => {
+                    return (
+                      <View style={styles.viewImages}>
+                        <ImagePreview
+                          key={index}
+                          imageSource={images.imgNoData}
+                          imageStyle={styles.imgNoData}
+                        />
+                      </View>
+                    );
+                  }}
+                />
+              )}
+              {category?.length ? (
+                <>
+                  <Gap height={verticalScale(8)} width={0} />
 
-              <FlatList
-                data={category}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                renderItem={({
-                  item,
-                  index,
-                }: {
-                  item: CategoryTypes;
-                  index: number;
-                }) => (
-                  <MenuButtons
-                    key={index}
-                    activeMenuIndex={activeMenuIndex}
-                    setActiveMenuIndex={() => handleMenuPress(index, item?._id)}
-                    index={index}
-                    item={item}
-                    onPress={() => {}}
-                    disabled={false}
+                  <FlatList
+                    data={category}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({
+                      item,
+                      index,
+                    }: {
+                      item: CategoryTypes;
+                      index: number;
+                    }) => (
+                      <MenuButtons
+                        key={index}
+                        activeMenuIndex={activeMenuIndex}
+                        setActiveMenuIndex={() =>
+                          handleMenuPress(index, item?._id)
+                        }
+                        index={index}
+                        item={item}
+                        onPress={() => {}}
+                        disabled={false}
+                      />
+                    )}
+                    keyExtractor={(_item, index) => index.toString()}
                   />
-                )}
-                keyExtractor={(_item, index) => index.toString()}
-              />
+                </>
+              ) : (
+                <ImageWithNotData style={styles.noData} />
+              )}
             </>
           )}
           {filteredProducts?.length ? (
@@ -146,14 +191,16 @@ const HomeSections = ({
                   <ProductsSections
                     key={index}
                     goDetailProduct={() => goDetailProduct({...item})}
-                    addFavorite={() => addFavorite(index)}
+                    addFavorite={() => addFavorite(item?._id)}
+                    deleteFavorite={() => deleteFavorite(item?.favorite?._id)}
                     data={item}
+                    isLogin={isLogin}
                   />
                 );
               }}
             />
           ) : isEmpty ? (
-            <ImageWithNotData />
+            <ImageWithNotData style={{}} />
           ) : null}
         </React.Fragment>
       )}

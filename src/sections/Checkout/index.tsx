@@ -8,6 +8,7 @@ import ProductCheckout from './ProductCheckout';
 import ChooseAddress from './ChooseAddress';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RadioButton} from 'react-native-paper';
+import {AddressTypes} from '../../types';
 
 interface CheckoutSectionsProps {
   onPress: () => void;
@@ -15,6 +16,7 @@ interface CheckoutSectionsProps {
   checked: boolean | string;
   setChecked: any;
   choosePayment: () => void;
+  dataAddress: AddressTypes[];
 }
 const CheckoutSections = ({
   onPress,
@@ -22,14 +24,17 @@ const CheckoutSections = ({
   checked,
   setChecked,
   choosePayment,
+  dataAddress,
 }: CheckoutSectionsProps) => {
+  const dataFilter = dataAddress?.find((item: AddressTypes) => item?.isDefault);
+
   return (
     <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         style={styles.scroll}>
-        <ChooseAddress onPress={onPress} />
+        <ChooseAddress onPress={onPress} data={dataFilter} />
 
         <Gap height={moderateScale(11)} width={0} />
 
@@ -74,25 +79,67 @@ const CheckoutSections = ({
           subTitleStyle={false}
           onPress={goPayment}
           style={styles.card}>
-          <Text style={styles.titleDelivery}>Choose Delivery</Text>
+          <View>
+            <Text style={styles.titleDelivery}>Material By</Text>
+
+            <View style={styles.hr} />
+
+            <View style={styles.flexRowCenter}>
+              <View style={styles.contentDelivery}>
+                <RadioButton
+                  value="first"
+                  uncheckedColor={colors.choco}
+                  status={checked === 'first' ? 'checked' : 'unchecked'}
+                  onPress={() => setChecked('first')}
+                  color={colors.orange}
+                />
+
+                <Gap height={moderateScale(2)} width={0} />
+
+                <Text style={[styles.text, {color: colors.black}]}>Tailor</Text>
+              </View>
+              <View style={styles.contentDelivery}>
+                <RadioButton
+                  value="first"
+                  uncheckedColor={colors.choco}
+                  status={checked === 'first' ? 'checked' : 'unchecked'}
+                  onPress={() => setChecked('first')}
+                  color={colors.orange}
+                />
+
+                <Gap height={moderateScale(2)} width={0} />
+
+                <Text style={[styles.text, {color: colors.black}]}>Me</Text>
+              </View>
+            </View>
+          </View>
 
           <View style={styles.hr} />
+          <Gap height={moderateScale(16)} width={0} />
 
-          <View style={styles.flexRowBetween}>
-            <View style={styles.contentDelivery}>
-              <RadioButton
-                value="first"
-                uncheckedColor={colors.choco}
-                status={checked === 'first' ? 'checked' : 'unchecked'}
-                onPress={() => setChecked('first')}
-                color={colors.orange}
-              />
+          <View>
+            <Text style={styles.titleDelivery}>Choose Delivery</Text>
 
-              <Gap height={moderateScale(2)} width={0} />
+            <View style={styles.hr} />
 
-              <Text style={[styles.text, {color: colors.black}]}>JNE</Text>
+            <View style={styles.flexRowBetween}>
+              <View style={styles.contentDelivery}>
+                <RadioButton
+                  value="first"
+                  uncheckedColor={colors.choco}
+                  status={checked === 'first' ? 'checked' : 'unchecked'}
+                  onPress={() => setChecked('first')}
+                  color={colors.orange}
+                />
+
+                <Gap height={moderateScale(2)} width={0} />
+
+                <Text style={[styles.text, {color: colors.black}]}>
+                  Kurir Toko
+                </Text>
+              </View>
+              <Text style={styles.text}>Rp10.000</Text>
             </View>
-            <Text style={styles.text}>Rp10.000</Text>
           </View>
 
           <View style={styles.hr} />
@@ -104,7 +151,10 @@ const CheckoutSections = ({
               <Text style={styles.titleProduct}>Total</Text>
               <Text style={styles.title}>RP160.000</Text>
             </View>
-            <Buttons style={styles.btnOrder} onPress={goPayment}>
+            <Buttons
+              disabled={false}
+              style={styles.btnOrder}
+              onPress={goPayment}>
               <Text style={styles.textOrder}>Order</Text>
             </Buttons>
           </View>

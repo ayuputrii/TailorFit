@@ -1,4 +1,5 @@
 import Header from './Header';
+import HeaderReview from './HeaderReview';
 import HeaderNotLogin from './HeaderNotLogin';
 import PhotoWithNotFound from './PhotoWithNotFound';
 import CardCommons from './Card';
@@ -15,9 +16,12 @@ import Shimmer from './Shimmer';
 import ImageWithNotData from './ImaageWithNotData';
 import ButtonLogin from './ButtonLogin';
 import ImageWithNotLogin from './ImageWithNotLogin';
+import CarouselImage from './CarouselImage';
+import TabViews from './TabView';
 
 export {
   Header,
+  HeaderReview,
   HeaderNotLogin,
   PhotoWithNotFound,
   CardCommons,
@@ -34,4 +38,6 @@ export {
   ImageWithNotData,
   ButtonLogin,
   ImageWithNotLogin,
+  CarouselImage,
+  TabViews,
 };

@@ -1,7 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Dispatch, SetStateAction} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {colors} from '../../utils/colors';
-import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {moderateScale} from '../../utils/scale';
 import {Buttons, InputSearch} from '../../components';
@@ -11,8 +11,10 @@ interface ProductSearchProps {
   onChangeText: Dispatch<SetStateAction<string>>;
   onSubmitEditing: () => void;
   onClose: () => void;
-  onNotifications: () => void;
+  onNotifications?: () => void;
   onSearchDelete: () => void;
+  isLogin?: boolean | undefined;
+  onClearText: () => void;
 }
 
 const ProductSearch = ({
@@ -20,11 +22,13 @@ const ProductSearch = ({
   onChangeText,
   onSubmitEditing,
   onClose,
-  onNotifications,
+  // onNotifications,
   onSearchDelete,
+  // isLogin,
+  onClearText,
 }: ProductSearchProps) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {width: '100%'}]}>
       <Buttons disabled={false} onPress={onClose} style={styles.viewBack}>
         <Ionicons
           name="chevron-back-outline"
@@ -34,6 +38,7 @@ const ProductSearch = ({
       </Buttons>
       <InputSearch
         value={value}
+        onClearText={onClearText}
         onChangeText={onChangeText}
         placeholder="Search product..."
         placeholderTextColor={colors.lightgray}
@@ -42,12 +47,14 @@ const ProductSearch = ({
         onSubmitEditing={onSubmitEditing}
         onPress={onSearchDelete}
       />
-      <Buttons
-        disabled={false}
-        onPress={onNotifications}
-        style={styles.viewNotif}>
-        <Octicons name="bell" size={moderateScale(24)} color={colors.black} />
-      </Buttons>
+      {/* {isLogin && (
+        <Buttons
+          disabled={false}
+          onPress={onNotifications}
+          style={styles.viewNotif}>
+          <Octicons name="bell" size={moderateScale(24)} color={colors.black} />
+        </Buttons>
+      )} */}
     </View>
   );
 };

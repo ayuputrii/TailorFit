@@ -5,7 +5,8 @@ import {colors} from '../../utils/colors';
 
 const styles = StyleSheet.create({
   container: {
-    margin: moderateScale(14),
+    padding: moderateScale(16),
+    flex: 1,
   },
   card: {
     flexDirection: 'row',

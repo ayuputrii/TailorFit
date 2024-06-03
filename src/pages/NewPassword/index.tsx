@@ -10,6 +10,7 @@ import {NewPasswordSections} from '../../sections';
 import styles from './styles';
 import {NewPasswordProps} from '../../navigation';
 import {API_RESET_PASSWORD, BASE_URL, postData} from '../../api';
+import {images} from '../../assets';
 
 const NewPassword = ({navigation}: NewPasswordProps) => {
   const email = useMemo(() => {
@@ -74,9 +75,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
   };
 
   return (
-    <BackgroundWithImage
-      backgroundChildren={false}
-      src={require('../../assets/images/img-rainbow.png')}>
+    <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
       <ScrollView style={styles.scroll}>
         <HeaderNotLogin
           title="Create New Password"

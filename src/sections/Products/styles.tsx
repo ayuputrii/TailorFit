@@ -4,22 +4,23 @@ import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
+  container: {
+    width: '50%',
+  },
   contentProduct: {
-    height: verticalScale(180),
     borderRadius: moderateScale(8),
-    marginRight: moderateScale(14),
-    marginBottom: moderateScale(8),
+    marginRight: moderateScale(12),
     paddingHorizontal: moderateScale(6),
-    paddingVertical: moderateScale(12),
-    backgroundColor: colors.white,
+    paddingVertical: moderateScale(8),
+    width: '100%',
   },
   imgProduct: {
-    height: moderateScale(190),
-    width: moderateScale(160),
+    height: moderateScale(200),
+    resizeMode: 'cover',
+    width: '100%',
   },
   imgStyle: {
     borderRadius: moderateScale(8),
-    resizeMode: 'cover',
   },
   imgRectangle: {
     right: moderateScale(-2),
@@ -56,7 +57,7 @@ export const styles = StyleSheet.create({
     bottom: moderateScale(0),
     left: moderateScale(2),
     position: 'absolute',
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     width: moderateScale(70),
     height: moderateScale(30),
     justifyContent: 'center',

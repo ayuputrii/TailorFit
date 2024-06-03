@@ -1,4 +1,4 @@
-import React, {Dispatch, forwardRef, SetStateAction, useRef} from 'react';
+import React, {Dispatch, forwardRef, SetStateAction} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -14,6 +14,7 @@ interface InputSearchProps {
   styleInput: any;
   styleText: any;
   onPress: () => void;
+  onClearText: () => void;
 }
 
 const InputSearch = forwardRef<TextInput, InputSearchProps>(
@@ -25,17 +26,11 @@ const InputSearch = forwardRef<TextInput, InputSearchProps>(
     placeholderTextColor = '#AFAFAF',
     styleInput,
     styleText,
+    onClearText,
   }: InputSearchProps) => {
-    const inputRef = useRef<TextInput>(null);
-
-    const onClear = () => {
-      inputRef.current?.clear();
-      onChangeText('');
-    };
     return (
       <View style={[styles.inputView, styleInput]}>
         <TextInput
-          ref={inputRef}
           value={value}
           style={[styles.InputSearch, styleText]}
           placeholder={placeholder}
@@ -43,7 +38,7 @@ const InputSearch = forwardRef<TextInput, InputSearchProps>(
           onChangeText={onChangeText}
           onSubmitEditing={onSubmitEditing}
         />
-        <Buttons style={{}} disabled={false} onPress={onClear}>
+        <Buttons style={{}} disabled={false} onPress={onClearText}>
           <Icon
             name="closecircle"
             size={moderateScale(20)}

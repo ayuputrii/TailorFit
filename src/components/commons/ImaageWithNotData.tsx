@@ -7,9 +7,13 @@ import {moderateScale, verticalScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 
-const ImageWithNotData = () => {
+interface ImageWithNoDataProps {
+  style: any;
+}
+
+const ImageWithNotData = ({style}: ImageWithNoDataProps) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.content}>
         <IlustrationNotFound
           width={'100%'}

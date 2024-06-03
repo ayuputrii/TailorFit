@@ -13,6 +13,7 @@ import ProductsSections from './Products';
 import ProductDetailSections from './ProductDetail';
 import ProfileSections from './Profile';
 import FavoriteSections from './Favorite';
+import ReviewSections from './Review';
 
 export {
   Login,
@@ -30,4 +31,5 @@ export {
   ProductDetailSections,
   ProfileSections,
   FavoriteSections,
+  ReviewSections,
 };

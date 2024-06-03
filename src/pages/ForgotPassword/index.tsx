@@ -10,6 +10,7 @@ import {ForgotPasswordSections} from '../../sections';
 import styles from './styles';
 import {ForgotPasswordProps} from '../../navigation';
 import {API_FORGOT_PASSWORD, BASE_URL, postData} from '../../api';
+import {images} from '../../assets';
 
 const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
   const [email, setEmail] = useState('');
@@ -20,6 +21,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [modalError, setModalError] = useState(false);
 
   const onSendEmail = async () => {
     const data = {
@@ -27,7 +29,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
     };
 
     if (email === '') {
-      setErrorEmail('Email harap diisi');
+      setErrorEmail('Email is required');
     } else {
       setErrorEmail('');
     }
@@ -45,6 +47,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
           setLoading(false);
           setDisabled(false);
           setShowModal(false);
+          setModalError(false);
           navigation.navigate('VerifyOTP', {
             email,
           });
@@ -53,13 +56,18 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
+          setModalError(true);
           setTitle('Verify Email is Failed');
-          setMessage(response?.data?.message);
+          setMessage(
+            response?.data?.message ||
+              "Server is encountered with problem! We'll fix it soon.",
+          );
         }
       } catch (error: any) {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
+        setModalError(true);
         setTitle('Verify Email is Failed');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
@@ -67,9 +75,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
   };
 
   return (
-    <BackgroundWithImage
-      backgroundChildren={false}
-      src={require('../../assets/images/img-rainbow.png')}>
+    <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
       <ScrollView style={styles.scroll}>
         <HeaderNotLogin
           title="Forgot Password"
@@ -97,7 +103,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
         message={message}
         textBtn={'Close'}
         onSubmit={() => setShowModal(false)}
-        style={undefined}
+        style={modalError ? styles.modalError : null}
       />
     </BackgroundWithImage>
   );

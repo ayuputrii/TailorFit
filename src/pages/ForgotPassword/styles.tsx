@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     zIndex: moderateScale(100),
     marginBottom: moderateScale(20),
     paddingHorizontal: moderateScale(16),
+    flex: 1,
+  },
+  modalError: {
+    height: moderateScale(450),
   },
 });
 

@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   btn: {
     width: '100%',
     backgroundColor: colors.orange,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     alignItems: 'center',
     justifyContent: 'center',

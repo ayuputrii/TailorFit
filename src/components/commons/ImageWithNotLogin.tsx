@@ -25,10 +25,7 @@ const ImageWithNotLogin = ({navigation}: ImageWithNotLoginProps) => {
       <Gap height={verticalScale(20)} width={0} />
       <Text style={styles.text}>Sorry, you have not access login.</Text>
       <Gap height={moderateScale(8)} width={0} />
-      <ButtonLogin
-        style={styles.btn}
-        navigation={() => navigation?.navigate('Login')}
-      />
+      <ButtonLogin style={styles.btn} navigation={navigation} />
     </View>
   );
 };

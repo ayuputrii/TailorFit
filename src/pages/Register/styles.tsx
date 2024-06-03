@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(10),
   },
   content: {
-    paddingTop: moderateScale(100),
+    paddingTop: moderateScale(50),
     paddingHorizontal: moderateScale(16),
   },
 });

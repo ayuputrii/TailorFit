@@ -1,33 +1,47 @@
 import React from 'react';
 import ProductsSections from '../Products';
-import {ImageWithNotData, ImageWithNotLogin} from '../../components';
+import {ImageWithNotData, Shimmer} from '../../components';
 import {FlatList, View} from 'react-native';
 import {ProductsTypes} from '../../types';
-import {colors} from '../../utils/colors';
-import IlustrationAccount from '../../assets/ilustration/il-access-account.svg';
-import {moderateScale} from '../../utils/scale';
+import {styles} from './styles';
 
 interface FavoriteSectionsProps {
   data: ProductsTypes[];
-  isEmpty: boolean;
+  loading: boolean;
+  isLogin: boolean | undefined;
+  isFavorite: null;
   navigation: any;
+  onDeleteFavorite: (id: string) => void;
 }
 
 const FavoriteSections = ({
   data,
-  isEmpty,
+  loading,
+  isLogin,
+  isFavorite,
   navigation,
+  onDeleteFavorite,
 }: FavoriteSectionsProps) => {
   const goDetailProduct = (item: ProductsTypes) => {
-    console.log('items', item);
-  };
-  const goFavorite = (index: number) => {
-    console.log(index, 'index');
+    navigation?.navigate('ProductDetail', item);
   };
 
   return (
     <>
-      {data?.length ? (
+      {loading ? (
+        <FlatList
+          data={Array(6).fill(1)}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          renderItem={({index}) => (
+            <View style={styles.productShimmerContainer}>
+              <Shimmer key={index} style={styles.productShimmer} />
+            </View>
+          )}
+          keyExtractor={(_item, index) => index.toString()}
+        />
+      ) : data?.length ? (
         <FlatList
           data={data}
           showsHorizontalScrollIndicator={false}
@@ -39,16 +53,16 @@ const FavoriteSections = ({
               <ProductsSections
                 key={index}
                 goDetailProduct={() => goDetailProduct({...item})}
-                addFavorite={() => goFavorite(index)}
+                addFavorite={() => {}}
+                deleteFavorite={() => onDeleteFavorite(item?.favorite?._id)}
                 data={item}
+                isLogin={isLogin}
               />
             );
           }}
         />
-      ) : isEmpty ? (
-        <ImageWithNotData />
       ) : (
-        <ImageWithNotLogin navigation={navigation} />
+        <ImageWithNotData style={styles.noData} />
       )}
     </>
   );

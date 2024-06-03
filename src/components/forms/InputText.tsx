@@ -14,6 +14,7 @@ interface InputTextProps {
   styleInput: any;
   styleText: any;
   error: any;
+  defaultValue?: string | number;
 }
 
 const InputText = forwardRef<TextInput, InputTextProps>(
@@ -27,6 +28,7 @@ const InputText = forwardRef<TextInput, InputTextProps>(
       styleInput,
       styleText,
       error,
+      defaultValue,
     }: InputTextProps,
     ref,
   ) => {
@@ -41,8 +43,11 @@ const InputText = forwardRef<TextInput, InputTextProps>(
             placeholderTextColor={placeholderTextColor}
             onChangeText={onChangeText}
             onSubmitEditing={onSubmitEditing}
+            defaultValue={defaultValue as string}
           />
         </View>
+        <Gap height={moderateScale(10)} width={0} />
+
         {error && <Text style={styles.error}>{error}</Text>}
         <Gap height={moderateScale(10)} width={0} />
       </React.Fragment>
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: '#DCDCDC',
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     marginBottom: moderateScale(4),
     justifyContent: 'center',

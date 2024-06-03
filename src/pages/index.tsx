@@ -18,6 +18,7 @@ import Address from './Address';
 import Payment from './Payment';
 import Profile from './Profile';
 import ProductDetail from './ProductDetail';
+import Review from './Review';
 
 export {
   SplashScreenPage,
@@ -40,4 +41,5 @@ export {
   Payment,
   Profile,
   ProductDetail,
+  Review,
 };

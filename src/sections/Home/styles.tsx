@@ -6,12 +6,25 @@ export const styles = StyleSheet.create({
   scroll: {
     marginVertical: moderateScale(12),
   },
+  viewImages: {
+    height: verticalScale(170),
+    borderRadius: moderateScale(12),
+    width: '98%',
+    paddingTop: moderateScale(6),
+  },
   imgPromo: {
-    width: '92%',
-    height: verticalScale(180),
+    width: '96%',
+    height: verticalScale(170),
     resizeMode: 'cover',
     borderRadius: moderateScale(8),
     zIndex: moderateScale(100),
+  },
+  imgNoData: {
+    width: '96%',
+    height: verticalScale(170),
+    resizeMode: 'contain',
+    borderRadius: moderateScale(8),
+    backgroundColor: colors.white,
   },
   imgShimmerPromo: {
     width: '100%',
@@ -37,22 +50,17 @@ export const styles = StyleSheet.create({
     height: verticalScale(40),
     marginBottom: moderateScale(16),
   },
-  contentProduct: {
-    height: verticalScale(180),
-    borderRadius: moderateScale(8),
-    marginRight: moderateScale(14),
+  productShimmerContainer: {
+    marginRight: moderateScale(8),
     marginBottom: moderateScale(8),
-    paddingHorizontal: moderateScale(6),
-    paddingVertical: moderateScale(12),
-    backgroundColor: colors.white,
+    width: '48%',
   },
   productShimmer: {
-    height: verticalScale(180),
+    height: verticalScale(200),
     borderRadius: moderateScale(8),
-    marginRight: moderateScale(14),
-    marginBottom: moderateScale(8),
-    paddingHorizontal: moderateScale(0),
-    paddingVertical: moderateScale(0),
-    backgroundColor: colors.white,
+    width: '100%',
+  },
+  noData: {
+    marginTop: moderateScale(80),
   },
 });

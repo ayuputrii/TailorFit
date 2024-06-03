@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {BackgroundWithImage, HeaderNotLogin} from '../../components/commons';
 import LoginSections from '../../sections/Login';
@@ -10,8 +10,13 @@ import {ModalConfirmation} from '../../components';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {removeData, saveData} from '../../utils/async-storage';
 import {KeyboardAvoidingView} from 'react-native';
+import {AuthContext} from '../../context/AuthContext';
+import {images} from '../../assets';
 
 const Login = ({navigation}: LoginProps) => {
+  const ctx = useContext(AuthContext);
+  const login = ctx?.onLogin;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [title, setTitle] = useState('');
@@ -31,18 +36,17 @@ const Login = ({navigation}: LoginProps) => {
     };
 
     if (email === '') {
-      setErrorEmail('Email harap diisi');
+      setErrorEmail('Email is required');
     } else {
       setErrorEmail('');
     }
     if (password === '') {
-      setErrorPassword('Password harap diisi');
+      setErrorPassword('Password is required');
     } else {
       setErrorPassword('');
     }
 
     if (email && password) {
-      console.log('MASUK');
       setLoading(true);
       setDisabled(true);
 
@@ -59,6 +63,9 @@ const Login = ({navigation}: LoginProps) => {
           }
           await saveData('USER_DATA_LOGIN', response?.data?.data);
           await saveData('ACCESS_TOKEN', response.data.data.accessToken);
+          if (login) {
+            login();
+          }
           navigation.replace('MainTabs');
         } else {
           setLoading(false);
@@ -108,51 +115,56 @@ const Login = ({navigation}: LoginProps) => {
   };
 
   return (
-    <BackgroundWithImage
-      backgroundChildren={false}
-      src={require('../../assets/images/img-rainbow.png')}>
-      <KeyboardAvoidingView behavior={'height'} style={styles.container}>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.content}>
-            <HeaderNotLogin
-              title="Sign In"
-              subTitle="Please enter your email and enter password."
-              fontSizeSub={12}
-              subColor={colors.lightgray}
-              marginTop={0}
-            />
-
-            <LoginSections
-              email={email}
-              setEmail={setEmail}
-              password={password}
-              setPassword={setPassword}
-              showRemember={showRemember}
-              setShowRemember={() => setShowRemember(!showRemember)}
-              navigation={navigation}
-              onLogin={onLogin}
-              loading={loading}
-              disabled={disabled}
-              errorEmail={errorEmail}
-              errorPassword={errorPassword}
-              loginWithGoogle={loginWithGoogle}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-
-      <ModalConfirmation
-        isVisible={showModal}
-        onClose={() => setShowModal(false)}
-        title={title}
-        message={message}
-        textBtn="Close"
-        onSubmit={() => setShowModal(false)}
-        style={undefined}
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        animated={false}
+        backgroundColor={colors.white}
+        barStyle="dark-content"
       />
-    </BackgroundWithImage>
+      <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
+        <KeyboardAvoidingView behavior={'height'} style={styles.container}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.content}>
+              <HeaderNotLogin
+                title="Sign In"
+                subTitle="Please enter your email and enter password."
+                fontSizeSub={12}
+                subColor={colors.lightgray}
+                marginTop={0}
+              />
+
+              <LoginSections
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                showRemember={showRemember}
+                setShowRemember={() => setShowRemember(!showRemember)}
+                navigation={navigation}
+                onLogin={onLogin}
+                loading={loading}
+                disabled={disabled}
+                errorEmail={errorEmail}
+                errorPassword={errorPassword}
+                loginWithGoogle={loginWithGoogle}
+              />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+
+        <ModalConfirmation
+          isVisible={showModal}
+          onClose={() => setShowModal(false)}
+          title={title}
+          message={message}
+          textBtn="Close"
+          onSubmit={() => setShowModal(false)}
+          style={undefined}
+        />
+      </BackgroundWithImage>
+    </SafeAreaView>
   );
 };
 

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderWidth: moderateScale(1),
     borderColor: '#DCDCDC',
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     flexDirection: 'row',
     alignItems: 'center',

@@ -33,6 +33,9 @@ const Header = ({
             image={image}
             loading={loading}
             style={undefined}
+            width={moderateScale(50)}
+            height={moderateScale(50)}
+            size={moderateScale(50)}
           />
           <Gap width={moderateScale(6)} height={0} />
           <View style={styles.headerContent}>
