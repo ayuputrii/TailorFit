@@ -11,6 +11,31 @@ const styles = StyleSheet.create({
   scroll: {
     paddingVertical: moderateScale(8),
   },
+  viewChoose: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  chooseCard: {
+    backgroundColor: colors.white,
+    borderRadius: moderateScale(6),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: moderateScale(16),
+    marginRight: moderateScale(6),
+    width: '35%',
+    paddingVertical: moderateScale(6),
+  },
+  flexRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  txtChoose: {
+    color: colors.darkgrey,
+    fontFamily: fonts.PoppinsSemiBold,
+  },
+  btnTrash: {
+    marginTop: moderateScale(8),
+  },
   flexRowBetween: {
     flexDirection: 'row',
     alignItems: 'center',

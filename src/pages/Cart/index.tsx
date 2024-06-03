@@ -14,6 +14,8 @@ import styles from './styles';
 import {CartProps} from '../../navigation';
 import {CartSections} from '../../sections';
 import {AuthContext} from '../../context/AuthContext';
+import IconFeather from 'react-native-vector-icons/Feather';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Cart = ({navigation}: CartProps) => {
   const ctx = useContext(AuthContext);
@@ -31,6 +33,8 @@ const Cart = ({navigation}: CartProps) => {
     navigation?.navigate('ProductDetail');
   };
 
+  const onTrash = () => {};
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -39,7 +43,7 @@ const Cart = ({navigation}: CartProps) => {
         barStyle="dark-content"
       />
       <BackHeader
-        title="Transaction Cart"
+        title="My Cart"
         goBack={() => navigation?.goBack()}
         icon={false}>
         <Gap height={moderateScale(8)} width={0} />
@@ -49,6 +53,45 @@ const Cart = ({navigation}: CartProps) => {
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               style={styles.scroll}>
+              <View style={styles.viewChoose}>
+                <View style={styles.chooseCard}>
+                  <Buttons
+                    style={false}
+                    disabled={false}
+                    onPress={() => setCheck(!check)}
+                    children={
+                      <View style={styles.flexRow}>
+                        <Text style={styles.txtChoose}>Choose All</Text>
+                        <Gap width={8} height={0} />
+                        {check ? (
+                          <Icons
+                            name="checkbox-outline"
+                            size={moderateScale(24)}
+                            color={colors.orange}
+                          />
+                        ) : (
+                          <Icons
+                            name="checkbox-blank-outline"
+                            size={moderateScale(24)}
+                            color={colors.orange}
+                          />
+                        )}
+                      </View>
+                    }
+                  />
+                </View>
+
+                <Buttons
+                  disabled={false}
+                  onPress={onTrash}
+                  style={styles.btnTrash}>
+                  <IconFeather
+                    name="trash-2"
+                    size={moderateScale(24)}
+                    color={colors.orange}
+                  />
+                </Buttons>
+              </View>
               <CartSections
                 onPress={() => goDetailProduct()}
                 check={check}
