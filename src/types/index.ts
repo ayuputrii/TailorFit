@@ -11,6 +11,7 @@ export interface UserDataTypes {
   fullName: string;
   role: string;
   phone: string;
+  profilePicture: string;
 }
 
 export interface CategoryTypes {
@@ -31,6 +32,7 @@ export interface PromotionTypes {
 }
 
 export interface ProductsTypes {
+  _id: string;
   name: string;
   images: any;
   description: string;
@@ -39,4 +41,25 @@ export interface ProductsTypes {
   materialProvider: string;
   materialStock: number;
   category: string;
+  favorite: {
+    _id: string;
+    customerId: string;
+    productId: string;
+  };
+}
+
+export interface RatingTypes {
+  _id: string;
+  averageRating: number;
+  count: number;
+}
+export interface AddressTypes {
+  isDefault: boolean;
+  _id: string;
+  customerId: string;
+  name: string;
+  phone: string;
+  addressDetail: string;
+  postalCode: number | string;
+  __v: number;
 }
