@@ -5,7 +5,12 @@ import {BackgroundWithImage, HeaderNotLogin} from '../../components/commons';
 import LoginSections from '../../sections/Login';
 import styles from './styles';
 import {LoginProps} from '../../navigation';
-import {API_LOGIN, BASE_URL, postData} from '../../api';
+import {
+  API_GOOGLE_REGISTER_LOGIN,
+  API_LOGIN,
+  BASE_URL,
+  postData,
+} from '../../api';
 import {ModalConfirmation} from '../../components';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {removeData, saveData} from '../../utils/async-storage';
@@ -94,23 +99,52 @@ const Login = ({navigation}: LoginProps) => {
     }
   };
 
-  const loginWithGoogle = async () => {
+  const onGoogle = async () => {
+    const userInfo = await GoogleSignin.signIn();
+
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo);
-      // setState({userInfo});
-    } catch (error) {
-      console.log('error', error);
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled the login flow
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   // operation (e.g. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
+      const data = {
+        fullName: userInfo?.user?.name,
+        email: userInfo?.user?.email,
+        profilePicture: userInfo?.user?.photo,
+      };
+
+      const response = await postData(
+        BASE_URL + API_GOOGLE_REGISTER_LOGIN,
+        data,
+      );
+      if (response?.data?.success) {
+        setLoading(false);
+        setDisabled(false);
+        setShowModal(false);
+        if (showRemember) {
+          await saveData('USER_LOGIN', JSON.stringify({email, password}));
+        } else {
+          await removeData('USER_LOGIN');
+        }
+        await saveData('USER_DATA_LOGIN', response?.data?.data);
+        await saveData('ACCESS_TOKEN', response.data.data.accessToken);
+        if (login) {
+          login();
+        }
+        navigation.replace('MainTabs');
+      } else {
+        setLoading(false);
+        setDisabled(false);
+        setShowModal(true);
+        setTitle('Login is Failed');
+        setMessage(
+          response?.data?.message ||
+            response?.data?.error?.message ||
+            "Server is encountered with problem! We'll fix it soon.",
+        );
+      }
+    } catch {
+      setLoading(false);
+      setDisabled(false);
+      setShowModal(true);
+      setTitle('Login is Failed');
+      setMessage("Server is encountered with problem! We'll fix it soon.");
     }
   };
 
@@ -148,7 +182,7 @@ const Login = ({navigation}: LoginProps) => {
                 disabled={disabled}
                 errorEmail={errorEmail}
                 errorPassword={errorPassword}
-                loginWithGoogle={loginWithGoogle}
+                loginWithGoogle={onGoogle}
               />
             </View>
           </ScrollView>
