@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {LogBox} from 'react-native';
 import 'react-native-gesture-handler';
 import AppNavigation from './src/navigation';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import AuthProvider from './src/context/AuthContext';
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
@@ -28,7 +29,11 @@ GoogleSignin.configure({
 });
 
 const App = () => {
-  return <AppWrapper />;
+  return (
+    <AuthProvider>
+      <AppWrapper />
+    </AuthProvider>
+  );
 };
 
 const AppWrapper = () => {
