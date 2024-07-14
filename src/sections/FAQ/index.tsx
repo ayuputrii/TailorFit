@@ -9,18 +9,26 @@ interface FAQSectionsProps {
 }
 
 const FAQSections = ({data}: FAQSectionsProps) => {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [collapsedIndexes, setCollapsedIndexes] = useState<
+    Record<number, Record<number, boolean>>
+  >({});
 
-  const toogleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
+  const toggleCollapse = (sectionIndex: number, itemIndex: number) => {
+    setCollapsedIndexes(prevState => ({
+      ...prevState,
+      [sectionIndex]: {
+        ...prevState[sectionIndex],
+        [itemIndex]: !prevState[sectionIndex]?.[itemIndex],
+      },
+    }));
   };
 
   return (
     <ScrollView style={styles.container}>
       {data?.length ? (
         <CollapsibleView
-          toogleCollapse={toogleCollapse}
-          isCollapsed={isCollapsed}
+          toggleCollapse={toggleCollapse}
+          collapsedIndexes={collapsedIndexes}
           data={data}
         />
       ) : (

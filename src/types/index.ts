@@ -1,4 +1,5 @@
 export interface menu {
+  [x: string]: any;
   id?: string | undefined;
   label?: string | undefined;
   content?: string | undefined;

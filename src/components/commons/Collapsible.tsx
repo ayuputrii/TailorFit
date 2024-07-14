@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {moderateScale} from '../../utils/scale';
@@ -9,49 +9,53 @@ import {menu} from '../../types';
 import Gap from './Gap';
 
 interface CollapsibleProps {
-  toogleCollapse: () => void;
-  isCollapsed: boolean;
+  toggleCollapse: (index: number, id: number) => void;
+  collapsedIndexes: Record<number, boolean | any>;
   data: menu[];
 }
 
 const CollapsibleView = ({
-  toogleCollapse,
-  isCollapsed,
+  toggleCollapse,
+  collapsedIndexes,
   data,
 }: CollapsibleProps) => {
   return (
     <React.Fragment>
       {data &&
-        data?.map((items: menu, index: number) => {
-          return (
-            <React.Fragment key={index}>
-              <Text style={styles.title}>{items?.title}</Text>
-              <Gap height={moderateScale(8)} width={0} />
-              <View style={styles.section}>
-                <TouchableOpacity onPress={toogleCollapse}>
-                  <View style={styles.item}>
-                    <Text style={styles.itemTitle}>{items?.label || '-'}</Text>
-                    <Icon
-                      name={
-                        isCollapsed
-                          ? 'keyboard-arrow-down'
-                          : 'keyboard-arrow-up'
-                      }
-                      size={24}
-                      color="#666"
-                      style={styles.arrowIcon}
-                    />
-                  </View>
-                </TouchableOpacity>
-                <Collapsible collapsed={isCollapsed}>
-                  <View style={styles.content}>
-                    <Text style={styles.text}>{items?.content || '-'}</Text>
-                  </View>
-                </Collapsible>
-              </View>
-            </React.Fragment>
-          );
-        })}
+        data.map((items: menu, index: number) => (
+          <React.Fragment key={index}>
+            <Text style={styles.title}>{items?.title}</Text>
+            <Gap height={moderateScale(8)} width={0} />
+            {items?.faq?.map((item: menu, id: number) => {
+              const isCollapsed = collapsedIndexes[index]?.[id];
+              return (
+                <View style={styles.section} key={id}>
+                  <TouchableOpacity onPress={() => toggleCollapse(index, id)}>
+                    <View style={styles.item}>
+                      <Text style={styles.itemTitle}>{item?.label || '-'}</Text>
+                      <Icon
+                        name={
+                          isCollapsed
+                            ? 'keyboard-arrow-down'
+                            : 'keyboard-arrow-up'
+                        }
+                        size={24}
+                        color="#666"
+                        style={styles.arrowIcon}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                  <Collapsible collapsed={isCollapsed}>
+                    <View style={styles.content}>
+                      <Text style={styles.text}>{item?.content || '-'}</Text>
+                    </View>
+                  </Collapsible>
+                </View>
+              );
+            })}
+            <Gap height={moderateScale(16)} width={0} />
+          </React.Fragment>
+        ))}
     </React.Fragment>
   );
 };
