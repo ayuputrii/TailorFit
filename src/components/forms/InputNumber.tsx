@@ -6,14 +6,14 @@ import {Gap, Text} from '../commons';
 import {fonts} from '../../utils/fonts';
 
 interface InputNumberProps {
-  value: string;
-  onChangeText: Dispatch<SetStateAction<string>>;
-  onSubmitEditing: () => void;
-  placeholder: string;
-  placeholderTextColor: string;
-  styleInput: any;
-  styleText: any;
-  error: any;
+  value?: string | undefined;
+  onChangeText?: Dispatch<SetStateAction<string | undefined>>;
+  onSubmitEditing?: () => void;
+  placeholder?: string;
+  placeholderTextColor?: string;
+  styleInput?: any;
+  styleText?: any;
+  error?: any;
 }
 
 const InputNumber = forwardRef<TextInput, InputNumberProps>(
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   inputView: {
     width: '100%',
     backgroundColor: colors.white,
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: '#DCDCDC',
     borderRadius: moderateScale(8),
     height: moderateScale(50),
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   InputNumber: {
     color: colors.black,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: fonts.PoppinsRegular,
     width: '100%',
     marginTop: moderateScale(2),
   },

@@ -13,11 +13,11 @@ import {moderateScale} from '../../utils/scale';
 import {SplashScreenProps} from '../../navigation';
 import {images} from '../../assets';
 
-const SplashScreenPage = ({navigation}: SplashScreenProps) => {
+const SplashScreen = ({navigation}: SplashScreenProps) => {
   return (
     <View style={styles.container}>
       <HeaderNotLogin
-        title="MADINA TAILOR"
+        title="TailorFit"
         subTitle="FASHION & STYLE"
         subColor={colors.black}
         marginTop={80}
@@ -51,4 +51,4 @@ const SplashScreenPage = ({navigation}: SplashScreenProps) => {
   );
 };
 
-export default SplashScreenPage;
+export default SplashScreen;

@@ -10,6 +10,8 @@ import {colors} from '../../utils/colors';
 import {
   Buttons,
   Gap,
+  InputCalendar,
+  InputDropdown,
   InputNumber,
   InputText,
   PhotoWithNotFound,
@@ -17,82 +19,99 @@ import {
 } from '../../components';
 import styles from './styles';
 import {moderateScale} from '../../utils/scale';
-import {UserDataTypes} from '../../types';
+import {menu, UserDataTypes} from '../../types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {launchImageLibrary} from 'react-native-image-picker';
-
+import {
+  Asset,
+  ImageLibraryOptions,
+  launchImageLibrary,
+} from 'react-native-image-picker';
+import {Gender} from '../../constants/MenuDropdown';
+import {useNavigation} from '@react-navigation/native';
 interface ProfileSectionsProps {
   user: UserDataTypes;
-  fullName: string;
-  setFullName: Dispatch<SetStateAction<string>>;
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
-  phone: string;
-  setPhone: Dispatch<SetStateAction<string>>;
-  address: string;
-  setAddress: Dispatch<SetStateAction<string>>;
-  gender: string;
-  setGender: Dispatch<SetStateAction<string>>;
-  birthday: string;
-  setBirthday: Dispatch<SetStateAction<string>>;
+  photo: Asset[] | undefined | string;
+  setPhoto: Dispatch<SetStateAction<Asset[] | undefined | string>>;
+  fullName: string | undefined;
+  setFullName: Dispatch<SetStateAction<string | undefined>>;
+  gender: string | undefined;
+  setGender: Dispatch<SetStateAction<string | undefined>>;
+  birthday: string | null | undefined;
+  setBirthday: Dispatch<SetStateAction<string | null | undefined>>;
+  phone: string | undefined;
+  setPhone: Dispatch<SetStateAction<string | undefined>>;
+  email: string | undefined;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
   onPress: () => void;
   disabled: boolean;
   loading: boolean;
+  goShowModalCalendar: () => void;
 }
 
 const ProfileSections = ({
   user,
+  photo,
+  setPhoto,
   fullName,
   setFullName,
-  email,
-  setEmail,
-  phone,
-  setPhone,
-  address,
-  setAddress,
   gender,
   setGender,
   birthday,
   setBirthday,
+  phone,
+  setPhone,
+  email,
+  setEmail,
   onPress,
   disabled,
   loading,
+  goShowModalCalendar,
 }: ProfileSectionsProps) => {
-  const refFullName = useRef<TextInput>(null);
-  const refEmail = useRef<TextInput>(null);
-  const refphone = useRef<TextInput>(null);
-  const refAddress = useRef<TextInput>(null);
+  const navigation = useNavigation();
 
-  const [userPhoto, setUserPhoto] = useState('');
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+
+  const refFullName = useRef<TextInput>(null);
 
   const chooseFile = async (isCamera: boolean) => {
-    const options = {
+    const options: ImageLibraryOptions = {
       mediaType: isCamera ? 'photo' : 'video',
     };
 
     try {
       const response = await launchImageLibrary(options);
-      setUserPhoto(response?.assets[0]);
-      console.log('pickedFile', response);
+      setPhoto(response?.assets);
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
+  const onChangeGender = (gender: menu) => {
+    setGender(gender?.id);
+  };
+
   useEffect(() => {
+    if (user?.profilePicture) {
+      setPhoto(user?.profilePicture);
+    }
     setFullName(user?.fullName);
-    setEmail(user?.email);
+    setGender(user?.gender);
+    setBirthday(user?.birthday);
     setPhone(user?.phone);
-    setAddress(user?.address);
+    setEmail(user?.email);
   }, [
+    setPhoto,
     setFullName,
-    setEmail,
+    setGender,
+    setBirthday,
     setPhone,
-    setAddress,
+    setEmail,
+    user,
+    user?.profilePicture,
     user?.fullName,
-    user?.email,
+    user?.gender,
+    user?.birthday,
     user?.phone,
-    user?.address,
   ]);
 
   return (
@@ -100,12 +119,14 @@ const ProfileSections = ({
       <View style={styles.viewButtonPhoto}>
         <Buttons
           disabled={false}
-          onPress={(isCamera: boolean) => chooseFile(isCamera)}
-          style={styles.btnPhoto}>
+          style={styles.btnPhoto}
+          onPress={(isCamera: boolean) => chooseFile(isCamera)}>
           <PhotoWithNotFound
             loading={loading}
-            image={userPhoto?.uri}
-            style={styles.photo}
+            image={typeof photo === 'string' ? photo : photo?.[0]?.uri || ''}
+            size={moderateScale(40)}
+            width={moderateScale(50)}
+            height={moderateScale(50)}
           />
           <View style={styles.iconProfile}>
             <Icon name="edit" size={moderateScale(14)} color={colors.white} />
@@ -122,13 +143,19 @@ const ProfileSections = ({
         styleInput={undefined}
         styleText={undefined}
         error={false}
-        onSubmitEditing={() => refEmail.current?.focus()}
       />
-      <InputText
-        ref={refAddress}
-        value={address}
-        onChangeText={setAddress}
-        placeholder="Address"
+      <InputDropdown
+        data={Gender}
+        value={gender}
+        setValue={onChangeGender}
+        isFocus={isFocus}
+        setIsFocus={setIsFocus}
+      />
+      <InputCalendar birthday={birthday} onPress={goShowModalCalendar} />
+      <InputNumber
+        value={phone}
+        onChangeText={setPhone}
+        placeholder="Phone"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
@@ -136,31 +163,27 @@ const ProfileSections = ({
         onSubmitEditing={onPress}
       />
       <InputText
-        ref={refEmail}
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
         placeholderTextColor={colors.gray}
-        styleInput={undefined}
+        styleInput={{
+          backgroundColor: email ? colors.gray : colors.white,
+        }}
         styleText={undefined}
         error={false}
-        onSubmitEditing={() => refphone.current?.focus()}
-      />
-      <InputNumber
-        ref={refphone}
-        value={phone}
-        onChangeText={setPhone}
-        placeholder="Phone Number"
-        placeholderTextColor={colors.gray}
-        styleInput={undefined}
-        styleText={undefined}
-        error={false}
-        onSubmitEditing={() => refAddress.current?.focus()}
+        editable={false}
+        onFocus={() => navigation.navigate('ChangeEmail')}
       />
       <Buttons
         onPress={onPress}
         disabled={disabled}
-        style={styles.btn}
+        style={[
+          styles.btn,
+          // {
+          //   marginTop: isFocus ? moderateScale(110) : moderateScale(24),
+          // },
+        ]}
         children={
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}

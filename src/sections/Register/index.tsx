@@ -14,14 +14,14 @@ import styles from './styles';
 import {moderateScale} from '../../utils/scale';
 
 interface RegisterSectionsProps {
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
-  fullName: string;
-  setFullName: Dispatch<SetStateAction<string>>;
-  phone: string;
-  setPhone: Dispatch<SetStateAction<string>>;
-  password: string;
-  setPassword: Dispatch<SetStateAction<string>>;
+  email: string | undefined;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
+  fullName: string | undefined;
+  setFullName: Dispatch<SetStateAction<string | undefined>>;
+  phone: string | undefined;
+  setPhone: Dispatch<SetStateAction<string | undefined>>;
+  password: string | undefined;
+  setPassword: Dispatch<SetStateAction<string | undefined>>;
   navigation: any;
   onRegister: () => void;
   errorEmail: string;

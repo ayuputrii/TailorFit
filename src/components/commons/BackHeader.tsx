@@ -9,10 +9,10 @@ import {fonts} from '../../utils/fonts';
 import IconANT from 'react-native-vector-icons/AntDesign';
 
 interface BackHeaderProps {
-  goBack: () => void;
-  title: string;
+  goBack?: () => void;
+  title?: string;
   icon?: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const BackHeader = ({goBack, title, icon, children}: BackHeaderProps) => {

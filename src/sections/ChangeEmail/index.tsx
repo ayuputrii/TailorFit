@@ -6,33 +6,29 @@ import {colors} from '../../utils/colors';
 import styles from './styles';
 import {moderateScale} from '../../utils/scale';
 
-interface ForgotPasswordSectionsProps {
+interface ChangeEmailSectionsProps {
   email: string | undefined;
   setEmail: Dispatch<SetStateAction<string | undefined>>;
-  onLogin: () => {};
   onSendEmail: () => {};
   errorEmail: string;
   disabled: boolean;
   loading: boolean;
-  isLogin?: boolean | undefined;
 }
 
-const ForgotPasswordSections = ({
+const ChangeEmailSections = ({
   email,
   setEmail,
-  onLogin,
   onSendEmail,
   errorEmail,
   disabled,
   loading,
-  isLogin,
-}: ForgotPasswordSectionsProps) => {
+}: ChangeEmailSectionsProps) => {
   return (
     <View style={styles.content}>
       <InputText
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder="New Email"
         placeholderTextColor={colors.gray}
         error={errorEmail}
         styleInput={undefined}
@@ -47,24 +43,13 @@ const ForgotPasswordSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.text}>Send Email</Text>
+            <Text style={styles.text}>Change Email</Text>
           </View>
         }
         disabled={disabled}
       />
-      {!isLogin && (
-        <React.Fragment>
-          <Gap height={12} width={0} />
-          <Buttons
-            onPress={onLogin}
-            style={styles.btnSignIn}
-            children={<Text style={styles.text}>Sign In</Text>}
-            disabled={disabled}
-          />
-        </React.Fragment>
-      )}
     </View>
   );
 };
 
-export default ForgotPasswordSections;
+export default ChangeEmailSections;

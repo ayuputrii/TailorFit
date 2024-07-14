@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {colors} from '../../utils/colors';
 import {moderateScale} from '../../utils/scale';
+import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   content: {
@@ -12,20 +13,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnPhoto: {
-    width: moderateScale(80),
-    height: moderateScale(80),
-    borderRadius: moderateScale(80),
+    width: moderateScale(70),
+    height: moderateScale(70),
+    borderRadius: moderateScale(70),
     backgroundColor: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     elevation: moderateScale(4),
-  },
-  photo: {
-    width: moderateScale(80),
-    height: moderateScale(80),
-    borderRadius: moderateScale(80),
-    resizeMode: 'cover',
   },
   iconProfile: {
     position: 'absolute',
@@ -46,7 +41,7 @@ const styles = StyleSheet.create({
   },
   txt: {
     color: '#A39797',
-    fontFamily: 'Poppins-Regular',
+    fontFamily: fonts.PoppinsRegular,
   },
   btn: {
     width: '100%',
@@ -58,9 +53,9 @@ const styles = StyleSheet.create({
     marginVertical: moderateScale(24),
   },
   text: {
-    color: '#ffffff',
+    color: colors.white,
     fontWeight: 'bold',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: fonts.PoppinsBold,
     fontSize: moderateScale(16),
   },
 });

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     left: moderateScale(0),
   },
   hr: {
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     width: '100%',
     borderColor: '#C3BFBF',
     opacity: moderateScale(0.6),

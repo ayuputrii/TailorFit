@@ -2,7 +2,6 @@ import Login from './Login';
 import RegisterSections from './Register';
 import NewPasswordSections from './NewPassword';
 import ForgotPasswordSections from './ForgotPassword';
-import ChangePasswordSections from './ChangePassword';
 import CartSections from './Cart';
 import CheckoutSections from './Checkout';
 import AddressSections from './Address';
@@ -14,13 +13,14 @@ import ProductDetailSections from './ProductDetail';
 import ProfileSections from './Profile';
 import FavoriteSections from './Favorite';
 import ReviewSections from './Review';
+import CurrentEmailSections from './ChangeEmail/CurrentEmailSections';
+import ChangeEmailSections from './ChangeEmail';
 
 export {
   Login,
   RegisterSections,
   NewPasswordSections,
   ForgotPasswordSections,
-  ChangePasswordSections,
   CartSections,
   CheckoutSections,
   AddressSections,
@@ -32,4 +32,6 @@ export {
   ProfileSections,
   FavoriteSections,
   ReviewSections,
+  CurrentEmailSections,
+  ChangeEmailSections,
 };

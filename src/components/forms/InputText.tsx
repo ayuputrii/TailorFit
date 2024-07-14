@@ -6,15 +6,17 @@ import {Gap, Text} from '../commons';
 import {fonts} from '../../utils/fonts';
 
 interface InputTextProps {
-  value: string;
-  onChangeText: Dispatch<SetStateAction<string>>;
-  onSubmitEditing: () => void;
-  placeholder: string;
-  placeholderTextColor: string;
-  styleInput: any;
-  styleText: any;
-  error: any;
+  value?: string;
+  onChangeText?: Dispatch<SetStateAction<string | undefined>>;
+  onSubmitEditing?: () => void;
+  placeholder?: string;
+  placeholderTextColor?: string;
+  styleInput?: any;
+  styleText?: any;
+  error?: any;
   defaultValue?: string | number;
+  editable?: boolean;
+  onFocus?: () => void;
 }
 
 const InputText = forwardRef<TextInput, InputTextProps>(
@@ -29,6 +31,8 @@ const InputText = forwardRef<TextInput, InputTextProps>(
       styleText,
       error,
       defaultValue,
+      editable,
+      onFocus,
     }: InputTextProps,
     ref,
   ) => {
@@ -44,9 +48,10 @@ const InputText = forwardRef<TextInput, InputTextProps>(
             onChangeText={onChangeText}
             onSubmitEditing={onSubmitEditing}
             defaultValue={defaultValue as string}
+            editable={editable}
+            onFocus={onFocus}
           />
         </View>
-        <Gap height={moderateScale(10)} width={0} />
 
         {error && <Text style={styles.error}>{error}</Text>}
         <Gap height={moderateScale(10)} width={0} />
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
   inputView: {
     width: '100%',
     backgroundColor: colors.white,
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     borderColor: '#DCDCDC',
     borderRadius: moderateScale(8),
     height: moderateScale(50),
@@ -69,7 +74,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: colors.black,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: fonts.PoppinsRegular,
     width: '100%',
     marginTop: moderateScale(2),
   },

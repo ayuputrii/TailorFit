@@ -2,10 +2,10 @@ import React, {ReactNode} from 'react';
 import {TouchableOpacity, ViewStyle} from 'react-native';
 
 interface ButtonsProps {
-  children: ReactNode;
-  onPress: () => void;
-  style: ViewStyle | any;
-  disabled: boolean;
+  children?: ReactNode;
+  onPress?: any;
+  style?: ViewStyle | any;
+  disabled?: boolean;
 }
 
 const Buttons = ({children, onPress, style, disabled}: ButtonsProps) => {

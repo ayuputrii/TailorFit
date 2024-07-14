@@ -22,17 +22,17 @@ const Login = ({navigation}: LoginProps) => {
   const ctx = useContext(AuthContext);
   const login = ctx?.onLogin;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
+  const [email, setEmail] = useState<string | undefined>('');
+  const [password, setPassword] = useState<string | undefined>('');
+  const [title, setTitle] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
+  const [errorEmail, setErrorEmail] = useState<string>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
 
-  const [showRemember, setShowRemember] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [showRemember, setShowRemember] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const onLogin = async () => {
     const data = {

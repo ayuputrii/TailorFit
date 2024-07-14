@@ -6,8 +6,6 @@ import VerifyOTP from './VerifyOTP';
 import NewPassword from './NewPassword';
 import Home from './Home';
 import Settings from './Settings';
-import ChangePassword from './ChangePassword';
-import About from './About';
 import HistoryTransaction from './HistoryTransaction';
 import Rating from './Rating';
 import Cart from './Cart';
@@ -19,6 +17,8 @@ import Payment from './Payment';
 import Profile from './Profile';
 import ProductDetail from './ProductDetail';
 import Review from './Review';
+import ChangeEmail from './ChangeEmail';
+import NewEmail from './ChangeEmail/NewEmail';
 
 export {
   SplashScreenPage,
@@ -29,9 +29,7 @@ export {
   NewPassword,
   Home,
   Settings,
-  ChangePassword,
   HistoryTransaction,
-  About,
   Rating,
   Cart,
   Checkout,
@@ -42,4 +40,6 @@ export {
   Profile,
   ProductDetail,
   Review,
+  ChangeEmail,
+  NewEmail,
 };

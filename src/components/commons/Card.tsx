@@ -2,6 +2,7 @@ import React, {ReactNode} from 'react';
 import {StyleSheet} from 'react-native';
 import {colors} from '../../utils/colors';
 import {Card} from 'react-native-paper';
+import Buttons from './Buttons';
 
 interface CardCommonsProps {
   backgroundColor?: string;
@@ -11,7 +12,7 @@ interface CardCommonsProps {
   subTitleStyle: any;
   children: ReactNode;
   style: any;
-  onPress: any;
+  onPress: () => void;
 }
 
 const CardCommons = ({
@@ -25,25 +26,26 @@ const CardCommons = ({
   onPress,
 }: CardCommonsProps) => {
   return (
-    <Card
-      elevation={0}
-      style={[styles.container, {backgroundColor}]}
-      onPress={onPress ? onPress : null}
-      theme={{
-        colors: {
-          outline: 'transparent',
-        },
-      }}>
-      {(title || subTitle) && (
-        <Card.Title
-          title={title}
-          subtitle={subTitle}
-          titleStyle={titleStyle}
-          subtitleStyle={subTitleStyle}
-        />
-      )}
-      {children && <Card.Content style={style}>{children}</Card.Content>}
-    </Card>
+    <Buttons onPress={onPress}>
+      <Card
+        elevation={0}
+        style={[styles.container, {backgroundColor}]}
+        theme={{
+          colors: {
+            outline: 'transparent',
+          },
+        }}>
+        {(title || subTitle) && (
+          <Card.Title
+            title={title}
+            subtitle={subTitle}
+            titleStyle={titleStyle}
+            subtitleStyle={subTitleStyle}
+          />
+        )}
+        {children && <Card.Content style={style}>{children}</Card.Content>}
+      </Card>
+    </Buttons>
   );
 };
 

@@ -15,8 +15,6 @@ import {
   NewPassword,
   Home,
   Settings,
-  ChangePassword,
-  About,
   HistoryTransaction,
   Rating,
   Cart,
@@ -28,6 +26,8 @@ import {
   Profile,
   ProductDetail,
   Review,
+  ChangeEmail,
+  NewEmail,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
@@ -40,11 +40,11 @@ export type NavigationParam = {
   Register: undefined;
   VerifyOTP: undefined;
   NewPassword: undefined;
+  ChangeEmail: undefined;
+  NewEmail: undefined;
   Home: undefined;
   Settings: undefined;
   Profile: undefined;
-  ChangePassword: undefined;
-  About: undefined;
   HistoryTransaction: undefined;
   Rating: undefined;
   Cart: undefined;
@@ -87,6 +87,23 @@ export type ForgotPasswordProps = {
   route: ForgotPasswordRouteProp;
 };
 
+type ChangeEmailNavigationProp = StackNavigationProp<
+  NavigationParam,
+  'ChangeEmail'
+>;
+type ChangeEmailRouteProp = RouteProp<NavigationParam, 'ChangeEmail'>;
+export type ChangeEmailProps = {
+  navigation: ChangeEmailNavigationProp;
+  route: ChangeEmailRouteProp;
+};
+
+type NewEmailNavigationProp = StackNavigationProp<NavigationParam, 'NewEmail'>;
+type NewEmailRouteProp = RouteProp<NavigationParam, 'NewEmail'>;
+export type NewEmailProps = {
+  navigation: NewEmailNavigationProp;
+  route: NewEmailRouteProp;
+};
+
 type LoginNavigationProp = StackNavigationProp<NavigationParam, 'Login'>;
 type LoginRouteProp = RouteProp<NavigationParam, 'Login'>;
 export type LoginProps = {
@@ -119,16 +136,6 @@ type ProfileRouteProp = RouteProp<NavigationParam, 'Profile'>;
 export type ProfileProps = {
   navigation: ProfileNavigationProp;
   route: ProfileRouteProp;
-};
-
-type ChangePasswordNavigationProp = StackNavigationProp<
-  NavigationParam,
-  'ChangePassword'
->;
-type ChangePasswordRouteProp = RouteProp<NavigationParam, 'ChangePassword'>;
-export type ChangePasswordProps = {
-  navigation: ChangePasswordNavigationProp;
-  route: ChangePasswordRouteProp;
 };
 
 type NewPasswordNavigationProp = StackNavigationProp<
@@ -166,13 +173,6 @@ type VerifyOTPRouteProp = RouteProp<NavigationParam, 'VerifyOTP'>;
 export type VerifyOTPProps = {
   navigation: VerifyOTPNavigationProp;
   route: VerifyOTPRouteProp;
-};
-
-type AboutNavigationProp = StackNavigationProp<NavigationParam, 'About'>;
-type AboutRouteProp = RouteProp<NavigationParam, 'About'>;
-export type AboutProps = {
-  navigation: AboutNavigationProp;
-  route: AboutRouteProp;
 };
 
 type HistoryTransactionNavigationProp = StackNavigationProp<
@@ -265,7 +265,7 @@ const MainTabs = () => {
   return (
     <BottomTabs
       Home={Home}
-      Chat={Chat}
+      // Chat={Chat}
       Favorite={Favorite}
       Settings={Settings}
       Cart={Cart}
@@ -336,6 +336,22 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
+      name="ChangeEmail"
+      component={ChangeEmail}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="NewEmail"
+      component={NewEmail}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
       name="Chat"
       component={Chat}
     />
@@ -394,22 +410,6 @@ const RootStackScreen = () => (
       }}
       name="HistoryTransaction"
       component={HistoryTransaction}
-    />
-    <RootStack.Screen
-      options={{
-        headerShown: false,
-        animationEnabled: false,
-      }}
-      name="About"
-      component={About}
-    />
-    <RootStack.Screen
-      options={{
-        headerShown: false,
-        animationEnabled: false,
-      }}
-      name="ChangePassword"
-      component={ChangePassword}
     />
     <RootStack.Screen
       options={{

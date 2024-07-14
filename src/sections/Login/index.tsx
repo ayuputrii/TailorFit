@@ -14,10 +14,10 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {moderateScale} from '../../utils/scale';
 
 interface LoginSectionsProps {
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
-  password: string;
-  setPassword: Dispatch<SetStateAction<string>>;
+  email: string | undefined;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
+  password: string | undefined;
+  setPassword: Dispatch<SetStateAction<string | undefined>>;
   showRemember: boolean;
   setShowRemember: Dispatch<SetStateAction<boolean>>;
   navigation: any;

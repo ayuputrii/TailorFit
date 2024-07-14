@@ -1,62 +1,90 @@
 import React, {useEffect, useState} from 'react';
-import {BackHeader, Gap, ModalConfirmation} from '../../components';
-import {moderateScale} from '../../utils/scale';
-import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import styles from './styles';
 import {ProfileProps} from '../../navigation';
-import {ProfileSections} from '../../sections';
-import {API_PROFILE, BASE_URL, putData} from '../../api';
+import {API_PROFILE, BASE_URL, getDataWithToken, putFormData} from '../../api';
 import {colors} from '../../utils/colors';
 import {getData} from '../../utils/async-storage';
 import {UserDataTypes} from '../../types';
-
-interface User {
-  customer: UserDataTypes;
-}
+import ProfilePage from './ProfilePage';
+import ModalCalendar from '../../components/modal/ModalCalendar';
+import moment from 'moment';
+import {Asset} from 'react-native-image-picker';
 
 const Profile = ({navigation}: ProfileProps) => {
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [gender, setGender] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
-  const [user, setUser] = useState<User>({} as User);
+  const [photo, setPhoto] = useState<Asset[] | undefined | string>('');
+  const [fullName, setFullName] = useState<string | undefined>('');
+  const [gender, setGender] = useState<string | undefined>('');
+  const [birthday, setBirthday] = useState<string | null | undefined>(null);
+  const [phone, setPhone] = useState<string | undefined>('');
+  const [email, setEmail] = useState<string | undefined>('');
+  const [title, setTitle] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
+  const [user, setUser] = useState<UserDataTypes>({} as UserDataTypes);
 
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModalCalendar, setShowModalCalendar] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const getUser = async () => {
-    const response = await getData('USER_DATA_LOGIN');
-    setUser(response);
+    const token = await getData('ACCESS_TOKEN');
+
+    const response = await getDataWithToken(BASE_URL + API_PROFILE, token);
+
+    if (response?.data?.data) {
+      setUser(response?.data?.data);
+    }
+  };
+
+  const onDateChange = (date: string | null | undefined) => {
+    setShowModalCalendar(false);
+    setBirthday(date);
   };
 
   const onUpdateProfile = async () => {
-    const data = {
-      email,
-      fullName,
-      phone,
-      address,
-      gender,
-      role: 'CUSTOMER',
-    };
-
     setLoading(true);
     setDisabled(true);
 
     const token = await getData('ACCESS_TOKEN');
+    const formData = new FormData();
+
+    if (typeof photo !== 'string') {
+      Array.from(photo).forEach((item: any) => {
+        formData.append('images', {
+          uri: item?.uri,
+          name: 'photo.jpg',
+          type: 'image/jpeg',
+        });
+      });
+    }
+
+    formData.append('dir', 'profile');
+    formData.append('fullName', fullName);
+    formData.append('gender', (gender || '').toUpperCase());
+    formData.append(
+      'birthday',
+      moment(birthday || new Date()).format('YYYY-MM-DD'),
+    );
+    formData.append('phone', phone);
 
     try {
-      const response: any = await putData(BASE_URL + API_PROFILE, data, token);
+      const response: any = await putFormData(
+        BASE_URL + API_PROFILE,
+        formData,
+        token,
+      );
+
       if (response?.data?.success) {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
         setTitle('Update Profile is Success');
-        setMessage(response?.data?.message);
+        setMessage(
+          response?.data?.message ||
+            'Congratulation Update profile is success.',
+        );
+        getUser();
       } else {
         setLoading(false);
         setDisabled(false);
@@ -67,15 +95,20 @@ const Profile = ({navigation}: ProfileProps) => {
             response?.error?.message ||
             "Server is encountered with problem! We'll fix it soon.",
         );
+        getUser();
       }
     } catch (error: any) {
-      console.log('error', error);
       setLoading(false);
       setDisabled(false);
       setShowModal(true);
       setTitle('Update Profile is Failed');
       setMessage(error?.message);
+      getUser();
     }
+  };
+
+  const goShowModalCalendar = () => {
+    setShowModalCalendar(true);
   };
 
   useEffect(() => {
@@ -89,44 +122,34 @@ const Profile = ({navigation}: ProfileProps) => {
         backgroundColor={colors.basebg}
         barStyle="dark-content"
       />
-      <BackHeader
-        title="Edit Profile"
-        goBack={() => navigation?.goBack()}
-        icon={false}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}>
-          <Gap height={moderateScale(8)} width={0} />
-          <ProfileSections
-            gender={gender}
-            setGender={setGender}
-            birthday={birthday}
-            setBirthday={setBirthday}
-            email={email}
-            setEmail={setEmail}
-            fullName={fullName}
-            setFullName={setFullName}
-            phone={phone}
-            setPhone={setPhone}
-            address={address}
-            setAddress={setAddress}
-            onPress={onUpdateProfile}
-            disabled={disabled}
-            loading={loading}
-            user={user?.customer}
-          />
-          <Gap height={moderateScale(8)} width={0} />
-        </ScrollView>
-      </BackHeader>
-
-      <ModalConfirmation
-        isVisible={showModal}
-        onClose={() => setShowModal(false)}
+      <ProfilePage
+        photo={photo}
+        setPhoto={setPhoto}
+        fullName={fullName}
+        setFullName={setFullName}
+        gender={gender}
+        setGender={setGender}
+        birthday={birthday}
+        setBirthday={setBirthday}
+        phone={phone}
+        setPhone={setPhone}
+        email={email}
+        setEmail={setEmail}
+        onUpdateProfile={onUpdateProfile}
+        disabled={disabled}
+        loading={loading}
+        user={user}
         title={title}
         message={message}
-        textBtn="Close"
-        onSubmit={() => setShowModal(false)}
-        style={undefined}
+        showModal={showModal}
+        setShowModal={() => setShowModal(false)}
+        navigation={navigation}
+        goShowModalCalendar={goShowModalCalendar}
+      />
+      <ModalCalendar
+        showCalendar={showModalCalendar}
+        setShowCalendar={setShowModalCalendar}
+        onDateChange={onDateChange}
       />
     </SafeAreaView>
   );

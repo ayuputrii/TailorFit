@@ -8,13 +8,14 @@ import {ActivityIndicator} from 'react-native';
 import {moderateScale} from '../../utils/scale';
 
 interface NewPasswordSectionsProps {
-  password: string;
-  setPassword: Dispatch<SetStateAction<string>>;
+  password: string | undefined;
+  setPassword: Dispatch<SetStateAction<string | undefined>>;
   errorPassowrd: string;
   onConfirmPassword: any;
   loading: boolean;
   disabled: boolean;
-  onLogin: () => void;
+  onLogin?: () => void;
+  isLogin?: boolean | undefined;
 }
 
 const NewPasswordSections = ({
@@ -25,6 +26,7 @@ const NewPasswordSections = ({
   loading,
   disabled,
   onLogin,
+  isLogin,
 }: NewPasswordSectionsProps) => {
   return (
     <View style={styles.content}>
@@ -34,6 +36,7 @@ const NewPasswordSections = ({
         placeholder="Password"
         placeholderTextColor={colors.gray}
         error={errorPassowrd}
+        onSubmitEditing={onConfirmPassword}
       />
       <Gap height={24} width={0} />
       <Buttons
@@ -48,13 +51,17 @@ const NewPasswordSections = ({
         }
         disabled={disabled}
       />
-      <Gap height={12} width={0} />
-      <Buttons
-        onPress={onLogin}
-        style={styles.btnSignIn}
-        children={<Text style={styles.text}>Sign In</Text>}
-        disabled={disabled}
-      />
+      {!isLogin && (
+        <React.Fragment>
+          <Gap height={12} width={0} />
+          <Buttons
+            onPress={onLogin}
+            style={styles.btnSignIn}
+            children={<Text style={styles.text}>Sign In</Text>}
+            disabled={disabled}
+          />
+        </React.Fragment>
+      )}
     </View>
   );
 };

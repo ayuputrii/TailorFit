@@ -18,6 +18,7 @@ import ButtonLogin from './ButtonLogin';
 import ImageWithNotLogin from './ImageWithNotLogin';
 import CarouselImage from './CarouselImage';
 import TabViews from './TabView';
+import Calendar from './Calendar';
 
 export {
   Header,
@@ -40,4 +41,5 @@ export {
   ImageWithNotLogin,
   CarouselImage,
   TabViews,
+  Calendar,
 };

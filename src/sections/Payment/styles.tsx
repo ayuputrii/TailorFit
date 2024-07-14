@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     color: '#857E7E',
   },
   hr: {
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     width: '100%',
     borderColor: '#DEDEDE',
     opacity: moderateScale(0.6),

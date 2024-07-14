@@ -1,14 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState, useContext} from 'react';
 import {Dimensions, SafeAreaView, StatusBar} from 'react-native';
-import {Buttons, Gap, Header, ModalNotif} from '../../components';
-import Icon from 'react-native-vector-icons/Ionicons';
-import IconANT from 'react-native-vector-icons/AntDesign';
-import {moderateScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
 import styles from './styles';
 import {HomeProps} from '../../navigation';
-import {HomeSections, ProductSearch} from '../../sections';
 import {useDebouncedCallback} from 'use-debounce';
 import {AuthContext} from '../../context/AuthContext';
 import {
@@ -30,10 +24,12 @@ import {
   PromotionTypes,
   UserDataTypes,
 } from '../../types';
+import HomePage from './HomePage';
 
 const Home = ({navigation}: HomeProps) => {
   const ctx = useContext(AuthContext);
   const isLogin = ctx?.isLogin;
+  const onLogout = ctx?.onLogout;
 
   const width = Dimensions.get('window').width;
 
@@ -207,6 +203,13 @@ const Home = ({navigation}: HomeProps) => {
     setFilteredProducts([]);
   };
 
+  const handleLogout = async () => {
+    if (onLogout) {
+      onLogout();
+    }
+    navigation?.replace('MainTabs');
+  };
+
   const onRefresh = async () => {
     setRefreshing(true);
 
@@ -255,74 +258,35 @@ const Home = ({navigation}: HomeProps) => {
         backgroundColor={colors.basebg}
         barStyle="dark-content"
       />
-      {showSearch ? (
-        <ProductSearch
-          value={keyword}
-          onChangeText={setKeyword}
-          onSubmitEditing={() => {}}
-          onClose={onCloseSearch}
-          onClearText={() => setKeyword('')}
-          onSearchDelete={onSearchDelete}
-          isLogin={isLogin}
-        />
-      ) : (
-        <Header
-          children={false}
-          title="Halo, "
-          subTitle={
-            isLogin ? (userData?.fullName ? firstName : '-') : 'Welcome!'
-          }
-          image={userData?.profilePicture}
-          icon={
-            <React.Fragment>
-              <Buttons disabled={false} onPress={onShowSearch} style={{}}>
-                <Icon
-                  name="search"
-                  size={moderateScale(28)}
-                  color={colors.black}
-                />
-              </Buttons>
-              {isLogin && (
-                <React.Fragment>
-                  <Gap width={moderateScale(10)} height={0} />
-                  <Buttons disabled={false} onPress={() => {}} style={{}}>
-                    <IconANT
-                      name="logout" //"bell"
-                      size={moderateScale(24)}
-                      color={colors.black}
-                    />
-                  </Buttons>
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          }
-          loading={loading || refreshing}
-        />
-      )}
-      <HomeSections
+      <HomePage
+        showSearch={showSearch}
+        keyword={keyword}
+        setKeyword={setKeyword}
+        onCloseSearch={onCloseSearch}
+        onSearchDelete={onSearchDelete}
+        isLogin={isLogin}
+        userData={userData}
+        firstName={firstName}
+        onShowSearch={onShowSearch}
+        handleLogout={handleLogout}
+        loading={loading}
+        refreshing={refreshing}
         category={category}
+        filteredProducts={filteredProducts}
+        promotion={promotion}
+        onRefresh={onRefresh}
         width={width}
         activeMenuIndex={activeMenuIndex}
         handleMenuPress={handleMenuPress}
         addFavorite={addFavorite}
         navigation={navigation}
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-        promotion={promotion}
-        filteredProducts={showSearch ? filteredProducts : products}
-        loading={loading || refreshing}
-        showSearch={showSearch}
         isEmpty={isEmpty}
-        isLogin={isLogin}
         deleteFavorite={deleteFavorite}
-      />
-
-      <ModalNotif
-        isVisible={showModalNotif}
+        products={products}
+        showModalNotif={showModalNotif}
         onClose={() => setShowModalNotif(false)}
-        title={titleModalNotif}
-        style={{}}
-        error={errorFavorite}
+        titleModalNotif={titleModalNotif}
+        errorFavorite={errorFavorite}
       />
     </SafeAreaView>
   );

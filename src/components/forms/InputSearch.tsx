@@ -4,6 +4,7 @@ import {colors} from '../../utils/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {moderateScale} from '../../utils/scale';
 import {Buttons} from '../commons';
+import {fonts} from '../../utils/fonts';
 
 interface InputSearchProps {
   value: string;
@@ -54,8 +55,8 @@ const styles = StyleSheet.create({
   inputView: {
     width: '92%',
     backgroundColor: colors.white,
-    borderWidth: 1,
-    borderColor: '#DCDCDC',
+    borderWidth: moderateScale(1),
+    borderColor: colors.lightgray,
     borderRadius: moderateScale(16),
     height: moderateScale(50),
     paddingHorizontal: moderateScale(6),
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   },
   InputSearch: {
     color: colors.black,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: fonts.PoppinsRegular,
     width: '90%',
   },
 });

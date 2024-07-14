@@ -7,6 +7,8 @@ export const BASE_URL = 'https://tailorfit-be.vercel.app';
 export const API_REGISTER = '/auth/register';
 export const API_LOGIN = '/auth/login';
 export const API_FORGOT_PASSWORD = '/auth/forgot-password';
+export const API_UPDATE_EMAIL = '/auth/update-email';
+export const API_CHANGE_EMAIL = '/auth/change-email';
 export const API_VERIFY_OTP = '/auth/otp-verify';
 export const API_RESET_PASSWORD = '/auth/reset-password';
 export const API_PROFILE = '/auth/profile';
@@ -73,7 +75,25 @@ export const getDataWithToken = async (url: string, token: string) => {
   }
 };
 
-export const putData = async (url: string, data: any, token: string) => {
+export const putFormData = async (url: string, data: any, token: string) => {
+  try {
+    let response = await axios.put(url, data, {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (error: any) {
+    return error.response;
+  }
+};
+
+export const putDataWithToken = async (
+  url: string,
+  data: any,
+  token: string,
+) => {
   try {
     let response = await axios.put(url, data, {
       headers: {
@@ -82,6 +102,7 @@ export const putData = async (url: string, data: any, token: string) => {
     });
     return response;
   } catch (error: any) {
+    console.log('rrrrr', error?.response);
     return error.response;
   }
 };

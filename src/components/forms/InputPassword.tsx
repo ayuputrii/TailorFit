@@ -7,12 +7,12 @@ import {moderateScale} from '../../utils/scale';
 import {fonts} from '../../utils/fonts';
 
 interface InputPasswordProps {
-  value: string;
-  onChangeText: (text: string) => void;
-  onSubmitEditing: () => void;
-  placeholder: string;
+  value?: string;
+  onChangeText?: (text?: string) => void;
+  onSubmitEditing?: () => void;
+  placeholder?: string;
   placeholderTextColor?: string;
-  error: any;
+  error?: any;
 }
 
 const InputPassword = forwardRef<TextInput, InputPasswordProps>(
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: colors.black,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: fonts.PoppinsRegular,
     width: '90%',
     marginTop: moderateScale(2),
   },

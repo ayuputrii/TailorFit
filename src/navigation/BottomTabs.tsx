@@ -48,6 +48,7 @@ const BottomTabs = ({
             height: verticalScale(Platform.OS === 'ios' ? -5 : -10),
           },
           shadowColor: colors.black,
+          paddingBottom: moderateScale(4),
           marginBottom: moderateScale(20),
           borderRadius: moderateScale(22),
           marginHorizontal: moderateScale(16),

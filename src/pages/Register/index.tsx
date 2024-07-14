@@ -16,21 +16,21 @@ import {images} from '../../assets';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const Register = ({navigation}: RegisterProps) => {
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorFullName, setErrorFullName] = useState('');
-  const [errorPhone, setErrorPhone] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
+  const [email, setEmail] = useState<string | undefined>('');
+  const [fullName, setFullName] = useState<string | undefined>('');
+  const [phone, setPhone] = useState<string | undefined>('');
+  const [password, setPassword] = useState<string | undefined>('');
+  const [title, setTitle] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
+  const [errorEmail, setErrorEmail] = useState<string>('');
+  const [errorFullName, setErrorFullName] = useState<string>('');
+  const [errorPhone, setErrorPhone] = useState<string>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
 
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [errors, setErrors] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [errors, setErrors] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const onRegister = async () => {
     const data = {

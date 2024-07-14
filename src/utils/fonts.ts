@@ -5,6 +5,6 @@ export const fonts = {
   PoppinsExtraLight: 'Poppins-ExtraLight',
   PoppinsLight: 'Poppins-Light',
   PoppinsMedium: 'Poppins-Medium',
-  PoppinsRegular: 'Poppins-Regular',
+  PoppinsRegular: 'PoppinsRegular',
   PoppinsSemiBold: 'Poppins-SemiBold',
 };

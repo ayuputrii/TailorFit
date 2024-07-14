@@ -9,4 +9,9 @@ export default {
   twitter: require('./ic-twitter.svg'),
   uncheck: require('./ic-uncheck.svg'),
   logo: require('./ic-logo.svg'),
+  history: require('./ic-history.svg'),
+  pencil: require('./ic-pencil.svg'),
+  security: require('./ic-security.svg'),
+  user: require('./ic-user.svg'),
+  updateEmail: require('./ic-change-email.svg'),
 };
