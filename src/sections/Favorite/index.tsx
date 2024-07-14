@@ -9,7 +9,6 @@ interface FavoriteSectionsProps {
   data: ProductsTypes[];
   loading: boolean;
   isLogin: boolean | undefined;
-  isFavorite: null;
   navigation: any;
   onDeleteFavorite: (id: string) => void;
 }
@@ -18,7 +17,6 @@ const FavoriteSections = ({
   data,
   loading,
   isLogin,
-  isFavorite,
   navigation,
   onDeleteFavorite,
 }: FavoriteSectionsProps) => {
@@ -54,7 +52,9 @@ const FavoriteSections = ({
                 key={index}
                 goDetailProduct={() => goDetailProduct({...item})}
                 addFavorite={() => {}}
-                deleteFavorite={() => onDeleteFavorite(item?.favorite?._id)}
+                deleteFavorite={() =>
+                  onDeleteFavorite(item?.favorite?._id as string)
+                }
                 data={item}
                 isLogin={isLogin}
               />

@@ -59,7 +59,7 @@ const MenuSettings = [
   {
     id: 5,
     label: 'FAQ',
-    value: 'faq',
+    value: 'FAQPage',
     icon: <IconMaterial name="info" size={18} color={colors.darkgray} />,
   },
 ];

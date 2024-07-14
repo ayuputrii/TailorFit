@@ -15,6 +15,7 @@ import FavoriteSections from './Favorite';
 import ReviewSections from './Review';
 import CurrentEmailSections from './ChangeEmail/CurrentEmailSections';
 import ChangeEmailSections from './ChangeEmail';
+import FAQSections from './FAQ';
 
 export {
   Login,
@@ -34,4 +35,5 @@ export {
   ReviewSections,
   CurrentEmailSections,
   ChangeEmailSections,
+  FAQSections,
 };

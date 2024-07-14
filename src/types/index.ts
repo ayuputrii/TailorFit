@@ -1,6 +1,8 @@
 export interface menu {
   id?: string | undefined;
   label?: string | undefined;
+  content?: string | undefined;
+  title?: string | undefined;
 }
 
 export interface UserDataTypes {

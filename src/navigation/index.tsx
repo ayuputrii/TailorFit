@@ -28,6 +28,7 @@ import {
   Review,
   ChangeEmail,
   NewEmail,
+  FAQPage,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
@@ -46,6 +47,7 @@ export type NavigationParam = {
   Settings: undefined;
   Profile: undefined;
   HistoryTransaction: undefined;
+  FAQPage: undefined;
   Rating: undefined;
   Cart: undefined;
   Checkout: undefined;
@@ -136,6 +138,16 @@ type ProfileRouteProp = RouteProp<NavigationParam, 'Profile'>;
 export type ProfileProps = {
   navigation: ProfileNavigationProp;
   route: ProfileRouteProp;
+};
+
+type FAQPageNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'FAQPage'
+>;
+type FAQPageRouteProp = RouteProp<NavigationParam, 'FAQPage'>;
+export type FAQPageProps = {
+  navigation: FAQPageNavigationProp;
+  route: FAQPageRouteProp;
 };
 
 type NewPasswordNavigationProp = StackNavigationProp<
@@ -410,6 +422,14 @@ const RootStackScreen = () => (
       }}
       name="HistoryTransaction"
       component={HistoryTransaction}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="FAQPage"
+      component={FAQPage}
     />
     <RootStack.Screen
       options={{

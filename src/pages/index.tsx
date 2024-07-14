@@ -19,6 +19,7 @@ import ProductDetail from './ProductDetail';
 import Review from './Review';
 import ChangeEmail from './ChangeEmail';
 import NewEmail from './ChangeEmail/NewEmail';
+import FAQPage from './FAQ';
 
 export {
   SplashScreenPage,
@@ -42,4 +43,5 @@ export {
   Review,
   ChangeEmail,
   NewEmail,
+  FAQPage,
 };
