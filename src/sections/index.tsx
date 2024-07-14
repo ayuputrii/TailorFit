@@ -16,6 +16,8 @@ import ReviewSections from './Review';
 import CurrentEmailSections from './ChangeEmail/CurrentEmailSections';
 import ChangeEmailSections from './ChangeEmail';
 import FAQSections from './FAQ';
+import RatingSections from './Rating';
+import HistoryTransactionSections from './HistoryTransaction';
 
 export {
   Login,
@@ -36,4 +38,6 @@ export {
   CurrentEmailSections,
   ChangeEmailSections,
   FAQSections,
+  RatingSections,
+  HistoryTransactionSections,
 };
