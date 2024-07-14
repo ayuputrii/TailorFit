@@ -19,6 +19,7 @@ import ImageWithNotLogin from './ImageWithNotLogin';
 import CarouselImage from './CarouselImage';
 import TabViews from './TabView';
 import Calendar from './Calendar';
+import CollapsibleView from './Collapsible';
 
 export {
   Header,
@@ -42,4 +43,5 @@ export {
   CarouselImage,
   TabViews,
   Calendar,
+  CollapsibleView,
 };
