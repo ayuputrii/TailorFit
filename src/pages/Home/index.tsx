@@ -203,13 +203,6 @@ const Home = ({navigation}: HomeProps) => {
     setFilteredProducts([]);
   };
 
-  const handleLogout = async () => {
-    if (onLogout) {
-      onLogout();
-    }
-    navigation?.replace('MainTabs');
-  };
-
   const onRefresh = async () => {
     setRefreshing(true);
 
@@ -268,7 +261,6 @@ const Home = ({navigation}: HomeProps) => {
         userData={userData}
         firstName={firstName}
         onShowSearch={onShowSearch}
-        handleLogout={handleLogout}
         loading={loading}
         refreshing={refreshing}
         category={category}

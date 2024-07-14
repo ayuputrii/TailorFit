@@ -4,6 +4,7 @@ import InputNumber from './InputNumber';
 import InputSearch from './InputSearch';
 import InputDropdown from './InputDropdown';
 import InputCalendar from './InputCalendar';
+import InputTextArea from './InputTextArea';
 
 export {
   InputText,
@@ -12,4 +13,5 @@ export {
   InputSearch,
   InputDropdown,
   InputCalendar,
+  InputTextArea,
 };

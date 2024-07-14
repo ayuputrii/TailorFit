@@ -23,7 +23,7 @@ import {
   deleteWithToken,
   getDataWithToken,
   postDataWithToken,
-  putData,
+  putDataWithToken,
 } from '../../api';
 import {AddressTypes} from '../../types';
 
@@ -142,12 +142,12 @@ const Address = ({navigation}: AddressProps) => {
   const goDetailAddress = (item: AddressTypes) => {
     setIsAdd(false);
     setShowModal(true);
-    setIdAddress(item?._id);
-    setAddressName(item?.name);
-    setPhone(item?.phone);
-    setAddress(item?.addressDetail);
+    setIdAddress(item?._id as string);
+    setAddressName(item?.name as string);
+    setPhone(item?.phone as string);
+    setAddress(item?.addressDetail as string);
     setPostCode(item?.postalCode as string);
-    setIsDefault(item?.isDefault);
+    setIsDefault(item?.isDefault as boolean);
   };
 
   const changeAddress = async () => {
@@ -163,7 +163,7 @@ const Address = ({navigation}: AddressProps) => {
         isDefault,
       };
       const token = await getData('ACCESS_TOKEN');
-      const response = await putData(
+      const response = await putDataWithToken(
         BASE_URL + API_ADDRESS + '/' + idAddress,
         data,
         token,

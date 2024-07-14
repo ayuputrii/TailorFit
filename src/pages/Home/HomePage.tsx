@@ -1,7 +1,6 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {Buttons, Gap, Header, ModalNotif} from '../../components';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconANT from 'react-native-vector-icons/AntDesign';
 import {moderateScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
 import {HomeSections, ProductSearch} from '../../sections';
@@ -22,7 +21,6 @@ interface HomePageProps {
   userData: UserDataTypes;
   firstName: string;
   onShowSearch: () => void;
-  handleLogout: () => void;
   loading: boolean;
   refreshing: boolean;
   category: CategoryTypes[];
@@ -53,7 +51,6 @@ const HomePage = ({
   userData,
   firstName,
   onShowSearch,
-  handleLogout,
   loading,
   refreshing,
   category,
@@ -97,7 +94,7 @@ const HomePage = ({
             <React.Fragment>
               <Buttons disabled={false} onPress={onShowSearch} style={{}}>
                 <Icon
-                  name="search"
+                  name="search-outline"
                   size={moderateScale(28)}
                   color={colors.black}
                 />
@@ -105,10 +102,13 @@ const HomePage = ({
               {isLogin && (
                 <React.Fragment>
                   <Gap width={moderateScale(10)} height={0} />
-                  <Buttons disabled={false} onPress={handleLogout} style={{}}>
-                    <IconANT
-                      name="logout"
-                      size={moderateScale(24)}
+                  <Buttons
+                    disabled={false}
+                    onPress={() => navigation.navigate('NotificationPage')}
+                    style={{}}>
+                    <Icon
+                      name="notifications-outline"
+                      size={moderateScale(28)}
                       color={colors.black}
                     />
                   </Buttons>
