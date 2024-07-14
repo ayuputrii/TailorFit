@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   BackHeader,
   Buttons,
@@ -9,13 +9,21 @@ import {
 } from '../../components';
 import {colors} from '../../utils/colors';
 import {moderateScale} from '../../utils/scale';
-import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  View,
+} from 'react-native';
 import styles from './styles';
 import {CartProps} from '../../navigation';
 import {CartSections} from '../../sections';
 import {AuthContext} from '../../context/AuthContext';
 import IconFeather from 'react-native-vector-icons/Feather';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {API_CART, BASE_URL, getDataWithToken} from '../../api';
+import {getData} from '../../utils/async-storage';
 
 const Cart = ({navigation}: CartProps) => {
   const ctx = useContext(AuthContext);
@@ -24,9 +32,25 @@ const Cart = ({navigation}: CartProps) => {
   const [check, setCheck] = useState(false);
 
   const [value, setValue] = useState(0);
+  const [dataCart, setDataCart] = useState([]);
 
   const onValue = ({v}: {v: number}) => {
     setValue(v);
+  };
+
+  const getDataCart = async () => {
+    const token = await getData('ACCESS_TOKEN');
+    try {
+      const response = await getDataWithToken(BASE_URL + API_CART, token);
+      if (response?.data?.data) {
+        setDataCart(response?.data?.data);
+      } else {
+        setDataCart([]);
+      }
+    } catch (error) {
+      console.log('get cart error', error);
+      setDataCart([]);
+    }
   };
 
   const goDetailProduct = () => {
@@ -34,6 +58,10 @@ const Cart = ({navigation}: CartProps) => {
   };
 
   const onTrash = () => {};
+
+  useEffect(() => {
+    getDataCart();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +74,6 @@ const Cart = ({navigation}: CartProps) => {
         title="My Cart"
         goBack={() => navigation?.goBack()}
         icon={false}>
-        <Gap height={moderateScale(8)} width={0} />
         {isLogin ? (
           <React.Fragment>
             <ScrollView
@@ -66,13 +93,13 @@ const Cart = ({navigation}: CartProps) => {
                         {check ? (
                           <Icons
                             name="checkbox-outline"
-                            size={moderateScale(24)}
+                            size={moderateScale(22)}
                             color={colors.orange}
                           />
                         ) : (
                           <Icons
                             name="checkbox-blank-outline"
-                            size={moderateScale(24)}
+                            size={moderateScale(22)}
                             color={colors.orange}
                           />
                         )}
@@ -81,24 +108,41 @@ const Cart = ({navigation}: CartProps) => {
                   />
                 </View>
 
-                <Buttons
-                  disabled={false}
-                  onPress={onTrash}
-                  style={styles.btnTrash}>
-                  <IconFeather
-                    name="trash-2"
-                    size={moderateScale(24)}
-                    color={colors.orange}
-                  />
-                </Buttons>
+                {check && (
+                  <React.Fragment>
+                    <Gap height={0} width={moderateScale(6)} />
+                    <Buttons disabled={false} onPress={onTrash} style={{}}>
+                      <IconFeather
+                        name="trash-2"
+                        size={moderateScale(22)}
+                        color={colors.orange}
+                      />
+                    </Buttons>
+                  </React.Fragment>
+                )}
               </View>
-              <CartSections
-                onPress={() => goDetailProduct()}
-                check={check}
-                setCheck={setCheck}
-                value={value}
-                onValue={onValue}
+
+              <FlatList
+                data={dataCart}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                numColumns={2}
+                keyExtractor={(_item, index) => index.toString()}
+                renderItem={({item, index}) => {
+                  return (
+                    <CartSections
+                      key={index}
+                      onPress={() => goDetailProduct()}
+                      check={check}
+                      setCheck={setCheck}
+                      value={value}
+                      onValue={onValue}
+                      data={item}
+                    />
+                  );
+                }}
               />
+
               <Gap height={moderateScale(8)} width={0} />
             </ScrollView>
 

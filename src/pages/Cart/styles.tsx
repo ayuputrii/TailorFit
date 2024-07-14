@@ -5,7 +5,9 @@ import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   container: {
-    padding: moderateScale(16),
+    paddingTop: moderateScale(16),
+    paddingHorizontal: moderateScale(16),
+    backgroundColor: colors.basebg,
     flex: 1,
   },
   scroll: {
@@ -14,16 +16,16 @@ const styles = StyleSheet.create({
   viewChoose: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    marginBottom: moderateScale(16),
+    alignItems: 'center',
   },
   chooseCard: {
     backgroundColor: colors.white,
     borderRadius: moderateScale(6),
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: moderateScale(16),
-    marginRight: moderateScale(6),
     width: '35%',
-    paddingVertical: moderateScale(6),
+    height: moderateScale(35),
   },
   flexRow: {
     alignItems: 'center',
@@ -32,9 +34,7 @@ const styles = StyleSheet.create({
   txtChoose: {
     color: colors.darkgrey,
     fontFamily: fonts.PoppinsSemiBold,
-  },
-  btnTrash: {
-    marginTop: moderateScale(8),
+    fontSize: moderateScale(12),
   },
   flexRowBetween: {
     flexDirection: 'row',
