@@ -46,6 +46,9 @@ export interface ProductsTypes {
   materialProvider?: string | undefined;
   materialStock?: number;
   category?: string | undefined;
+  icon?: string | undefined;
+  value?: string | undefined;
+  label: string | undefined;
   favorite?: {
     _id?: string | undefined;
     customerId?: string | undefined;
