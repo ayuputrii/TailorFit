@@ -20,6 +20,7 @@ export const API_REVIEW = '/review';
 export const API_ADDRESS = '/address';
 export const API_GET_DEFAULT_ADDRESS = '/set-default';
 export const API_GOOGLE_REGISTER_LOGIN = '/auth/google-login';
+export const API_CART = '/cart';
 
 export const postDataWithToken = async (
   url: string,
