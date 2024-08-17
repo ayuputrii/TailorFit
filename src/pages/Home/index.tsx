@@ -29,7 +29,6 @@ import HomePage from './HomePage';
 const Home = ({navigation}: HomeProps) => {
   const ctx = useContext(AuthContext);
   const isLogin = ctx?.isLogin;
-  const onLogout = ctx?.onLogout;
 
   const width = Dimensions.get('window').width;
 
@@ -51,8 +50,8 @@ const Home = ({navigation}: HomeProps) => {
   const [filteredProducts, setFilteredProducts] = useState<ProductsTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('');
   const [keyword, setKeyword] = useState<string>('');
-  const [page, setPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(10);
+
+  console.log('response category', category);
 
   const firstName = `${
     userData?.fullName?.split(' ')[0] + ' ' + userData?.fullName?.split(' ')[1]
@@ -116,8 +115,7 @@ const Home = ({navigation}: HomeProps) => {
     const token = await getData('ACCESS_TOKEN');
     try {
       const response = await getDataWithToken(
-        BASE_URL +
-          `${API_PRODUCT}?page=${page}&perPage=${perPage}&q=${keyword}`,
+        BASE_URL + `${API_PRODUCT}?q=${keyword}`,
         token,
       );
       if (response?.data?.data) {
@@ -152,16 +150,18 @@ const Home = ({navigation}: HomeProps) => {
         getProducts();
         setShowModalNotif(true);
         setErrorFavorite(false);
-        setTitleModalNotif(response?.data?.message || 'Favorite added!');
+        setTitleModalNotif(
+          response?.data?.message || 'Produk Berhasil ditambahkan ke favorit',
+        );
       } else {
         setShowModalNotif(true);
         setErrorFavorite(true);
-        setTitleModalNotif('Failed add favorite!');
+        setTitleModalNotif('Produk belum berhasil ditambahkan ke favorit');
       }
     } catch (error) {
       setShowModalNotif(true);
       setErrorFavorite(true);
-      setTitleModalNotif('Failed add favorite!');
+      setTitleModalNotif('Produk belum berhasil ditambahkan ke favorit');
     }
   };
 
@@ -176,16 +176,18 @@ const Home = ({navigation}: HomeProps) => {
         getProducts();
         setShowModalNotif(true);
         setErrorFavorite(false);
-        setTitleModalNotif(response?.data?.message || 'Favorite deleted!');
+        setTitleModalNotif(
+          response?.data?.message || 'Produk Berhasil dihapus dari favorit',
+        );
       } else {
         setShowModalNotif(true);
         setErrorFavorite(true);
-        setTitleModalNotif('Failed deleted favorite!');
+        setTitleModalNotif('Produk belum berhasil dihapus dari favorit');
       }
     } catch (error) {
       setShowModalNotif(true);
       setErrorFavorite(true);
-      setTitleModalNotif('Failed deleted favorite!');
+      setTitleModalNotif('Produk belum berhasil dihapus dari favorit');
     }
   };
 
@@ -197,6 +199,7 @@ const Home = ({navigation}: HomeProps) => {
     setShowSearch(false);
     setFilteredProducts([]);
     setIsEmpty(false);
+    setKeyword('');
   };
 
   const onSearchDelete = () => {
