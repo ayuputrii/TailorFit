@@ -15,6 +15,7 @@ import {usePaymentTypeStore} from '../../store/usePaymentTypeStore';
 import {formatIdr} from '../../utils/format-number';
 import Accordion from 'react-native-collapsible/Accordion';
 import ContentProductCO from './ContentProductCO';
+import {fonts} from '../../utils/fonts';
 
 interface CheckoutSectionsProps {
   onPress: () => void;
@@ -23,6 +24,8 @@ interface CheckoutSectionsProps {
   setChecked: any;
   choosePayment: () => void;
   dataAddress: AddressTypes[];
+  isFullPayment: boolean;
+  setIsFullPayment: (v: boolean) => void;
 }
 const CheckoutSections = ({
   onPress,
@@ -31,6 +34,8 @@ const CheckoutSections = ({
   setChecked,
   choosePayment,
   dataAddress,
+  isFullPayment,
+  setIsFullPayment,
 }: CheckoutSectionsProps) => {
   const cartStore = useCartStore();
   const paymentTypeStore = usePaymentTypeStore();
@@ -69,6 +74,8 @@ const CheckoutSections = ({
   const renderContent = (item: any, _: any) => {
     return <ContentProductCO key={item?._id} {...item} />;
   };
+
+  const total = totalPrice + 1e5;
 
   return (
     <View style={styles.container}>
@@ -153,7 +160,7 @@ const CheckoutSections = ({
             <View style={styles.flexRowBetween}>
               <View style={styles.contentDelivery}>
                 <RadioButton
-                  value="first"
+                  value="FU"
                   uncheckedColor={colors.choco}
                   status={checked === 'first' ? 'checked' : 'unchecked'}
                   onPress={() => setChecked('first')}
@@ -178,16 +185,91 @@ const CheckoutSections = ({
           </Text>
 
           <Gap height={moderateScale(8)} width={0} />
-
           <View style={styles.hr} />
 
-          <Gap height={moderateScale(8)} width={0} />
+          <View>
+            <Text style={styles.titleDelivery}>Pilih Tipe Pembayaran</Text>
 
+            <View style={styles.hr} />
+
+            <View style={styles.flexRowBetween}>
+              <View style={styles.contentDelivery}>
+                <RadioButton
+                  value="isFullPayment"
+                  uncheckedColor={colors.choco}
+                  status={isFullPayment ? 'checked' : 'unchecked'}
+                  onPress={() => setIsFullPayment(true)}
+                  color={colors.orange}
+                />
+
+                <Gap height={moderateScale(2)} width={0} />
+
+                <Text style={[styles.text, {color: colors.black}]}>
+                  Full Payment
+                </Text>
+              </View>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.orange, fontFamily: fonts.PoppinsBold},
+                ]}>
+                {formatIdr(total)}
+              </Text>
+            </View>
+
+            <View style={styles.flexRowBetween}>
+              <View style={styles.contentDelivery}>
+                <RadioButton
+                  value="isFullPayment"
+                  uncheckedColor={colors.choco}
+                  status={!isFullPayment ? 'checked' : 'unchecked'}
+                  onPress={() => setIsFullPayment(false)}
+                  color={colors.orange}
+                />
+
+                <Gap height={moderateScale(2)} width={0} />
+
+                <Text style={[styles.text, {color: colors.black}]}>
+                  Down Payment
+                </Text>
+              </View>
+              <Text
+                style={[
+                  styles.text,
+                  {color: colors.orange, fontFamily: fonts.PoppinsBold},
+                ]}>
+                {formatIdr(total / 2)}
+              </Text>
+            </View>
+          </View>
+
+          <Gap height={moderateScale(6)} width={0} />
+
+          {!isFullPayment && (
+            <React.Fragment>
+              <View style={styles.hr} />
+
+              <Gap height={moderateScale(6)} width={0} />
+
+              <View style={styles.flexRowBetween}>
+                <Text style={styles.titleProduct}>Sisa Pembayaran:</Text>
+                <Text style={styles.title}>
+                  {formatIdr(isFullPayment ? total : total / 2)}
+                </Text>
+              </View>
+            </React.Fragment>
+          )}
+
+          <View style={styles.hr} />
+          <Gap height={moderateScale(6)} width={0} />
           <View style={styles.flexRowBetween}>
             <View>
               <Text style={styles.titleProduct}>Total</Text>
-              <Text style={styles.title}>{formatIdr(totalPrice + 1e5)}</Text>
+              <Text style={styles.title}>
+                {formatIdr(isFullPayment ? total : total / 2)}
+              </Text>
             </View>
+
             <Buttons
               disabled={false}
               style={styles.btnOrder}

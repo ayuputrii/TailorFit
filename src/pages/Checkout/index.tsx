@@ -27,6 +27,7 @@ const Checkout = ({navigation}: CheckoutProps) => {
   const [dataAddress, setDataAdsress] = useState<AddressTypes[]>([]);
 
   const [loadingDots, setLoadingDots] = useState(false);
+  const [isFullPayment, setIsFullPayment] = useState(false);
 
   const cartStore = useCartStore();
   const paymentTypeStore = usePaymentTypeStore();
@@ -58,6 +59,7 @@ const Checkout = ({navigation}: CheckoutProps) => {
           addressId: dataAddress.find(item => item.isDefault)?._id,
           products: cartStore.selectedCart,
           paymentType: paymentTypeStore.paymentType,
+          isFullPayment,
         },
         token,
       );
@@ -128,6 +130,8 @@ const Checkout = ({navigation}: CheckoutProps) => {
           setChecked={setChecked}
           choosePayment={choosePayment}
           dataAddress={dataAddress}
+          isFullPayment={isFullPayment}
+          setIsFullPayment={setIsFullPayment}
         />
       </BackHeader>
     </View>
