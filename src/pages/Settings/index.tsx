@@ -22,13 +22,13 @@ import IconsMaterialCommunity from 'react-native-vector-icons/MaterialCommunityI
 const MenuSettings = [
   {
     id: 1,
-    label: 'Edit Profile',
+    label: 'Ubah Profil',
     value: 'Profile',
     icon: <IconAwesome name="user-o" size={18} color={colors.darkgray} />,
   },
   {
     id: 2,
-    label: 'History Transaction',
+    label: 'Riwayat Transaksi',
     value: 'HistoryTransaction',
     icon: (
       <IconAwesome6
@@ -40,13 +40,13 @@ const MenuSettings = [
   },
   {
     id: 3,
-    label: 'Change Password',
+    label: 'Ubah Kata Sandi',
     value: 'ForgotPassword',
     icon: <IconFeather name="lock" size={18} color={colors.darkgray} />,
   },
   {
     id: 4,
-    label: 'Change Email',
+    label: 'Ubah Email',
     value: 'ChangeEmail',
     icon: (
       <IconsMaterialCommunity
@@ -84,7 +84,7 @@ const Settings = ({navigation}: SettingsProps) => {
         barStyle="dark-content"
       />
       <BackHeader
-        title="Settings"
+        title="Pengaturan"
         goBack={() => navigation?.goBack()}
         icon={
           isLogin && (
@@ -99,9 +99,10 @@ const Settings = ({navigation}: SettingsProps) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
-          <Gap height={moderateScale(20)} width={0} />
           {isLogin ? (
             <React.Fragment>
+              <Gap height={moderateScale(20)} width={0} />
+
               {MenuSettings?.map(items => (
                 <React.Fragment>
                   <CardCommons

@@ -27,7 +27,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
   const isLogin = ctx?.isLogin;
 
   const email = useMemo(() => {
-    return navigation.getState().routes.find(item => item.name === 'VerifyOTP')
+    return navigation.getState().routes.find(item => item.name === 'VerifiyOTP')
       ?.params?.email;
   }, [navigation]);
 
@@ -48,7 +48,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
     };
 
     if (password === '') {
-      setErrorPassword('Password is required');
+      setErrorPassword('Harap isi kata sandi baru Anda');
     } else {
       setErrorPassword('');
     }
@@ -67,14 +67,14 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Reset Password is Success');
+          setTitle('Kata Sandi Baru Anda Berhasil di Ubah');
           setMessage(response?.data?.message);
         } else {
           setIsError(true);
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Reset Password is Failed');
+          setTitle('Kata Sandi Baru Anda Belum Berhasil di Ubah');
           setMessage(response?.data?.message);
         }
       } catch (error: any) {
@@ -82,7 +82,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Reset Password is Failed');
+        setTitle('Kata Sandi Baru Anda Belum Berhasil di Ubah');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
     }
@@ -93,7 +93,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
       {isLogin ? (
         <View style={styles.container}>
           <BackHeader
-            title="Change Password"
+            title="Ubah Kata Sandi"
             goBack={() => navigation?.goBack()}
             icon={
               <IconANT
@@ -117,8 +117,8 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
         <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
           <ScrollView style={styles.scroll}>
             <HeaderNotLogin
-              title="Create New Password"
-              subTitle={`Please enter your new password and ${'\n'} confirm password.`}
+              title="Buat Kata Sandi Baru"
+              subTitle={`Harap isi kata sandi baru Anda dan ${'\n'} konfirmasi kata sandi.`}
               fontSizeSub={12}
               subColor={colors.lightgray}
               marginTop={0}

@@ -4,6 +4,7 @@ import {colors} from '../../utils/colors';
 import IconAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {moderateScale} from '../../utils/scale';
 import Shimmer from './Shimmer';
+import IconUser from '../../assets/icons/ic-user.svg';
 
 interface PhotoWithNotFoundProps {
   image?: string | any;
@@ -11,7 +12,6 @@ interface PhotoWithNotFoundProps {
   style?: any;
   width?: number;
   height?: number;
-  size?: number;
 }
 
 const PhotoWithNotFound = ({
@@ -20,7 +20,6 @@ const PhotoWithNotFound = ({
   style,
   width = 60,
   height = 60,
-  size = moderateScale(50),
 }: PhotoWithNotFoundProps) => {
   return (
     <View style={styles.container}>
@@ -34,7 +33,12 @@ const PhotoWithNotFound = ({
           style={[styles.image, style]}
         />
       ) : (
-        <IconAwesome5 name="user-alt" size={size} color={colors.black} />
+        <IconUser
+          name="user-alt"
+          color={colors.black}
+          width={moderateScale(50)}
+          height={moderateScale(50)}
+        />
       )}
     </View>
   );

@@ -22,17 +22,17 @@ interface ModalInputAddressProps {
   title: string;
   textBtn: string;
   onSubmit: () => void;
-  addressName: string;
-  setAddressName: Dispatch<SetStateAction<string>>;
-  errorAddressName: string;
-  phone: string;
-  setPhone: Dispatch<SetStateAction<string>>;
+  addressName: string | undefined;
+  setAddressName: Dispatch<SetStateAction<string | undefined>>;
+  errorAddressName: string | undefined;
+  phone: string | undefined;
+  setPhone: Dispatch<SetStateAction<string | undefined>>;
   errorPhone: string;
-  address: string;
-  setAddress: Dispatch<SetStateAction<string>>;
+  address: string | undefined;
+  setAddress: Dispatch<SetStateAction<string | undefined>>;
   errorAddress: string;
-  postCode: string;
-  setPostCode: Dispatch<SetStateAction<string>>;
+  postCode: string | undefined;
+  setPostCode: Dispatch<SetStateAction<string | undefined>>;
   errorPostCode: string;
   disabled: boolean;
   loading: boolean;
@@ -90,7 +90,7 @@ const ModalInputAddress = ({
               ref={refAddressName}
               value={addressName}
               onChangeText={setAddressName}
-              placeholder="Address Name"
+              placeholder="Nama Alamat"
               placeholderTextColor={'#AFAFAF'}
               styleInput={undefined}
               styleText={undefined}
@@ -101,7 +101,7 @@ const ModalInputAddress = ({
               ref={refPhone}
               value={phone}
               onChangeText={setPhone}
-              placeholder="Phone Number"
+              placeholder="Nomor Handphone"
               placeholderTextColor={'#AFAFAF'}
               styleInput={undefined}
               styleText={undefined}
@@ -112,7 +112,7 @@ const ModalInputAddress = ({
               ref={refAddress}
               value={address}
               onChangeText={setAddress}
-              placeholder="Address"
+              placeholder="Alamat"
               placeholderTextColor={'#AFAFAF'}
               styleInput={undefined}
               styleText={undefined}
@@ -123,7 +123,7 @@ const ModalInputAddress = ({
               ref={refPostCode}
               value={`${postCode}`}
               onChangeText={setPostCode}
-              placeholder="Post Code"
+              placeholder="Kode Pos"
               placeholderTextColor={'#AFAFAF'}
               styleInput={undefined}
               styleText={undefined}
@@ -132,7 +132,7 @@ const ModalInputAddress = ({
             />
 
             <View style={styles.flexBetweenCenter}>
-              <Text style={styles.txt}>Default Address ? </Text>
+              <Text style={styles.txt}>Alamat Utama ? </Text>
               <Switch
                 trackColor={{false: colors.lightgray, true: colors.lightgray}}
                 thumbColor={colors.orange}

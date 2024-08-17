@@ -1,9 +1,12 @@
+import {StylePropsWithArrayTransform} from 'react-native-reanimated/lib/typescript/reanimated2/layoutReanimation/animationBuilder/commonTypes';
+import {Asset} from 'react-native-image-picker';
 export interface menu {
   [x: string]: any;
   id?: string | undefined;
   label?: string | undefined;
   content?: string | undefined;
   title?: string | undefined;
+  value?: string | undefined;
 }
 
 export interface UserDataTypes {
@@ -54,6 +57,17 @@ export interface ProductsTypes {
     customerId?: string | undefined;
     productId?: string | undefined;
   };
+  total?: string | undefined;
+  quantity?: number;
+  quality?: 'REGULAR' | 'MEDIUM' | 'PREMIUM';
+  size?: 'CUSTOM' | 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL';
+  type?: 'STANDARD' | 'BODYFIT' | 'SLIMTFIT';
+  products?: [];
+  productId?: {
+    duration: string;
+    materialProvider: string;
+  };
+  slug?: string | undefined;
 }
 
 export interface RatingTypes {
@@ -70,4 +84,56 @@ export interface AddressTypes {
   addressDetail?: string | undefined;
   postalCode?: number | string | undefined;
   __v?: number;
+}
+interface SizeAttribute {
+  label: string;
+  value: number;
+}
+export interface Size {
+  _id: string;
+  name: string;
+  sizeDetail: {
+    neck: SizeAttribute;
+    shoulder: SizeAttribute;
+    bust: SizeAttribute;
+    sleeveLength: SizeAttribute;
+    armHole: SizeAttribute;
+    waist: SizeAttribute;
+    hip: SizeAttribute;
+    thigh: SizeAttribute;
+    knee: SizeAttribute;
+    length: SizeAttribute;
+  };
+}
+
+export interface Cart {
+  customerId: string;
+  productId: string | ProductsTypes;
+  quantity: number;
+  quality: string;
+  type: string;
+  size: string;
+  active: boolean;
+  references: (Asset | string)[];
+  sizeDetail: SizeDetail;
+  _id: string;
+  materialProvider: string;
+}
+
+interface SizeDetail {
+  neck: Attribute;
+  shoulder: Attribute;
+  bust: Attribute;
+  sleeveLength: Attribute;
+  armHole: Attribute;
+  waist: Attribute;
+  hip: Attribute;
+  thigh: Attribute;
+  knee: Attribute;
+  length: Attribute;
+}
+
+interface Attribute {
+  label: string;
+  value: number;
 }

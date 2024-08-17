@@ -2392,6 +2392,14 @@
     "@types/react" "*"
     react-native "*"
 
+"@types/react-native-indicators@^0.16.6":
+  version "0.16.6"
+  resolved "https://registry.npmjs.org/@types/react-native-indicators/-/react-native-indicators-0.16.6.tgz"
+  integrity sha512-m3H8cCX67zk7alEEdKdv+kYPzOHSCOiU+Brw04sXFBflw9R2HUM7IJnsM6lu96Lm7b8wyyW016ZsmzIHoQO3iQ==
+  dependencies:
+    "@types/react" "*"
+    react-native "*"
+
 "@types/react-native-snap-carousel@^3.8.11":
   version "3.8.11"
   resolved "https://registry.npmjs.org/@types/react-native-snap-carousel/-/react-native-snap-carousel-3.8.11.tgz"
@@ -2422,7 +2430,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.6":
+"@types/react@*", "@types/react@^18.2.6", "@types/react@>=16.8":
   version "18.2.74"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.2.74.tgz"
   integrity sha512-9AEqNZZyBx8OdZpxzQlaFEVCSFUM2YXJH46yPOiOpm078k6ZLOCcuAzGum/zK8YBwY+dbahVNbHrbgrAwIRlqw==
@@ -3498,6 +3506,11 @@ csstype@^3.0.2:
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.3.tgz"
   integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
 
+currency.js@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.npmjs.org/currency.js/-/currency.js-2.0.4.tgz"
+  integrity sha512-6/OplJYgJ0RUlli74d93HJ/OsKVBi8lB1+Z6eJYS1YZzBuIp4qKKHpJ7ad+GvTlWmLR/hLJOWTykN5Nm8NJ7+w==
+
 data-view-buffer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/data-view-buffer/-/data-view-buffer-1.0.1.tgz"
@@ -3944,6 +3957,11 @@ escape-string-regexp@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
+
+escape-string-regexp@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
 
 eslint-config-prettier@^8.5.0:
   version "8.10.0"
@@ -4784,7 +4802,7 @@ internal-slot@^1.0.7:
     hasown "^2.0.0"
     side-channel "^1.0.4"
 
-invariant@^2.2.4:
+invariant@^2.2.4, invariant@2.2.4:
   version "2.2.4"
   resolved "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -7029,7 +7047,7 @@ promzard@^1.0.0:
   dependencies:
     read "^3.0.1"
 
-prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1, prop-types@>=15.6.0:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1, prop-types@>=15.6.0:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7197,6 +7215,13 @@ react-native-images-preview@^0.0.1:
   resolved "https://registry.npmjs.org/react-native-images-preview/-/react-native-images-preview-0.0.1.tgz"
   integrity sha512-OQwjXyOrNiYYR5XeQ64s7cvQI6QS7/+XsWMchhGDxi7bE8QEmAyUc02+60Ity6sQpC0YNFLRzPCIjWtUJFlVZw==
 
+react-native-indicators@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.npmjs.org/react-native-indicators/-/react-native-indicators-0.17.0.tgz"
+  integrity sha512-s23em477GHGxWeGczWrixScAZD6tQU4mx1fttlrwhEGKOxhBgp55Kh3RoD9Wj4yna4e5W35xQNoPqoJAT6QW5A==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-linear-gradient@^2.8.3, react-native-linear-gradient@>=2.4.0:
   version "2.8.3"
   resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz"
@@ -7236,6 +7261,11 @@ react-native-pixel-perfect@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/react-native-pixel-perfect/-/react-native-pixel-perfect-1.0.2.tgz"
   integrity sha512-0IvYCNkxuQbQC9q4tI+C3i6o38nbx916p7gBRBWuPxDhKBCuTkVV3VukcfW6vtjRlwQm6kwQcF9OtI+yUBt+YA==
+
+react-native-radio-buttons-group@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/react-native-radio-buttons-group/-/react-native-radio-buttons-group-3.1.0.tgz"
+  integrity sha512-DiNM1yI6WfRygUZ+Z/bsjggyLypXsxRNXPNYpPHXSEVbRD6uF5Aei+HMIwyeRbfMKPtHwLq7cGsmUDV01i+rOQ==
 
 react-native-raw-bottom-sheet@^3.0.0:
   version "3.0.0"
@@ -7335,6 +7365,14 @@ react-native-vector-icons@*, react-native-vector-icons@^10.*, react-native-vecto
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
+react-native-webview@^13.10.5:
+  version "13.10.5"
+  resolved "https://registry.npmjs.org/react-native-webview/-/react-native-webview-13.10.5.tgz"
+  integrity sha512-ZfQJHyifuZop8cQB8HYpL9dxss9Cw9sOlMU+/yarfG/ugoL0rky/0tq9QmEydFMXjDSplSUb22OrRdFlqfXe0g==
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
+
 react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", "react-native@>= 0.30.0", "react-native@>= 0.47.x", react-native@>=0.57, react-native@>=0.57.0, react-native@>=0.59.0, react-native@>=0.6.0, react-native@>=0.61.3, react-native@>=0.64.0, react-native@>=0.65.0, react-native@0.73.6:
   version "0.73.6"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.73.6.tgz"
@@ -7401,7 +7439,7 @@ react-test-renderer@18.2.0:
     react-shallow-renderer "^16.15.0"
     scheduler "^0.23.0"
 
-react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, "react@>= 15.2.1", "react@>= 15.x", react@>=15.0.0, react@>=16.0, react@>=16.11.0, react@>=16.3.0, react@>=16.4.0, react@>=16.8, react@>=16.8.0, react@>=17.0.0, react@18.2.0:
+react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^18.2.0, "react@>= 15.2.1", "react@>= 15.x", react@>=15.0.0, react@>=16.0, react@>=16.11.0, react@>=16.3.0, react@>=16.4.0, react@>=16.8, react@>=16.8.0, react@>=17.0.0, react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -8523,6 +8561,11 @@ use-latest-callback@^0.1.5, use-latest-callback@^0.1.9:
   resolved "https://registry.npmjs.org/use-latest-callback/-/use-latest-callback-0.1.9.tgz"
   integrity sha512-CL/29uS74AwreI/f2oz2hLTW7ZqVeV5+gxFeGudzQrgkCytrHw33G4KbnQOrRlAEzzAFXi7dDLMC9zhWcVpzmw==
 
+use-sync-external-store@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
+  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
+
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
@@ -8842,3 +8885,10 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zustand@^4.5.4:
+  version "4.5.4"
+  resolved "https://registry.npmjs.org/zustand/-/zustand-4.5.4.tgz"
+  integrity sha512-/BPMyLKJPtFEvVL0E9E9BTUM63MNyhPGlvxk1XjrfWTUlV+BR8jufjsovHzrtR6YNcBEcL7cMHovL1n9xHawEg==
+  dependencies:
+    use-sync-external-store "1.2.0"

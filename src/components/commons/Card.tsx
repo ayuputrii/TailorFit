@@ -13,6 +13,7 @@ interface CardCommonsProps {
   children: ReactNode;
   style: any;
   onPress: () => void;
+  disabled?: boolean;
 }
 
 const CardCommons = ({
@@ -24,9 +25,10 @@ const CardCommons = ({
   children,
   style,
   onPress,
+  disabled,
 }: CardCommonsProps) => {
   return (
-    <Buttons onPress={onPress}>
+    <Buttons onPress={!disabled ? onPress : false} disabled={disabled}>
       <Card
         elevation={0}
         style={[styles.container, {backgroundColor}]}

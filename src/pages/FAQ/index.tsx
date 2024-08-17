@@ -1,7 +1,5 @@
 import React from 'react';
 import {BackHeader, Gap} from '../../components';
-import IconANT from 'react-native-vector-icons/AntDesign';
-import {colors} from '../../utils/colors';
 import {moderateScale} from '../../utils/scale';
 import {ScrollView, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -14,16 +12,7 @@ const FAQPage = () => {
 
   return (
     <View style={styles.container}>
-      <BackHeader
-        title="FAQ"
-        goBack={() => navigation?.goBack()}
-        icon={
-          <IconANT
-            name="logout"
-            color={colors.black}
-            size={moderateScale(20)}
-          />
-        }>
+      <BackHeader title="FAQ" goBack={() => navigation?.goBack()} icon={false}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>

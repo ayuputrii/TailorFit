@@ -40,24 +40,24 @@ const Register = ({navigation}: RegisterProps) => {
       password,
       role: 'CUSTOMER',
     };
-    console.log('data', data);
+
     if (email === '') {
-      setErrorEmail('Email is required');
+      setErrorEmail('Email harus diisi');
     } else {
       setErrorEmail('');
     }
     if (fullName === '') {
-      setErrorFullName('FullName is required');
+      setErrorFullName('Nama Lengkap harus diisi');
     } else {
       setErrorFullName('');
     }
     if (phone === '') {
-      setErrorPhone('Phone Number is required');
+      setErrorPhone('Nomor Handphone harus diisi');
     } else {
       setErrorPhone('');
     }
     if (password === '') {
-      setErrorPassword('Password is required');
+      setErrorPassword('Kata Sandi harus diisi');
     } else {
       setErrorPassword('');
     }
@@ -73,14 +73,14 @@ const Register = ({navigation}: RegisterProps) => {
           setDisabled(false);
           setErrors(false);
           setShowModal(true);
-          setTitle('Register is Success');
+          setTitle('Registrasi Berhasil');
           setMessage(response?.data?.message);
         } else {
           setLoading(false);
           setDisabled(false);
           setErrors(true);
           setShowModal(true);
-          setTitle('Register is Failed');
+          setTitle('Registrasi Belum Berhasil');
           setMessage(
             response?.data?.message ||
               response?.data?.error?.message ||
@@ -92,7 +92,7 @@ const Register = ({navigation}: RegisterProps) => {
         setDisabled(false);
         setErrors(true);
         setShowModal(true);
-        setTitle('Register is Failed');
+        setTitle('Register Belum Berhasil');
         setMessage(
           error?.data?.message ||
             "Server is encountered with problem! We'll fix it soon.",
@@ -124,14 +124,14 @@ const Register = ({navigation}: RegisterProps) => {
         setDisabled(false);
         setErrors(false);
         setShowModal(true);
-        setTitle('Register is Success');
+        setTitle('Register Berhasil');
         setMessage(response?.data?.message);
       } else {
         setLoading(false);
         setDisabled(false);
         setErrors(true);
         setShowModal(true);
-        setTitle('Register is Failed');
+        setTitle('Register Belum Berhasil');
         setMessage(
           response?.data?.message ||
             response?.data?.error?.message ||
@@ -143,7 +143,7 @@ const Register = ({navigation}: RegisterProps) => {
       setDisabled(false);
       setErrors(true);
       setShowModal(true);
-      setTitle('Register is Failed');
+      setTitle('Register Belum Berhasil');
       setMessage(
         error?.data?.message ||
           "Server is encountered with problem! We'll fix it soon.",
@@ -160,7 +160,7 @@ const Register = ({navigation}: RegisterProps) => {
         <View style={styles.content}>
           <HeaderNotLogin
             title="Sign Up"
-            subTitle={`Please enter your fullname, email, ${'\n'} userName and enter password.`}
+            subTitle={`Harap masukkan nama lengkap, nomor handphone, ${'\n'} email, dan kata sandi Anda.`}
             fontSizeSub={12}
             subColor={colors.lightgray}
             marginTop={0}
@@ -192,7 +192,7 @@ const Register = ({navigation}: RegisterProps) => {
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={errors ? 'Close' : 'Login'}
+        textBtn={errors ? 'Tutup' : 'Sign In'}
         onSubmit={() => {
           errors ? setShowModal(false) : navigation.replace('Login');
         }}

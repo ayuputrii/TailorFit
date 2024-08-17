@@ -91,6 +91,21 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PoppinsSemiBold,
     fontSize: moderateScale(12),
   },
+  productShimmerContainer: {
+    marginRight: moderateScale(8),
+    marginBottom: moderateScale(8),
+    width: '100%',
+  },
+  productShimmer: {
+    height: verticalScale(100),
+    borderRadius: moderateScale(8),
+    width: '100%',
+  },
+  shimmerChoose: {
+    width: '35%',
+    borderRadius: moderateScale(6),
+    height: moderateScale(35),
+  },
 });
 
 export default styles;

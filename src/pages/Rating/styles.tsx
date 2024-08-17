@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PoppinsSemiBold,
     color: colors.darkgray,
   },
+  modalError: {
+    height: moderateScale(450),
+  },
 });
 
 export default styles;

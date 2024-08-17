@@ -9,13 +9,12 @@ export const styles = StyleSheet.create({
   },
   contentProduct: {
     borderRadius: moderateScale(8),
-    marginRight: moderateScale(12),
     paddingHorizontal: moderateScale(6),
     paddingVertical: moderateScale(8),
     width: '100%',
   },
   imgProduct: {
-    height: moderateScale(200),
+    height: moderateScale(170),
     resizeMode: 'cover',
     width: '100%',
   },
@@ -48,9 +47,10 @@ export const styles = StyleSheet.create({
     shadowColor: colors.black,
   },
   imgRectangleBottom: {
-    bottom: moderateScale(-2),
-    left: moderateScale(0),
+    bottom: moderateScale(-6),
     position: 'absolute',
+    marginLeft: moderateScale(-10),
+    width: moderateScale(130),
   },
   price: {
     backgroundColor: colors.black,
@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
     left: moderateScale(2),
     position: 'absolute',
     borderRadius: moderateScale(8),
-    width: moderateScale(70),
+    width: moderateScale(90),
     height: moderateScale(30),
     justifyContent: 'center',
     alignItems: 'center',

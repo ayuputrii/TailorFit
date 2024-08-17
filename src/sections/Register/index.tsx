@@ -63,40 +63,40 @@ const RegisterSections = ({
         ref={refFullName}
         value={fullName}
         onChangeText={setFullName}
-        placeholder="Fullname"
+        placeholder="Masukkan Nama Lengkap"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
         error={errorFullName}
         onSubmitEditing={() => refEmail.current?.focus()}
       />
-      <InputText
-        ref={refEmail}
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email"
-        placeholderTextColor={colors.gray}
-        styleInput={undefined}
-        styleText={undefined}
-        error={errorEmail}
-        onSubmitEditing={() => refphone.current?.focus()}
-      />
       <InputNumber
         ref={refphone}
         value={phone}
         onChangeText={setPhone}
-        placeholder="Phone Number"
+        placeholder="Masukkan Nomor Handphone"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
         error={errorPhone}
         onSubmitEditing={() => refPassword.current?.focus()}
       />
+      <InputText
+        ref={refEmail}
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Masukkan Email"
+        placeholderTextColor={colors.gray}
+        styleInput={undefined}
+        styleText={undefined}
+        error={errorEmail}
+        onSubmitEditing={() => refphone.current?.focus()}
+      />
       <InputPassword
         ref={refPassword}
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder="Masukkan Kata Sandi"
         placeholderTextColor={colors.gray}
         error={errorPassword}
         onSubmitEditing={onRegister}
@@ -128,7 +128,7 @@ const RegisterSections = ({
         children={
           <React.Fragment>
             <Text style={[styles.txt, styles.colorLightBlack]}>
-              You have an account ?
+              Sudah memiliki akun ?
             </Text>
             <Text style={[styles.txt, styles.colorBoldBlack]}> Sign In</Text>
           </React.Fragment>

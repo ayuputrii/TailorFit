@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {colors} from '../../utils/colors';
 import {BackHeader, ModalConfirmation} from '../../components';
 import styles from './styles';
 import {ChangeEmailProps} from '../../navigation';
 import {API_CHANGE_EMAIL, BASE_URL, postDataWithToken} from '../../api';
-import IconANT from 'react-native-vector-icons/AntDesign';
-import {moderateScale} from '../../utils/scale';
 import {getData} from '../../utils/async-storage';
 import {CurrentEmailSections} from '../../sections';
 
@@ -27,7 +24,7 @@ const ChangeEmail = ({navigation}: ChangeEmailProps) => {
     };
 
     if (email === '') {
-      setErrorEmail('Email is required');
+      setErrorEmail('Email harus diisi');
     } else {
       setErrorEmail('');
     }
@@ -59,7 +56,7 @@ const ChangeEmail = ({navigation}: ChangeEmailProps) => {
           setDisabled(false);
           setShowModal(true);
           setModalError(true);
-          setTitle('Verify Email is Failed');
+          setTitle('Verifikasi Email Belum Berhasil');
           setMessage(
             response?.data?.message ||
               "Server is encountered with problem! We'll fix it soon.",
@@ -70,7 +67,7 @@ const ChangeEmail = ({navigation}: ChangeEmailProps) => {
         setDisabled(false);
         setShowModal(true);
         setModalError(true);
-        setTitle('Verify Email is Failed');
+        setTitle('Verifikasi Email Belum Berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
     }
@@ -80,15 +77,9 @@ const ChangeEmail = ({navigation}: ChangeEmailProps) => {
     <React.Fragment>
       <View style={styles.container}>
         <BackHeader
-          title="Change Email"
+          title="Ubah Email"
           goBack={() => navigation?.goBack()}
-          icon={
-            <IconANT
-              name="logout"
-              color={colors.black}
-              size={moderateScale(20)}
-            />
-          }>
+          icon={false}>
           <CurrentEmailSections
             email={email}
             setEmail={setEmail}

@@ -17,7 +17,7 @@ const ButtonLogin = ({navigation, style}: ButtonLoginProps) => {
       disabled={false}
       onPress={() => navigation.navigate('Login')}
       style={[styles.btnLogin, style]}>
-      <Text style={styles.txt}>Login</Text>
+      <Text style={styles.txt}>Sign In</Text>
     </Buttons>
   );
 };

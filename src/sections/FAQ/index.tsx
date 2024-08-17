@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import {styles} from './styles';
-import {CollapsibleView, ImageWithNotData} from '../../components';
+import {CollapsibleFAQ, ImageWithNotData} from '../../components';
 import {menu} from '../../types';
 
 interface FAQSectionsProps {
@@ -26,7 +26,7 @@ const FAQSections = ({data}: FAQSectionsProps) => {
   return (
     <ScrollView style={styles.container}>
       {data?.length ? (
-        <CollapsibleView
+        <CollapsibleFAQ
           toggleCollapse={toggleCollapse}
           collapsedIndexes={collapsedIndexes}
           data={data}

@@ -1,15 +1,16 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {View} from 'react-native';
-import {Buttons, Gap, InputTextArea, Text} from '../../components';
+import {ActivityIndicator, View} from 'react-native';
+import {
+  Buttons,
+  Gap,
+  InputMultipleFile,
+  InputTextArea,
+  Text,
+} from '../../components';
 import {styles} from './styles';
 import StarRating from 'react-native-star-rating-widget';
 import {moderateScale} from '../../utils/scale';
-import {
-  Asset,
-  ImageLibraryOptions,
-  launchImageLibrary,
-} from 'react-native-image-picker';
-import IconFeather from 'react-native-vector-icons/Feather';
+import {Asset} from 'react-native-image-picker';
 import {colors} from '../../utils/colors';
 
 interface RatingSectionsProps {
@@ -18,8 +19,10 @@ interface RatingSectionsProps {
   comment: string;
   setComment: Dispatch<SetStateAction<string>>;
   onSubmit: () => void;
-  photo: Asset[] | undefined | string;
-  setPhoto: Dispatch<SetStateAction<Asset[] | undefined | string>>;
+  file: (Asset | string)[];
+  setFile: Dispatch<SetStateAction<(Asset | string)[]>>;
+  disabled?: boolean;
+  loading?: boolean;
 }
 
 const RatingSections = ({
@@ -28,22 +31,11 @@ const RatingSections = ({
   comment,
   setComment,
   onSubmit,
-  photo,
-  setPhoto,
+  file,
+  setFile,
+  disabled,
+  loading,
 }: RatingSectionsProps) => {
-  const chooseFile = async (isCamera: boolean) => {
-    const options: ImageLibraryOptions = {
-      mediaType: isCamera ? 'photo' : 'video',
-    };
-
-    try {
-      const response = await launchImageLibrary(options);
-      setPhoto(response?.assets);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
   return (
     <View style={styles.content}>
       <Text style={styles.txt}>Give us a star</Text>
@@ -58,25 +50,8 @@ const RatingSections = ({
       <Gap height={moderateScale(16)} width={0} />
 
       <Text style={styles.txt}>Add Photo</Text>
-      <View style={styles.flexRowCenter}>
-        <Buttons
-          disabled={false}
-          style={styles.btnPhoto}
-          onPress={(isCamera: boolean) => chooseFile(isCamera)}>
-          <IconFeather
-            name="camera"
-            color={colors.gray}
-            size={moderateScale(30)}
-          />
-        </Buttons>
 
-        <Buttons
-          disabled={false}
-          style={styles.btnPhoto}
-          onPress={(isCamera: boolean) => chooseFile(isCamera)}>
-          {/* <ImageWithNotFound uri={} /> */}
-        </Buttons>
-      </View>
+      <InputMultipleFile file={file} setFile={setFile} />
 
       <Gap height={moderateScale(16)} width={0} />
 
@@ -92,8 +67,22 @@ const RatingSections = ({
 
       <Gap height={moderateScale(16)} width={0} />
 
-      <Buttons style={styles.btn} onPress={onSubmit}>
+      <Buttons
+        style={[
+          styles.btn,
+          {
+            backgroundColor: disabled ? colors.grey : colors.orange,
+          },
+        ]}
+        onPress={onSubmit}
+        disabled={disabled}>
         <Text style={styles.txtBtn}>Send</Text>
+        {loading && (
+          <>
+            <Gap width={moderateScale(8)} height={0} />
+            <ActivityIndicator size="small" color={colors.white} />
+          </>
+        )}
       </Buttons>
     </View>
   );

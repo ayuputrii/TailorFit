@@ -66,14 +66,16 @@ const HomeSections = ({
         loading={loading}
         showSearch={showSearch}
       />
-      <ProductHomeSections
-        filteredProducts={filteredProducts}
-        addFavorite={addFavorite}
-        isEmpty={isEmpty}
-        isLogin={isLogin}
-        deleteFavorite={deleteFavorite}
-        goDetailProduct={goDetailProduct}
-      />
+      {!loading && (
+        <ProductHomeSections
+          filteredProducts={filteredProducts}
+          addFavorite={addFavorite}
+          isEmpty={isEmpty}
+          isLogin={isLogin}
+          deleteFavorite={deleteFavorite}
+          goDetailProduct={goDetailProduct}
+        />
+      )}
       <Gap height={verticalScale(100)} width={0} />
     </ScrollView>
   );

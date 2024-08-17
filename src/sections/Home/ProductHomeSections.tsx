@@ -22,7 +22,7 @@ const ProductHomeSections = ({
 }: ProductHomeSectionsProps) => {
   return (
     <React.Fragment>
-      {filteredProducts?.length ? (
+      {Boolean(filteredProducts?.length) ? (
         <FlatList
           data={filteredProducts}
           showsHorizontalScrollIndicator={false}
@@ -34,8 +34,10 @@ const ProductHomeSections = ({
               <ProductsSections
                 key={index}
                 goDetailProduct={() => goDetailProduct({...item})}
-                addFavorite={() => addFavorite(item?._id)}
-                deleteFavorite={() => deleteFavorite(item?.favorite?._id)}
+                addFavorite={() => addFavorite(item?._id as string)}
+                deleteFavorite={() =>
+                  deleteFavorite(item?.favorite?._id as string)
+                }
                 data={item}
                 isLogin={isLogin}
               />
@@ -44,7 +46,9 @@ const ProductHomeSections = ({
         />
       ) : isEmpty ? (
         <ImageWithNotData style={{}} />
-      ) : null}
+      ) : (
+        <ImageWithNotData style={{}} />
+      )}
     </React.Fragment>
   );
 };

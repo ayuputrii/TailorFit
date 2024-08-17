@@ -5,6 +5,7 @@ import InputSearch from './InputSearch';
 import InputDropdown from './InputDropdown';
 import InputCalendar from './InputCalendar';
 import InputTextArea from './InputTextArea';
+import InputMultipleFile from './InputMultipleFile';
 
 export {
   InputText,
@@ -14,4 +15,5 @@ export {
   InputDropdown,
   InputCalendar,
   InputTextArea,
+  InputMultipleFile,
 };

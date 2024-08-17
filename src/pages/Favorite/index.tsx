@@ -25,8 +25,6 @@ const Favorite = ({navigation}: FavoriteProps) => {
   const ctx = useContext(AuthContext);
   const isLogin = ctx?.isLogin;
 
-  const [isFavorite, setIsFavorite] = useState(null);
-
   const [titleModalNotif, setTitleModalNotif] = useState<string>('');
   const [dataFavorite, setDataFavorite] = useState([]);
 
@@ -50,7 +48,7 @@ const Favorite = ({navigation}: FavoriteProps) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log('get favorite error');
+      setDataFavorite([]);
     }
   };
 
@@ -62,20 +60,21 @@ const Favorite = ({navigation}: FavoriteProps) => {
         token,
       );
       if (response?.data?.success) {
-        setIsFavorite(null);
         getFavorite();
         setShowModalNotif(true);
         setErrorFavorite(false);
-        setTitleModalNotif(response?.data?.message || 'Favorite deleted!');
+        setTitleModalNotif(
+          response?.data?.message || 'Produk tersimpan berhasil dihapus!',
+        );
       } else {
         setShowModalNotif(true);
         setErrorFavorite(true);
-        setTitleModalNotif('Failed deleted favorite!');
+        setTitleModalNotif('Belum Berhasil menghapus produk tersimpan!');
       }
     } catch (error) {
       setShowModalNotif(true);
       setErrorFavorite(true);
-      setTitleModalNotif('Failed deleted favorite!');
+      setTitleModalNotif('Belum Berhasil menghapus produk tersimpan!');
     }
   };
 
@@ -105,7 +104,7 @@ const Favorite = ({navigation}: FavoriteProps) => {
         barStyle="dark-content"
       />
       <BackHeader
-        title="Favorite"
+        title="Produk Tersimpan"
         goBack={() => navigation?.goBack()}
         icon={false}>
         <ScrollView
@@ -114,16 +113,18 @@ const Favorite = ({navigation}: FavoriteProps) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
-          <Gap height={moderateScale(8)} width={0} />
           {isLogin ? (
-            <FavoriteSections
-              data={dataFavorite}
-              loading={loading || refreshing}
-              isLogin={isLogin}
-              isFavorite={isFavorite}
-              navigation={navigation}
-              onDeleteFavorite={onDeleteFavorite}
-            />
+            <React.Fragment>
+              <Gap height={moderateScale(8)} width={0} />
+
+              <FavoriteSections
+                data={dataFavorite}
+                loading={loading || refreshing}
+                isLogin={isLogin}
+                navigation={navigation}
+                onDeleteFavorite={onDeleteFavorite}
+              />
+            </React.Fragment>
           ) : (
             <ImageWithNotLogin navigation={navigation} />
           )}

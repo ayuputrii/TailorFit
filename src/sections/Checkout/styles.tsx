@@ -7,15 +7,23 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     flex: 1,
+    marginBottom: moderateScale(8),
   },
   scroll: {
     marginVertical: moderateScale(8),
+    marginBottom: moderateScale(40),
   },
   card: {
     width: '100%',
     backgroundColor: colors.white,
     borderRadius: moderateScale(8),
     paddingVertical: moderateScale(16),
+  },
+  cardPayment: {
+    width: '100%',
+    backgroundColor: colors.white,
+    borderRadius: moderateScale(10),
+    paddingVertical: moderateScale(8),
   },
   flexRowBetween: {
     flexDirection: 'row',
@@ -55,6 +63,12 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PoppinsSemiBold,
     color: colors.choco,
   },
+  txtTf: {
+    fontSize: moderateScale(10),
+    fontFamily: fonts.PoppinsSemiBold,
+    color: colors.choco,
+    marginTop: moderateScale(6),
+  },
   text: {
     fontSize: moderateScale(10),
     fontFamily: fonts.PoppinsRegular,
@@ -72,7 +86,7 @@ const styles = StyleSheet.create({
     left: moderateScale(0),
   },
   hr: {
-    borderWidth: moderateScale(1),
+    borderWidth: moderateScale(0.6),
     width: '100%',
     borderColor: '#C3BFBF',
     opacity: moderateScale(0.6),
@@ -99,10 +113,63 @@ const styles = StyleSheet.create({
     fontFamily: fonts.PoppinsSemiBold,
     fontSize: moderateScale(12),
   },
-  notFound: {
-    width: moderateScale(80),
-    height: moderateScale(80),
+  imgProduct: {
+    width: moderateScale(50),
+    height: moderateScale(50),
     resizeMode: 'cover',
+    borderRadius: moderateScale(8),
+  },
+  notFound: {
+    width: moderateScale(50),
+    height: moderateScale(50),
+    resizeMode: 'cover',
+    borderRadius: moderateScale(8),
+  },
+  txtAddressNoData: {
+    color: colors.grey,
+    fontFamily: fonts.PoppinsBold,
+    fontSize: moderateScale(14),
+    marginTop: moderateScale(4),
+  },
+  contentAccordion: {
+    paddingHorizontal: moderateScale(16),
+    paddingBottom: moderateScale(24),
+  },
+  flexColumn: {
+    flexDirection: 'column',
+  },
+  cardSize: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: moderateScale(4),
+  },
+  size: {
+    fontSize: moderateScale(12),
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    color: colors.black,
+    textAlign: 'center',
+    marginBottom: moderateScale(4),
+  },
+  valueSize: {
+    fontSize: moderateScale(12),
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    color: colors.white,
+    textAlign: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: colors.orange,
+    borderRadius: moderateScale(16),
+    width: moderateScale(50),
+    paddingVertical: moderateScale(4),
+  },
+  mark: {
+    color: colors.white,
+    backgroundColor: colors.choco,
+    width: moderateScale(60),
+    textAlign: 'center',
+    marginLeft: moderateScale(8),
     borderRadius: moderateScale(8),
   },
 });

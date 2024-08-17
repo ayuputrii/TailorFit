@@ -53,7 +53,7 @@ const LoginSections = ({
         ref={refEmail}
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder="Masukkan Email"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
@@ -64,7 +64,7 @@ const LoginSections = ({
         ref={refPassword}
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder="Masukkan Kata Sandi"
         placeholderTextColor={colors.gray}
         error={errorPassword}
         onSubmitEditing={onLogin}
@@ -90,7 +90,7 @@ const LoginSections = ({
                 />
               )}
               <Gap width={8} height={0} />
-              <Text style={styles.txt}>Remember me</Text>
+              <Text style={styles.txt}>Ingat Saya</Text>
             </View>
           }
         />
@@ -98,7 +98,7 @@ const LoginSections = ({
           style={false}
           disabled={false}
           onPress={() => navigation.navigate('ForgotPassword')}
-          children={<Text style={styles.txt}>Forgot Password ? </Text>}
+          children={<Text style={styles.txt}>Lupa Kata Sandi ? </Text>}
         />
       </View>
       <Buttons
@@ -128,7 +128,7 @@ const LoginSections = ({
         children={
           <React.Fragment>
             <Text style={[styles.txt, styles.colorLightBlack]}>
-              You Don’t have an account ?
+              Anda belum memiliki akun ?
             </Text>
             <Text style={[styles.txt, styles.colorBoldBlack]}> Sign Up</Text>
           </React.Fragment>

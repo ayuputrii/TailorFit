@@ -8,4 +8,5 @@ export default {
   imgNoData: require('./no-image.jpeg'),
   imgProduct: require('./product.png'),
   imgPromo: require('./promo.png'),
+  imgBank: require('./img-logobank.jpg'),
 };

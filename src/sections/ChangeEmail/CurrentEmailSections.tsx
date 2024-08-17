@@ -28,7 +28,7 @@ const CurrentEmailSections = ({
       <InputText
         value={email}
         onChangeText={setEmail}
-        placeholder="Current Email"
+        placeholder="Masukkan Email Anda"
         placeholderTextColor={colors.gray}
         error={errorCurrentEmail}
         styleInput={undefined}
@@ -43,7 +43,7 @@ const CurrentEmailSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.text}>Send Email</Text>
+            <Text style={styles.text}>Kirim Email</Text>
           </View>
         }
         disabled={disabled}

@@ -13,6 +13,7 @@ interface InputDropdownProps {
   setValue: (gender: menu) => void;
   isFocus: boolean;
   setIsFocus: Dispatch<SetStateAction<boolean>>;
+  placeholder: string;
 }
 const InputDropdown = ({
   data,
@@ -20,6 +21,7 @@ const InputDropdown = ({
   setValue,
   isFocus,
   setIsFocus,
+  placeholder,
 }: InputDropdownProps) => {
   return (
     <React.Fragment>
@@ -31,14 +33,14 @@ const InputDropdown = ({
           data={[
             {
               id: '',
-              label: 'Choose Gender',
+              label: 'Pilih',
             },
             ...data,
           ]}
           maxHeight={300}
           labelField="label"
           valueField="id"
-          placeholder={!isFocus ? 'Select item' : '...'}
+          placeholder={placeholder}
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}

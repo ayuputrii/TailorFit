@@ -80,7 +80,6 @@ const HomePage = ({
           onClose={onCloseSearch}
           onClearText={() => setKeyword('')}
           onSearchDelete={onSearchDelete}
-          isLogin={isLogin}
         />
       ) : (
         <Header
@@ -91,30 +90,13 @@ const HomePage = ({
           }
           image={userData?.profilePicture}
           icon={
-            <React.Fragment>
-              <Buttons disabled={false} onPress={onShowSearch} style={{}}>
-                <Icon
-                  name="search-outline"
-                  size={moderateScale(28)}
-                  color={colors.black}
-                />
-              </Buttons>
-              {isLogin && (
-                <React.Fragment>
-                  <Gap width={moderateScale(10)} height={0} />
-                  <Buttons
-                    disabled={false}
-                    onPress={() => navigation.navigate('NotificationPage')}
-                    style={{}}>
-                    <Icon
-                      name="notifications-outline"
-                      size={moderateScale(28)}
-                      color={colors.black}
-                    />
-                  </Buttons>
-                </React.Fragment>
-              )}
-            </React.Fragment>
+            <Buttons disabled={false} onPress={onShowSearch} style={{}}>
+              <Icon
+                name="search-outline"
+                size={moderateScale(28)}
+                color={colors.black}
+              />
+            </Buttons>
           }
           loading={loading || refreshing}
         />

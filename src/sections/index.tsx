@@ -18,6 +18,11 @@ import ChangeEmailSections from './ChangeEmail';
 import FAQSections from './FAQ';
 import RatingSections from './Rating';
 import HistoryTransactionSections from './HistoryTransaction';
+import NotificationSections from './Notification';
+import CustomSizeSections from './CustomSize';
+import DetailTransactionSections from './DetailTransaction';
+import ChoosePaymentSections from './ChoosePayment';
+import OrderSections from './Order';
 
 export {
   Login,
@@ -40,4 +45,9 @@ export {
   FAQSections,
   RatingSections,
   HistoryTransactionSections,
+  NotificationSections,
+  CustomSizeSections,
+  DetailTransactionSections,
+  ChoosePaymentSections,
+  OrderSections,
 };

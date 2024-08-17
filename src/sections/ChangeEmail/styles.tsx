@@ -5,7 +5,7 @@ import {moderateScale} from '../../utils/scale';
 const styles = StyleSheet.create({
   content: {
     width: '100%',
-    marginTop: moderateScale(34),
+    marginTop: moderateScale(24),
   },
   btn: {
     width: '100%',

@@ -33,7 +33,7 @@ const NewPasswordSections = ({
       <InputPassword
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder="Masukkan Kata Sandi Baru Anda"
         placeholderTextColor={colors.gray}
         error={errorPassowrd}
         onSubmitEditing={onConfirmPassword}

@@ -1,25 +1,24 @@
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction, useMemo} from 'react';
 import {RefreshControl, ScrollView, View} from 'react-native';
 import {
-  Buttons,
   CarouselImage,
   Gap,
   ImageWithNotData,
-  ModalBottom,
+  LoadingDots,
   Shimmer,
   Text,
 } from '../../components';
 import {moderateScale, verticalScale} from '../../utils/scale';
 import {ProductsTypes, RatingTypes} from '../../types';
 import styles from './styles';
-import {formatMoney} from '../../utils/format-number';
+import {formatIdr} from '../../utils/format-number';
 import {colors} from '../../utils/colors';
 import {StarRatingDisplay} from 'react-native-star-rating-widget';
 import TabsProductDetail from './TabsProductDetail';
 import {images} from '../../assets';
 import {ImagePreview} from 'react-native-images-preview';
-import NumericInput from 'react-native-numeric-input';
-
+import OrderDetailModal from './OrderDetailModal';
+import {Asset} from 'react-native-image-picker';
 interface ProductDetailSectionsProps {
   width: any;
   products: ProductsTypes;
@@ -27,13 +26,31 @@ interface ProductDetailSectionsProps {
   refreshing: boolean;
   onRefresh: () => void;
   loading: boolean;
-  onBuy: () => void;
-  onCart: () => void;
+  onOrder: () => void;
   refRBSheet: any;
   navigation: any;
   isLogin: boolean | undefined;
   rating: RatingTypes | undefined;
   review: string;
+  quality: {id: number; name: string}[];
+  type: {id: number; name: string}[];
+  selectedType: number;
+  selectedQuality: number;
+  selectedSize: number;
+  handleMenuPress: (val: number, segment: 'quality' | 'size' | 'type') => void;
+  file: (Asset | string)[];
+  setFile: Dispatch<SetStateAction<(Asset | string)[]>>;
+  onCustomizeSize: () => void;
+  detail: ProductsTypes;
+  onShowBuy: () => void;
+  onShowCart: () => void;
+  materialProvider: string;
+  setMaterialProvider: Dispatch<SetStateAction<string>>;
+  quantity: number;
+  onQuantity: ({v}: {v: number}) => void;
+  loadingDots: boolean;
+  enableContinue: boolean;
+  enableCustom: boolean;
 }
 
 const ProductDetailSections = ({
@@ -43,22 +60,50 @@ const ProductDetailSections = ({
   refreshing,
   onRefresh,
   loading,
-  onBuy,
-  onCart,
+  onOrder,
   refRBSheet,
   navigation,
   isLogin,
   rating,
   review,
+  quality,
+  type,
+  selectedQuality,
+  selectedSize,
+  selectedType,
+  handleMenuPress,
+  file,
+  setFile,
+  onCustomizeSize,
+  detail,
+  onShowBuy,
+  onShowCart,
+  materialProvider,
+  setMaterialProvider,
+  quantity,
+  onQuantity,
+  loadingDots,
+  enableContinue,
+  enableCustom,
 }: ProductDetailSectionsProps) => {
-  const [value, setValue] = useState(0);
-
-  const onValue = ({v}: {v: number}) => {
-    setValue(v);
-  };
+  const radioButtons = useMemo(
+    () => [
+      {
+        id: '1',
+        label: 'Tailor',
+        value: 'tailor',
+      },
+      {
+        id: '2',
+        label: 'Me',
+        value: 'me',
+      },
+    ],
+    [],
+  );
 
   return (
-    <>
+    <React.Fragment>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -150,7 +195,7 @@ const ProductDetailSections = ({
               </View>
               <View style={styles.viewTextRight}>
                 <Text style={styles.textPrice}>
-                  {'Rp' + formatMoney(products?.price) || 'N/A'}
+                  {formatIdr(products?.price ? products?.price : 0)}
                 </Text>
               </View>
             </View>
@@ -173,59 +218,34 @@ const ProductDetailSections = ({
         )}
       </ScrollView>
 
-      <ModalBottom
-        height={200}
-        refRBSheet={refRBSheet}
-        button={
-          <View style={styles.flexRow}>
-            <Buttons disabled={false} onPress={onBuy} style={styles.btn}>
-              <Text style={styles.txtBtn}>Buy Now</Text>
-            </Buttons>
-            <Buttons
-              disabled={false}
-              onPress={onCart}
-              style={[
-                styles.btn,
-                {
-                  backgroundColor: colors.darkChoco,
-                },
-              ]}>
-              <Text style={styles.txtBtn}>Add to Cart</Text>
-            </Buttons>
-          </View>
-        }>
-        <View style={styles.contentModal}>
-          <View style={styles.flexBetweenCenter}>
-            <Text style={styles.titleModal}>Total QTY</Text>
-            <NumericInput
-              value={value}
-              onChange={v => onValue({v})}
-              onLimitReached={(isMax, msg) => console.log(isMax, msg)}
-              totalWidth={moderateScale(100)}
-              totalHeight={moderateScale(30)}
-              iconSize={moderateScale(12)}
-              step={1}
-              minValue={0}
-              valueType="real"
-              rounded
-              textColor={colors.orange}
-              borderColor={colors.grey}
-              iconStyle={{color: colors.black}}
-              rightButtonBackgroundColor={colors.white}
-              leftButtonBackgroundColor={colors.white}
-              upDownButtonsBackgroundColor={colors.white}
-            />
-          </View>
-          <Gap height={moderateScale(16)} width={0} />
-          <Buttons
-            disabled={false}
-            onPress={onCart}
-            style={[styles.btn, styles.btnTake]}>
-            <Text style={styles.txtBtn}>Take Body Size</Text>
-          </Buttons>
-        </View>
-      </ModalBottom>
-    </>
+      {loadingDots ? (
+        <LoadingDots />
+      ) : (
+        <OrderDetailModal
+          materialProvider={materialProvider}
+          onOrder={onOrder}
+          onShowBuy={onShowBuy}
+          onShowCart={onShowCart}
+          refRBSheet={refRBSheet}
+          quality={quality}
+          type={type}
+          selectedQuality={selectedQuality}
+          selectedSize={selectedSize}
+          selectedType={selectedType}
+          handleMenuPress={handleMenuPress}
+          radioButtons={radioButtons}
+          setMaterialProvider={setMaterialProvider}
+          quantity={quantity}
+          onQuantity={onQuantity}
+          file={file}
+          setFile={setFile}
+          onCustomizeSize={onCustomizeSize}
+          detail={detail}
+          enableContinue={enableContinue}
+          enableCustom={enableCustom}
+        />
+      )}
+    </React.Fragment>
   );
 };
 

@@ -32,7 +32,7 @@ const ForgotPasswordSections = ({
       <InputText
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder="Masukkan Email Anda"
         placeholderTextColor={colors.gray}
         error={errorEmail}
         styleInput={undefined}
@@ -47,7 +47,7 @@ const ForgotPasswordSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.text}>Send Email</Text>
+            <Text style={styles.text}>Kirim Email</Text>
           </View>
         }
         disabled={disabled}

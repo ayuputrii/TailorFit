@@ -37,7 +37,6 @@ const CELL_COUNT = 6;
 const VerifyOTP = ({navigation}: VerifyOTPProps) => {
   const route = useRoute();
 
-  console.log('route', route);
   const ctx = useContext(AuthContext);
   const isLogin = ctx?.isLogin;
 
@@ -73,7 +72,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
     };
 
     if (value === '') {
-      setErrorOTP('OTP is required');
+      setErrorOTP('Harap isi OTP');
     } else {
       setErrorOTP('');
     }
@@ -92,14 +91,14 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
           setDisabled(false);
           setIsError(false);
           setShowModal(true);
-          setTitle('Verify OTP is Success');
+          setTitle('Verifikasi OTP Berhasil');
           setMessage(response?.data?.message);
         } else {
           setLoading(false);
           setDisabled(false);
           setIsError(true);
           setShowModal(true);
-          setTitle('Verify OTP is Failed');
+          setTitle('Verifikasi OTP Belum Berhasil');
           setMessage(response?.data?.message);
         }
       } catch (error: any) {
@@ -107,7 +106,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
         setDisabled(false);
         setIsError(true);
         setShowModal(true);
-        setTitle('Verify OTP is Failed');
+        setTitle('Verifikasi OTP Belum Berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
     }
@@ -134,14 +133,14 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
         setLoadingReset(false);
         setDisabled(false);
         setShowModalEmail(true);
-        setTitle('Verify Email is Failed');
+        setTitle('Verifikasi Email Belum Berhasil');
         setMessage(response?.data?.message);
       }
     } catch (error: any) {
       setLoadingReset(false);
       setDisabled(false);
       setShowModalEmail(true);
-      setTitle('Verify Email is Failed');
+      setTitle('Verifikasi Email Belum Berhasil');
       setMessage("Server is encountered with problem! We'll fix it soon.");
     }
   };
@@ -151,15 +150,9 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
       {isLogin ? (
         <View style={styles.container}>
           <BackHeader
-            title={'Verify OTP'}
+            title={'Verifikasi OTP'}
             goBack={() => navigation?.goBack()}
-            icon={
-              <IconANT
-                name="logout"
-                color={colors.black}
-                size={moderateScale(20)}
-              />
-            }>
+            icon={false}>
             <View style={styles.scrollLogin}>
               <CodeField
                 ref={ref}
@@ -195,7 +188,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
                       <ActivityIndicator size="small" color={colors.orange} />
                     )}
                     <Gap width={moderateScale(3)} height={0} />
-                    <Text style={styles.txt}>Resend Code...</Text>
+                    <Text style={styles.txt}>Kirim Ulang Kode...</Text>
                   </View>
                 }
                 disabled={false}
@@ -210,7 +203,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
                       <ActivityIndicator size="small" color={colors.white} />
                     )}
                     <Gap width={moderateScale(3)} height={0} />
-                    <Text style={styles.text}>Verify</Text>
+                    <Text style={styles.text}>Verifikasi OTP</Text>
                   </View>
                 }
                 disabled={disabled}
@@ -222,8 +215,8 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
         <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
           <ScrollView style={styles.scroll}>
             <HeaderNotLogin
-              title="Verify Your Email"
-              subTitle={`Please enter the 4 digit code sent to ${'\n'} ayuputri.12378@gmal.com.`}
+              title="Verifikasi Email Anda"
+              subTitle={`Harap isi 4 kode yang telah dikirimkan ke email Anda di${'\n'} ${email}`}
               fontSizeSub={12}
               subColor={colors.lightgray}
               marginTop={0}
@@ -278,7 +271,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
                     <ActivityIndicator size="small" color={colors.white} />
                   )}
                   <Gap width={moderateScale(3)} height={0} />
-                  <Text style={styles.text}>Verify</Text>
+                  <Text style={styles.text}>Verifikasi OTP</Text>
                 </View>
               }
               disabled={disabled}
@@ -315,7 +308,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
         onClose={() => setShowModalEmail(false)}
         title={title}
         message={message}
-        textBtn="Close"
+        textBtn="Tutup"
         onSubmit={() => setShowModalEmail(false)}
         style={styles.modal}
       />

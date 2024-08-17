@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.orange,
     padding: moderateScale(14),
     borderRadius: moderateScale(10),
+    flexDirection: 'row',
   },
   txtBtn: {
     color: colors.white,

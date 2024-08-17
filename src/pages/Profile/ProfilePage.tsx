@@ -58,7 +58,7 @@ const ProfilePage = ({
   return (
     <React.Fragment>
       <BackHeader
-        title="Edit Profile"
+        title="Ubah Profil"
         goBack={() => navigation?.goBack()}
         icon={false}>
         <ScrollView
@@ -93,7 +93,7 @@ const ProfilePage = ({
         onClose={setShowModal}
         title={title}
         message={message}
-        textBtn="Close"
+        textBtn="Tutup"
         onSubmit={setShowModal}
         style={undefined}
       />

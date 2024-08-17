@@ -24,7 +24,8 @@ const AddressSections = ({onPress, data, onTrash}: AddressProps) => {
         subTitle={''}
         titleStyle={false}
         subTitleStyle={false}
-        onPress={false}
+        onPress={() => {}}
+        disabled={false}
         style={styles.card}>
         <View style={styles.flexRowBetween}>
           <View style={styles.content}>

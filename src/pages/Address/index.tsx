@@ -38,11 +38,11 @@ const Address = ({navigation}: AddressProps) => {
 
   const [title, setTitle] = useState('');
   const [dataAddress, setDataAddress] = useState<AddressTypes[]>([]);
-  const [addressName, setAddressName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [postCode, setPostCode] = useState('');
-  const [idAddress, setIdAddress] = useState('');
+  const [addressName, setAddressName] = useState<string | undefined>('');
+  const [phone, setPhone] = useState<string | undefined>('');
+  const [address, setAddress] = useState<string | undefined>('');
+  const [postCode, setPostCode] = useState<string | undefined>('');
+  const [idAddress, setIdAddress] = useState<string | undefined>('');
   const [isDefault, setIsDefault] = useState(false);
 
   const [errorAddressName, setErrorAddressName] = useState('');
@@ -58,7 +58,7 @@ const Address = ({navigation}: AddressProps) => {
         setDataAddress(response?.data?.data);
       }
     } catch (error) {
-      console.log('error get address', error);
+      setDataAddress([]);
     }
   };
 
@@ -71,22 +71,22 @@ const Address = ({navigation}: AddressProps) => {
 
   const addAddress = async () => {
     if (addressName === '') {
-      setErrorAddressName('Address Name is required');
+      setErrorAddressName('Nama Alamat Name harus diisi');
     } else {
       setErrorAddressName('');
     }
     if (phone === '') {
-      setErrorPhone('Phone is required');
+      setErrorPhone('Nomor Handphone harus diisi');
     } else {
       setErrorPhone('');
     }
     if (address === '') {
-      setErrorAddress('Address is required');
+      setErrorAddress('Alamat harus diisi');
     } else {
       setErrorAddress('');
     }
     if (postCode === '') {
-      setErrorPostCode('Post Code is required');
+      setErrorPostCode('Kode Pos harus diisi');
     } else {
       setErrorPostCode('');
     }

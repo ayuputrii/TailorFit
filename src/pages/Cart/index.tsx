@@ -1,67 +1,144 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {
-  BackHeader,
-  Buttons,
-  CardCommons,
-  Gap,
-  ImageWithNotLogin,
-  Text,
-} from '../../components';
+import React, {useState, useContext, useEffect, useMemo} from 'react';
+import {BackHeader, Gap, ImageWithNotLogin} from '../../components';
 import {colors} from '../../utils/colors';
 import {moderateScale} from '../../utils/scale';
-import {
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  View,
-} from 'react-native';
+import {SafeAreaView, StatusBar, View} from 'react-native';
 import styles from './styles';
 import {CartProps} from '../../navigation';
-import {CartSections} from '../../sections';
 import {AuthContext} from '../../context/AuthContext';
-import IconFeather from 'react-native-vector-icons/Feather';
-import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {API_CART, BASE_URL, getDataWithToken} from '../../api';
+import {
+  API_CART,
+  BASE_URL,
+  getDataWithToken,
+  postDataWithToken,
+} from '../../api';
 import {getData} from '../../utils/async-storage';
+import {useCartStore} from '../../store/useCartStore';
+import {Cart as CartType, ProductsTypes} from '../../types';
+import {useIsBuyStore} from '../../store/useIsBuyStore';
+import useCartConfig from '../../hooks/useCartConfig';
+import CartLogin from './CartLogin';
+import OrderDetailModal from '../../sections/ProductDetail/OrderDetailModal';
 
 const Cart = ({navigation}: CartProps) => {
   const ctx = useContext(AuthContext);
   const isLogin = ctx?.isLogin;
 
   const [check, setCheck] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [loadingDots, setLoadingDots] = useState(false);
 
-  const [value, setValue] = useState(0);
-  const [dataCart, setDataCart] = useState([]);
+  const [cartId, setCartId] = useState('');
+  const cartConfig = useCartConfig({
+    cartId,
+  });
 
-  const onValue = ({v}: {v: number}) => {
-    setValue(v);
-  };
+  const cartStore = useCartStore();
+  const isBuyStore = useIsBuyStore();
+
+  useEffect(() => {
+    isBuyStore.setNotBuy();
+  }, []);
 
   const getDataCart = async () => {
+    setLoading(true);
     const token = await getData('ACCESS_TOKEN');
+
     try {
       const response = await getDataWithToken(BASE_URL + API_CART, token);
       if (response?.data?.data) {
-        setDataCart(response?.data?.data);
+        cartStore?.setCart(response?.data?.data);
+        setLoading(false);
       } else {
-        setDataCart([]);
+        setLoading(false);
       }
     } catch (error) {
-      console.log('get cart error', error);
-      setDataCart([]);
+      setLoading(false);
     }
   };
 
-  const goDetailProduct = () => {
-    navigation?.navigate('ProductDetail');
+  const onRefresh = async () => {
+    setRefreshing(true);
+
+    await getDataCart();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
   };
 
-  const onTrash = () => {};
+  useEffect(() => {
+    getDataCart();
+    setRefreshing(false);
+  }, []);
 
   useEffect(() => {
     getDataCart();
   }, []);
+
+  const totalPrice = useMemo(() => {
+    const selected = cartStore?.cart.filter(item =>
+      cartStore?.selectedCart?.includes(item?._id),
+    );
+    const allPrice = selected.reduce((acc, cur) => {
+      const price =
+        cur?.quantity * ((cur.productId as ProductsTypes)?.price || 1);
+
+      return acc + price;
+    }, 0);
+
+    return allPrice;
+  }, [cartStore?.cart, cartStore?.selectedCart]);
+
+  const onCheckAll = () => {
+    setCheck(!check);
+    if (check) {
+      cartStore?.setSelectedCart([]);
+    } else {
+      cartStore?.setSelectedCart(cartStore?.cart.map(item => item._id));
+    }
+  };
+
+  const onDeleteCart = async () => {
+    setLoadingDots(true);
+    try {
+      const token = await getData('ACCESS_TOKEN');
+      await postDataWithToken(
+        `${BASE_URL}${API_CART}/delete/multiple/`,
+        {
+          cartIds: cartStore?.selectedCart,
+        },
+        token,
+      );
+      cartStore?.setCart(
+        cartStore?.cart.filter(
+          item => !cartStore?.selectedCart.includes(item._id),
+        ),
+      );
+      cartStore?.setSelectedCart([]);
+      setCheck(false);
+      setLoadingDots(false);
+    } catch (err) {
+      setLoadingDots(false);
+    }
+  };
+
+  const isChecked = useMemo(() => {
+    const equalLength =
+      cartStore?.cart.length === cartStore?.selectedCart.length;
+    const notZero =
+      cartStore?.cart.length !== 0 && cartStore?.selectedCart.length !== 0;
+    return check || (equalLength && notZero);
+  }, [check, cartStore?.cart, cartStore?.selectedCart]);
+
+  const onPressItem = (id: string) => {
+    setLoadingDots(true);
+    setCartId(id);
+  };
+
+  const onCloseModalBottom = () => {
+    setCartId('');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,105 +148,54 @@ const Cart = ({navigation}: CartProps) => {
         barStyle="dark-content"
       />
       <BackHeader
-        title="My Cart"
+        title="Keranjang Belanja"
         goBack={() => navigation?.goBack()}
         icon={false}>
         {isLogin ? (
           <React.Fragment>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              style={styles.scroll}>
-              <View style={styles.viewChoose}>
-                <View style={styles.chooseCard}>
-                  <Buttons
-                    style={false}
-                    disabled={false}
-                    onPress={() => setCheck(!check)}
-                    children={
-                      <View style={styles.flexRow}>
-                        <Text style={styles.txtChoose}>Choose All</Text>
-                        <Gap width={8} height={0} />
-                        {check ? (
-                          <Icons
-                            name="checkbox-outline"
-                            size={moderateScale(22)}
-                            color={colors.orange}
-                          />
-                        ) : (
-                          <Icons
-                            name="checkbox-blank-outline"
-                            size={moderateScale(22)}
-                            color={colors.orange}
-                          />
-                        )}
-                      </View>
-                    }
-                  />
-                </View>
-
-                {check && (
-                  <React.Fragment>
-                    <Gap height={0} width={moderateScale(6)} />
-                    <Buttons disabled={false} onPress={onTrash} style={{}}>
-                      <IconFeather
-                        name="trash-2"
-                        size={moderateScale(22)}
-                        color={colors.orange}
-                      />
-                    </Buttons>
-                  </React.Fragment>
-                )}
-              </View>
-
-              <FlatList
-                data={dataCart}
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                numColumns={2}
-                keyExtractor={(_item, index) => index.toString()}
-                renderItem={({item, index}) => {
-                  return (
-                    <CartSections
-                      key={index}
-                      onPress={() => goDetailProduct()}
-                      check={check}
-                      setCheck={setCheck}
-                      value={value}
-                      onValue={onValue}
-                      data={item}
-                    />
-                  );
-                }}
-              />
-
-              <Gap height={moderateScale(8)} width={0} />
-            </ScrollView>
-
-            <CardCommons
-              title={''}
-              subTitle={''}
-              titleStyle={false}
-              subTitleStyle={false}
-              onPress={() => navigation.navigate('Checkout')}
-              style={styles.cardBottom}>
-              <View style={styles.flexRowBetween}>
-                <View style={styles.viewBottom}>
-                  <Text style={styles.title}>Total</Text>
-                  <Text style={styles.text1}>Rp 100.000</Text>
-                </View>
-                <Buttons
-                  disabled={false}
-                  style={styles.btn}
-                  onPress={() => navigation.navigate('Checkout')}>
-                  <Text style={styles.txtCheckout}>Checkout (16)</Text>
-                </Buttons>
-              </View>
-            </CardCommons>
+            <CartLogin
+              loading={loading}
+              onCheckAll={onCheckAll}
+              isChecked={isChecked}
+              onDeleteCart={onDeleteCart}
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              onPressItem={onPressItem}
+              navigation={navigation}
+              totalPrice={totalPrice}
+            />
+            <OrderDetailModal
+              materialProvider={cartConfig!.materialProvider}
+              onOrder={cartConfig!.onOrder}
+              onShowBuy={cartConfig!.onShowBuy}
+              onShowCart={cartConfig!.onShowCart}
+              refRBSheet={cartConfig!.refRBSheet}
+              quality={cartConfig!.quality}
+              type={cartConfig!.type}
+              selectedQuality={cartConfig!.selectedQuality}
+              selectedSize={cartConfig!.selectedSize}
+              selectedType={cartConfig!.selectedType}
+              handleMenuPress={cartConfig!.handleMenuPress}
+              radioButtons={cartConfig!.radioButtons}
+              setMaterialProvider={cartConfig!.setMaterialProvider}
+              quantity={cartConfig!.quantity}
+              onQuantity={cartConfig!.onQuantity}
+              file={cartConfig!.file}
+              setFile={cartConfig!.setFile}
+              onCustomizeSize={cartConfig!.onCustomizeSize}
+              detail={cartConfig!.detail}
+              enableContinue={cartConfig!.enableContinue}
+              enableCustom={cartConfig!.enableCustom}
+              trigger={<View />}
+              setLoadingDots={setLoadingDots}
+              loadingDots={loadingDots}
+              onCloseModalBottom={onCloseModalBottom}
+            />
           </React.Fragment>
         ) : (
           <ImageWithNotLogin navigation={navigation} />
         )}
+
         <Gap height={moderateScale(8)} width={0} />
       </BackHeader>
     </SafeAreaView>

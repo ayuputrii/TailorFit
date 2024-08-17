@@ -28,7 +28,7 @@ const HomeSearchSections = ({
 }: HomeSearchSectionsProps) => {
   return (
     <React.Fragment>
-      {loading && !showSearch ? (
+      {Boolean(loading && !showSearch) ? (
         <React.Fragment>
           <Shimmer style={styles.imgShimmerPromo} />
           <Gap height={verticalScale(14)} width={0} />

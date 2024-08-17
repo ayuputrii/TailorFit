@@ -51,8 +51,8 @@ const TabsProductDetail = ({
                       onPress={() => navigation?.navigate('Review')}
                       disabled={false}
                       style={styles.flexBetweenCenter}>
-                      <Text style={styles.seeAll}>Review</Text>
-                      <Text style={styles.seeAll}>See All</Text>
+                      <Text style={styles.seeAll}>Ulasan dan Penilaian</Text>
+                      <Text style={styles.seeAll}>Lihat Semua</Text>
                     </Buttons>
                     <Gap height={moderateScale(12)} width={0} />
                   </>
@@ -61,7 +61,6 @@ const TabsProductDetail = ({
                   data={review}
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
-                  numColumns={2}
                   renderItem={({item, index}) => {
                     return (
                       <React.Fragment key={index}>

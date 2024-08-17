@@ -20,6 +20,12 @@ import Review from './Review';
 import ChangeEmail from './ChangeEmail';
 import NewEmail from './ChangeEmail/NewEmail';
 import FAQPage from './FAQ';
+import Notification from './Notification';
+import CustomSize from './CustomSize';
+import DetailTransaction from './DetailTransaction';
+import ChoosePayment from './ChoosePayment';
+import SizeInformation from './SizeInformation';
+import Order from './Order';
 
 export {
   SplashScreenPage,
@@ -44,4 +50,10 @@ export {
   ChangeEmail,
   NewEmail,
   FAQPage,
+  Notification,
+  CustomSize,
+  DetailTransaction,
+  ChoosePayment,
+  SizeInformation,
+  Order,
 };

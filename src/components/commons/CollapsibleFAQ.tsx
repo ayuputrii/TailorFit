@@ -8,17 +8,17 @@ import {fonts} from '../../utils/fonts';
 import {menu} from '../../types';
 import Gap from './Gap';
 
-interface CollapsibleProps {
+interface CollapsibleFAQProps {
   toggleCollapse: (index: number, id: number) => void;
   collapsedIndexes: Record<number, boolean | any>;
   data: menu[];
 }
 
-const CollapsibleView = ({
+const CollapsibleFAQ = ({
   toggleCollapse,
   collapsedIndexes,
   data,
-}: CollapsibleProps) => {
+}: CollapsibleFAQProps) => {
   return (
     <React.Fragment>
       {data &&
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     padding: moderateScale(16),
     backgroundColor: colors.white,
     borderRadius: moderateScale(10),
+    marginBottom: moderateScale(8),
   },
   item: {
     flexDirection: 'row',
@@ -96,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CollapsibleView;
+export default CollapsibleFAQ;

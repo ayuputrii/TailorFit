@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: moderateScale(8),
-    width: moderateScale(80),
+    width: moderateScale(100),
     height: moderateScale(30),
     paddingHorizontal: moderateScale(16),
   },
@@ -89,8 +89,9 @@ const styles = StyleSheet.create({
   },
   txtBtn: {
     color: colors.white,
-    fontSize: moderateScale(15),
+    fontSize: moderateScale(14),
     fontFamily: fonts.PoppinsBold,
+    textAlign: 'center',
   },
   noData: {
     flex: moderateScale(1),
@@ -121,6 +122,12 @@ const styles = StyleSheet.create({
     color: colors.darkgrey,
     fontFamily: fonts.PoppinsSemiBold,
     paddingHorizontal: moderateScale(4),
+  },
+  hr: {
+    color: colors.lightgray,
+    width: '100%',
+    borderWidth: moderateScale(0.2),
+    marginVertical: moderateScale(10),
   },
 });
 

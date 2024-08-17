@@ -24,8 +24,8 @@ const TabViews = ({renderScene, length}: TabViewsProps) => {
 
   const [index, setIndex] = useState(0);
   const [routes] = useState(() => [
-    {key: 'detail', title: 'Detail Product'},
-    {key: 'review', title: 'Review', totalReview: totalReview},
+    {key: 'detail', title: 'Detail Produk'},
+    {key: 'review', title: 'Ulasan', totalReview: totalReview},
   ]);
 
   useEffect(() => {

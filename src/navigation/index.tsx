@@ -16,6 +16,7 @@ import {
   Home,
   Settings,
   HistoryTransaction,
+  DetailTransaction,
   Rating,
   Cart,
   Checkout,
@@ -29,9 +30,15 @@ import {
   ChangeEmail,
   NewEmail,
   FAQPage,
+  Notification,
+  CustomSize,
+  ChoosePayment,
+  SizeInformation,
+  Order,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
+import {ProductsTypes} from '../types';
 
 export type NavigationParam = {
   MainTabs: undefined;
@@ -47,6 +54,7 @@ export type NavigationParam = {
   Settings: undefined;
   Profile: undefined;
   HistoryTransaction: undefined;
+  DetailTransaction: undefined;
   FAQPage: undefined;
   Rating: undefined;
   Cart: undefined;
@@ -55,8 +63,15 @@ export type NavigationParam = {
   Favorite: undefined;
   Address: undefined;
   Payment: undefined;
-  ProductDetail: undefined;
+  ChoosePayment: undefined;
+  ProductDetail: Partial<ProductsTypes> & {
+    openBottomSheet: boolean | undefined;
+  };
   Review: undefined;
+  Notification: undefined;
+  CustomSize: undefined;
+  SizeInformation: undefined;
+  Order: undefined;
 };
 
 type MainTabsNavigationProp = BottomTabNavigationProp<
@@ -200,6 +215,19 @@ export type HistoryTransactionProps = {
   route: HistoryTransactionRouteProp;
 };
 
+type DetailTransactionNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'DetailTransaction'
+>;
+type DetailTransactionRouteProp = RouteProp<
+  NavigationParam,
+  'DetailTransaction'
+>;
+export type DetailTransactionProps = {
+  navigation: DetailTransactionNavigationProp;
+  route: DetailTransactionRouteProp;
+};
+
 type RatingNavigationProp = StackNavigationProp<NavigationParam, 'Rating'>;
 type RatingRouteProp = RouteProp<NavigationParam, 'Rating'>;
 export type RatingProps = {
@@ -258,11 +286,58 @@ export type PaymentProps = {
   route: PaymentRouteProp;
 };
 
+type ChoosePaymentNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'ChoosePayment'
+>;
+type ChoosePaymentRouteProp = RouteProp<NavigationParam, 'ChoosePayment'>;
+export type ChoosePaymentProps = {
+  navigation: ChoosePaymentNavigationProp;
+  route: ChoosePaymentRouteProp;
+};
+
 type ReviewNavigationProp = BottomTabNavigationProp<NavigationParam, 'Review'>;
 type ReviewRouteProp = RouteProp<NavigationParam, 'Review'>;
 export type ReviewProps = {
   navigation: ReviewNavigationProp;
   route: ReviewRouteProp;
+};
+
+type NotificationNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'Notification'
+>;
+type NotificationRouteProp = RouteProp<NavigationParam, 'Notification'>;
+export type NotificationProps = {
+  navigation: NotificationNavigationProp;
+  route: NotificationRouteProp;
+};
+
+type CustomSizeNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'CustomSize'
+>;
+type CustomSizeRouteProp = RouteProp<NavigationParam, 'CustomSize'>;
+export type CustomSizeProps = {
+  navigation: CustomSizeNavigationProp;
+  route: CustomSizeRouteProp;
+};
+
+type SizeInformationNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'SizeInformation'
+>;
+type SizeInformationRouteProp = RouteProp<NavigationParam, 'SizeInformation'>;
+export type SizeInformationProps = {
+  navigation: SizeInformationNavigationProp;
+  route: SizeInformationRouteProp;
+};
+
+type OrderNavigationProp = BottomTabNavigationProp<NavigationParam, 'Order'>;
+type OrderRouteProp = RouteProp<NavigationParam, 'Order'>;
+export type OrderProps = {
+  navigation: OrderNavigationProp;
+  route: OrderRouteProp;
 };
 
 const navigationRef = React.createRef();
@@ -277,7 +352,7 @@ const MainTabs = () => {
   return (
     <BottomTabs
       Home={Home}
-      // Chat={Chat}
+      Order={Order}
       Favorite={Favorite}
       Settings={Settings}
       Cart={Cart}
@@ -396,6 +471,14 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
+      name="Order"
+      component={Order}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
       name="Checkout"
       component={Checkout}
     />
@@ -422,6 +505,14 @@ const RootStackScreen = () => (
       }}
       name="HistoryTransaction"
       component={HistoryTransaction}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="DetailTransaction"
+      component={DetailTransaction}
     />
     <RootStack.Screen
       options={{
@@ -460,8 +551,40 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
+      name="ChoosePayment"
+      component={ChoosePayment}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
       name="Review"
       component={Review}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="Notification"
+      component={Notification}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="CustomSize"
+      component={CustomSize}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="SizeInformation"
+      component={SizeInformation}
     />
   </RootStack.Navigator>
 );

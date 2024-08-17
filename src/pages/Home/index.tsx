@@ -66,7 +66,7 @@ const Home = ({navigation}: HomeProps) => {
         setUserData(response?.data?.data);
       }
     } catch (error) {
-      console.log('Get profile error...', error);
+      setUserData({});
     }
   };
 
@@ -77,7 +77,7 @@ const Home = ({navigation}: HomeProps) => {
         setPromotion(response?.data?.data);
       }
     } catch (error) {
-      console.log('Get promotion error...', error);
+      setPromotion([]);
     }
   };
 
@@ -88,7 +88,7 @@ const Home = ({navigation}: HomeProps) => {
         setCategory([{_id: '', name: 'All'}, ...response?.data?.data]);
       }
     } catch (error) {
-      console.log('Get category error...', error);
+      setCategory([]);
     }
   };
 

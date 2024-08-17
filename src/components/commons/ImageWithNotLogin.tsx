@@ -23,7 +23,10 @@ const ImageWithNotLogin = ({navigation}: ImageWithNotLoginProps) => {
         />
       </View>
       <Gap height={verticalScale(20)} width={0} />
-      <Text style={styles.text}>Sorry, you have not access login.</Text>
+      <Text style={styles.text}>
+        Maaf, kamu tidak punya akses ke halaman ini. Harap masuk akun terlebih
+        dahulu!
+      </Text>
       <Gap height={moderateScale(8)} width={0} />
       <ButtonLogin style={styles.btn} navigation={navigation} />
     </View>
@@ -50,6 +53,7 @@ const styles = StyleSheet.create({
     color: colors.orange,
     fontFamily: fonts.PoppinsSemiBold,
     fontSize: moderateScale(16),
+    textAlign: 'center',
   },
   btn: {
     width: '50%',

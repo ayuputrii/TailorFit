@@ -42,7 +42,7 @@ const InputSearch = forwardRef<TextInput, InputSearchProps>(
         <Buttons style={{}} disabled={false} onPress={onClearText}>
           <Icon
             name="closecircle"
-            size={moderateScale(20)}
+            size={moderateScale(18)}
             color={colors.black}
           />
         </Buttons>
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     borderWidth: moderateScale(1),
     borderColor: colors.lightgray,
     borderRadius: moderateScale(16),
-    height: moderateScale(50),
     paddingHorizontal: moderateScale(6),
     justifyContent: 'center',
     flexDirection: 'row',
@@ -67,6 +66,7 @@ const styles = StyleSheet.create({
   InputSearch: {
     color: colors.black,
     fontFamily: fonts.PoppinsRegular,
+    height: moderateScale(38),
     width: '90%',
   },
 });

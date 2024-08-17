@@ -41,12 +41,12 @@ const Login = ({navigation}: LoginProps) => {
     };
 
     if (email === '') {
-      setErrorEmail('Email is required');
+      setErrorEmail('Email harus diisi');
     } else {
       setErrorEmail('');
     }
     if (password === '') {
-      setErrorPassword('Password is required');
+      setErrorPassword('Password harus diisi');
     } else {
       setErrorPassword('');
     }
@@ -76,7 +76,7 @@ const Login = ({navigation}: LoginProps) => {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Login is Failed');
+          setTitle('Login Belum Berhasil');
           setMessage(
             response?.data?.message ||
               response?.data?.error?.message ||
@@ -87,10 +87,10 @@ const Login = ({navigation}: LoginProps) => {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Login is Failed');
+        setTitle('Login Belum Berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
-      setTitle('Login is Failed');
+      setTitle('Login Belum Berhasil');
       setMessage("Server is encountered with problem! We'll fix it soon.");
     } else {
       setLoading(false);
@@ -132,7 +132,7 @@ const Login = ({navigation}: LoginProps) => {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Login is Failed');
+        setTitle('Login Belum Berhasil');
         setMessage(
           response?.data?.message ||
             response?.data?.error?.message ||
@@ -143,7 +143,7 @@ const Login = ({navigation}: LoginProps) => {
       setLoading(false);
       setDisabled(false);
       setShowModal(true);
-      setTitle('Login is Failed');
+      setTitle('Login Belum Berhasil');
       setMessage("Server is encountered with problem! We'll fix it soon.");
     }
   };
@@ -163,7 +163,7 @@ const Login = ({navigation}: LoginProps) => {
             <View style={styles.content}>
               <HeaderNotLogin
                 title="Sign In"
-                subTitle="Please enter your email and enter password."
+                subTitle="Harap masukkan email dan kata sandi Anda."
                 fontSizeSub={12}
                 subColor={colors.lightgray}
                 marginTop={0}
@@ -193,7 +193,7 @@ const Login = ({navigation}: LoginProps) => {
           onClose={() => setShowModal(false)}
           title={title}
           message={message}
-          textBtn="Close"
+          textBtn="Tutup"
           onSubmit={() => setShowModal(false)}
           style={undefined}
         />

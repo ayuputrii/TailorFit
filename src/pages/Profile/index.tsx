@@ -79,17 +79,16 @@ const Profile = ({navigation}: ProfileProps) => {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Update Profile is Success');
+        setTitle('Ubah Profil Berhasil');
         setMessage(
-          response?.data?.message ||
-            'Congratulation Update profile is success.',
+          response?.data?.message || 'Selamat, Anda berhasil mengubah profil.',
         );
         getUser();
       } else {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Update Profile is Failed');
+        setTitle('Ubah Profil Belum Berhasil');
         setMessage(
           response?.message ||
             response?.error?.message ||
@@ -101,7 +100,7 @@ const Profile = ({navigation}: ProfileProps) => {
       setLoading(false);
       setDisabled(false);
       setShowModal(true);
-      setTitle('Update Profile is Failed');
+      setTitle('Ubah Profil Belum Berhasil');
       setMessage(error?.message);
       getUser();
     }

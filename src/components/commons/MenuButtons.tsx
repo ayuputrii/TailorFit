@@ -6,13 +6,18 @@ import Text from './Text';
 import {colors} from '../../utils/colors';
 import {moderateScale, verticalScale} from '../../utils/scale';
 import {fonts} from '../../utils/fonts';
+import {menu, Size} from '../../types';
 interface MenuButtonsProps {
   activeMenuIndex: number;
   setActiveMenuIndex: (index: number) => void;
   index: number;
-  item: any;
+  item: Size | menu;
   onPress: () => void;
   disabled: boolean;
+  bgColor?: string;
+  bgColorInActive?: string;
+  txtColor?: string;
+  txtColorInActive?: string;
 }
 
 const MenuButtons = ({
@@ -22,6 +27,10 @@ const MenuButtons = ({
   item,
   onPress,
   disabled,
+  bgColor = colors.black,
+  bgColorInActive = colors.white,
+  txtColor = colors.white,
+  txtColorInActive = colors.black,
 }: MenuButtonsProps) => {
   return (
     <React.Fragment>
@@ -31,7 +40,7 @@ const MenuButtons = ({
           styles.button,
           {
             backgroundColor:
-              activeMenuIndex === index ? colors.black : colors.white,
+              activeMenuIndex === index ? bgColor : bgColorInActive,
           },
         ]}
         onPress={() => {
@@ -42,7 +51,7 @@ const MenuButtons = ({
           style={[
             styles.text,
             {
-              color: activeMenuIndex === index ? colors.white : colors.black,
+              color: activeMenuIndex === index ? txtColor : txtColorInActive,
             },
           ]}>
           {item?.name}
@@ -56,17 +65,15 @@ const MenuButtons = ({
 
 const styles = StyleSheet.create({
   button: {
-    width: moderateScale(100),
+    width: moderateScale(120),
     borderRadius: moderateScale(20),
     justifyContent: 'center',
     alignItems: 'center',
-    height: verticalScale(40),
+    height: verticalScale(35),
     marginBottom: moderateScale(16),
   },
   text: {
-    fontSize: moderateScale(14),
-    width: moderateScale(80),
-    flexWrap: 'wrap',
+    fontSize: moderateScale(12),
     textAlign: 'center',
     fontFamily: fonts.PoppinsSemiBold,
   },

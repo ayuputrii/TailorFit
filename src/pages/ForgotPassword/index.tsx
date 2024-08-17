@@ -17,9 +17,7 @@ import {
   postDataWithToken,
 } from '../../api';
 import {images} from '../../assets';
-import IconANT from 'react-native-vector-icons/AntDesign';
 import {AuthContext} from '../../context/AuthContext';
-import {moderateScale} from '../../utils/scale';
 import {getData} from '../../utils/async-storage';
 
 const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
@@ -42,7 +40,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
     };
 
     if (email === '') {
-      setErrorEmail('Email is required');
+      setErrorEmail('Email harus diisi');
     } else {
       setErrorEmail('');
     }
@@ -72,7 +70,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
           setDisabled(false);
           setShowModal(true);
           setModalError(true);
-          setTitle('Verify Email is Failed');
+          setTitle('Verifikasi Email Belum Berhasil');
           setMessage(
             response?.data?.message ||
               "Server is encountered with problem! We'll fix it soon.",
@@ -83,7 +81,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
         setDisabled(false);
         setShowModal(true);
         setModalError(true);
-        setTitle('Verify Email is Failed');
+        setTitle('Verifikasi Email Belum Berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
     }
@@ -94,15 +92,9 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
       {isLogin ? (
         <View style={styles.container}>
           <BackHeader
-            title="Change Password"
+            title="Ubah Kata Sandi"
             goBack={() => navigation?.goBack()}
-            icon={
-              <IconANT
-                name="logout"
-                color={colors.black}
-                size={moderateScale(20)}
-              />
-            }>
+            icon={false}>
             <ForgotPasswordSections
               email={email}
               setEmail={setEmail}
@@ -119,8 +111,8 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
         <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
           <ScrollView style={styles.scroll}>
             <HeaderNotLogin
-              title="Forgot Password"
-              subTitle={`Please enter the email with your account ${'\n'} and well send the instruction to ${'\n'} reset to your email.`}
+              title="Lupa Kata Sandi"
+              subTitle={`Silakan masukkan email dengan akun Anda ${'\n'} dan kami akan mengirimkan kode ${'\n'} ke email Anda`}
               fontSizeSub={12}
               subColor={colors.lightgray}
               marginTop={0}
@@ -144,7 +136,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={'Close'}
+        textBtn={'Tutup'}
         onSubmit={() => setShowModal(false)}
         style={modalError ? styles.modalError : null}
       />

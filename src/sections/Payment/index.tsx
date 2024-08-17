@@ -17,7 +17,8 @@ const PaymentSections = () => {
         subTitle={''}
         titleStyle={false}
         subTitleStyle={false}
-        onPress={false}
+        onPress={() => {}}
+        disabled={false}
         style={styles.card}>
         <View style={styles.flexRowBetween}>
           <Text style={styles.text}>Total Payment</Text>
@@ -40,7 +41,8 @@ const PaymentSections = () => {
         subTitle={''}
         titleStyle={false}
         subTitleStyle={false}
-        onPress={false}
+        onPress={() => {}}
+        disabled={false}
         style={styles.card}>
         <View style={styles.flexRow}>
           <IconMaterial

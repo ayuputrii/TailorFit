@@ -6,8 +6,8 @@ import {images} from '../../assets';
 
 interface ImageWithNotFoundProps {
   uri: string | any;
-  style: any;
-  styleNoData: any;
+  style?: any;
+  styleNoData?: any;
 }
 
 const ImageWithNotFound = ({

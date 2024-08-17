@@ -9,6 +9,12 @@ const styles = StyleSheet.create({
   noData: {
     flex: moderateScale(1),
   },
+  cardShimmer: {
+    marginTop: moderateScale(8),
+    borderRadius: moderateScale(8),
+    width: '100%',
+    height: moderateScale(180),
+  },
 });
 
 export default styles;

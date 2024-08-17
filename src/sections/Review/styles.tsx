@@ -13,6 +13,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(8),
     paddingRight: moderateScale(16),
   },
+  commentFileView: {
+    paddingHorizontal: moderateScale(8),
+    paddingRight: moderateScale(16),
+  },
   headerReview: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -27,7 +31,6 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(12),
     color: colors.darkgrey,
     fontFamily: fonts.PoppinsSemiBold,
-    paddingHorizontal: moderateScale(8),
   },
   imageReview: {
     height: moderateScale(65),

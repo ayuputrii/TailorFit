@@ -27,7 +27,7 @@ const NewEmail = ({navigation}: NewEmailProps) => {
     };
 
     if (email === '') {
-      setErrorEmail('Email is required');
+      setErrorEmail('Email harus diisi');
     } else {
       setErrorEmail('');
     }
@@ -48,14 +48,14 @@ const NewEmail = ({navigation}: NewEmailProps) => {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Create New Email is Success');
+          setTitle('Create New Email Berhasil');
           setMessage(response?.data?.message);
         } else {
           setIsError(true);
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Create New Email is Failed');
+          setTitle('Create New Email Belum Berhasil');
           setMessage(response?.data?.message);
         }
       } catch (error: any) {
@@ -63,7 +63,7 @@ const NewEmail = ({navigation}: NewEmailProps) => {
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Create New Email is Failed');
+        setTitle('Create New Email Belum Berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
     }

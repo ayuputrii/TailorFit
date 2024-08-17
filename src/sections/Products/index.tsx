@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles';
 import {ProductsTypes} from '../../types';
 import {moderateScale} from '../../utils/scale';
-import {formatMoney} from '../../utils/format-number';
+import {formatIdr} from '../../utils/format-number';
 import {Text} from 'react-native-paper';
 import {images} from '../../assets';
 
@@ -76,7 +76,7 @@ const ProductsSections = ({
             />
             <View style={styles.price}>
               <Text style={styles.txtPrice}>
-                {data?.price ? 'Rp ' + formatMoney(data?.price) : 'Rp 0'}
+                {formatIdr(data?.price ? data?.price : 0)}
               </Text>
             </View>
           </ImageBackground>
@@ -120,7 +120,7 @@ const ProductsSections = ({
             />
             <View style={styles.price}>
               <Text style={styles.txtPrice}>
-                {data?.price ? 'Rp ' + formatMoney(data?.price) : 'Rp 0'}
+                {formatIdr(data?.price ? data?.price : 0)}
               </Text>
             </View>
           </ImageBackground>

@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     zIndex: moderateScale(100),
     backgroundColor: 'white',
     borderRadius: moderateScale(20),
-    height: moderateScale(400),
+    height: moderateScale(420),
   },
   btnClose: {
     flexDirection: 'row',

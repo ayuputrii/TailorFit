@@ -8,7 +8,7 @@ import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 
 interface ImageWithNoDataProps {
-  style: any;
+  style?: any;
 }
 
 const ImageWithNotData = ({style}: ImageWithNoDataProps) => {
@@ -22,7 +22,7 @@ const ImageWithNotData = ({style}: ImageWithNoDataProps) => {
         />
       </View>
       <Gap height={verticalScale(20)} width={0} />
-      <Text style={styles.text}>Sorry, data is empty.</Text>
+      <Text style={styles.text}>Maaf, data ini tidak ditemukan.</Text>
     </View>
   );
 };

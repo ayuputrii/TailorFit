@@ -138,7 +138,7 @@ const ProfileSections = ({
         ref={refFullName}
         value={fullName}
         onChangeText={setFullName}
-        placeholder="Fullname"
+        placeholder="Masukkan Nama Lengkap"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
@@ -150,12 +150,13 @@ const ProfileSections = ({
         setValue={onChangeGender}
         isFocus={isFocus}
         setIsFocus={setIsFocus}
+        placeholder={!isFocus ? 'Pilih Jenis Kelamin' : '...'}
       />
       <InputCalendar birthday={birthday} onPress={goShowModalCalendar} />
       <InputNumber
         value={phone}
         onChangeText={setPhone}
-        placeholder="Phone"
+        placeholder="Masukkan Nomor Handphone"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
@@ -165,7 +166,7 @@ const ProfileSections = ({
       <InputText
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder="Masukkan Email"
         placeholderTextColor={colors.gray}
         styleInput={{
           backgroundColor: email ? colors.gray : colors.white,
@@ -178,17 +179,12 @@ const ProfileSections = ({
       <Buttons
         onPress={onPress}
         disabled={disabled}
-        style={[
-          styles.btn,
-          // {
-          //   marginTop: isFocus ? moderateScale(110) : moderateScale(24),
-          // },
-        ]}
+        style={styles.btn}
         children={
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.text}>Update Profile</Text>
+            <Text style={styles.text}>Ubah Profil</Text>
           </View>
         }
       />

@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
     paddingTop: moderateScale(6),
   },
   imgPromo: {
-    width: '96%',
-    height: verticalScale(170),
+    width: '94%',
+    height: moderateScale(180),
     resizeMode: 'cover',
     borderRadius: moderateScale(8),
     zIndex: moderateScale(100),
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     borderRadius: moderateScale(20),
     justifyContent: 'center',
     alignItems: 'center',
-    height: verticalScale(40),
+    height: verticalScale(35),
     marginBottom: moderateScale(16),
   },
   productShimmerContainer: {
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     width: '48%',
   },
   productShimmer: {
-    height: verticalScale(200),
+    height: verticalScale(170),
     borderRadius: moderateScale(8),
     width: '100%',
   },

@@ -19,7 +19,7 @@ const PromotionsSections = ({promotion, width}: PromotionSectionsProps) => {
         <CarouselImage
           loop={true}
           width={width}
-          height={verticalScale(180)}
+          height={verticalScale(170)}
           autoPlay={true}
           data={promotion}
           renderItem={({
