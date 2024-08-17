@@ -23,7 +23,6 @@ interface HomeSectionsProps {
   isEmpty: boolean;
   isLogin: boolean | undefined;
   deleteFavorite: (id: string) => void;
-  loadProduct: boolean;
 }
 
 const HomeSections = ({
@@ -42,7 +41,6 @@ const HomeSections = ({
   isEmpty,
   isLogin,
   deleteFavorite,
-  loadProduct,
 }: HomeSectionsProps) => {
   const goDetailProduct = (item: ProductsTypes) => {
     navigation?.navigate('ProductDetail', item);
@@ -76,7 +74,6 @@ const HomeSections = ({
           isLogin={isLogin}
           deleteFavorite={deleteFavorite}
           goDetailProduct={goDetailProduct}
-          loadProduct={loadProduct}
         />
       )}
       <Gap height={verticalScale(100)} width={0} />

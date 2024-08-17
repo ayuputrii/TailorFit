@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {Buttons, Gap, Header, ModalNotif} from '../../components';
+import {Buttons, Header, ModalNotif} from '../../components';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {moderateScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
@@ -39,6 +39,7 @@ interface HomePageProps {
   onClose: () => void;
   titleModalNotif: string;
   errorFavorite: boolean;
+  loadProduct: boolean;
 }
 
 const HomePage = ({
@@ -69,6 +70,7 @@ const HomePage = ({
   onClose,
   titleModalNotif,
   errorFavorite,
+  loadProduct,
 }: HomePageProps) => {
   return (
     <React.Fragment>
@@ -117,6 +119,7 @@ const HomePage = ({
         isEmpty={isEmpty}
         isLogin={isLogin}
         deleteFavorite={deleteFavorite}
+        loadProduct={loadProduct}
       />
 
       <ModalNotif

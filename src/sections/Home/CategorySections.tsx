@@ -41,7 +41,7 @@ const CategorySections = ({
                 <MenuButtons
                   key={index}
                   activeMenuIndex={activeMenuIndex}
-                  setActiveMenuIndex={() => handleMenuPress(index, item?._id)}
+                  setActiveMenuIndex={() => handleMenuPress(index)}
                   index={index}
                   item={item}
                   onPress={() => {}}
