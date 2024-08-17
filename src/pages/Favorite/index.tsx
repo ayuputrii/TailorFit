@@ -64,17 +64,17 @@ const Favorite = ({navigation}: FavoriteProps) => {
         setShowModalNotif(true);
         setErrorFavorite(false);
         setTitleModalNotif(
-          response?.data?.message || 'Produk tersimpan berhasil dihapus!',
+          response?.data?.message || 'Berhasil dihapus dari favorit',
         );
       } else {
         setShowModalNotif(true);
         setErrorFavorite(true);
-        setTitleModalNotif('Belum Berhasil menghapus produk tersimpan!');
+        setTitleModalNotif('Produk belum berhasil dihapus dari favorit');
       }
     } catch (error) {
       setShowModalNotif(true);
       setErrorFavorite(true);
-      setTitleModalNotif('Belum Berhasil menghapus produk tersimpan!');
+      setTitleModalNotif('Produk belum berhasil dihapus dari favorit');
     }
   };
 
@@ -104,7 +104,7 @@ const Favorite = ({navigation}: FavoriteProps) => {
         barStyle="dark-content"
       />
       <BackHeader
-        title="Produk Tersimpan"
+        title="Favorit"
         goBack={() => navigation?.goBack()}
         icon={false}>
         <ScrollView
