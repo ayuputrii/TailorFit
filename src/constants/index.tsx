@@ -62,37 +62,37 @@ export const DataSize = [
 export const DataStatus = [
   {
     id: 1,
-    name: 'Unpaid',
+    name: 'Belum Bayar',
     slug: 'UNPAID',
   },
   {
     id: 2,
-    name: 'Material Pickup',
+    name: 'Pengambilan Barang',
     slug: 'MATERIAL_PICKUP',
   },
   {
     id: 3,
-    name: 'Sewing Process',
+    name: 'Proses Jahit',
     slug: 'SEWING_PROCESS',
   },
   {
     id: 4,
-    name: 'On Delivery',
+    name: 'Pengiriman Barang',
     slug: 'ON_DELIVERY',
   },
   {
     id: 5,
-    name: 'Return',
+    name: 'Pengembalian Barang',
     slug: 'RETURN',
   },
   {
     id: 6,
-    name: 'Completed',
+    name: 'Selesai',
     slug: 'COMPLETED',
   },
   {
     id: 7,
-    name: 'Canceled',
+    name: 'Dibatalkan',
     slug: 'CANCELED',
   },
 ];
@@ -100,12 +100,12 @@ export const DataStatus = [
 export const DataHistoryStatus = [
   {
     id: 1,
-    name: 'Completed',
+    name: 'Selesai',
     slug: 'COMPLETED',
   },
   {
     id: 2,
-    name: 'Canceled',
+    name: 'Dibatalkan',
     slug: 'CANCELED',
   },
 ];
