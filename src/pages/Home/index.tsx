@@ -36,11 +36,13 @@ const Home = ({navigation}: HomeProps) => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadProduct, setLoadProduct] = useState(true);
   const [showSearch, setShowSearch] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [showModalNotif, setShowModalNotif] = useState(false);
   const [errorFavorite, setErrorFavorite] = useState(false);
 
+  const [idCategory, setIdCategory] = useState<string>('');
   const [userData, setUserData] = useState<UserDataTypes>({} as UserDataTypes);
   const [promotion, setPromotion] = useState<PromotionTypes[]>([]);
   const [category, setCategory] = useState<CategoryTypes[]>([]);
@@ -48,10 +50,7 @@ const Home = ({navigation}: HomeProps) => {
 
   const [titleModalNotif, setTitleModalNotif] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<ProductsTypes[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>('');
   const [keyword, setKeyword] = useState<string>('');
-
-  console.log('response category', category);
 
   const firstName = `${
     userData?.fullName?.split(' ')[0] + ' ' + userData?.fullName?.split(' ')[1]
@@ -84,21 +83,23 @@ const Home = ({navigation}: HomeProps) => {
     try {
       const response = await getDataResponse(BASE_URL + API_CATEGORY);
       if (response?.data?.data) {
-        setCategory([{_id: '', name: 'All'}, ...response?.data?.data]);
+        setCategory([{_id: '', name: 'Semua'}, ...response?.data?.data]);
       }
     } catch (error) {
       setCategory([]);
     }
   };
 
-  const getProducts = async (cat?: string) => {
+  const getProducts = async (cat?: string | number) => {
+    setLoadProduct(true);
     const token = await getData('ACCESS_TOKEN');
     try {
       const response = await getDataWithToken(
-        BASE_URL + `${API_PRODUCT}?category=${cat || selectedCategory}`,
+        BASE_URL + `${API_PRODUCT}?category=${cat ?? ''}`,
         token,
       );
       if (response?.data?.data) {
+        setLoadProduct(false);
         setProducts(response?.data?.data);
         if (response?.data?.data?.length) {
           setIsEmpty(false);
@@ -107,6 +108,7 @@ const Home = ({navigation}: HomeProps) => {
         }
       }
     } catch (error) {
+      setLoadProduct(false);
       setIsEmpty(true);
     }
   };
@@ -130,11 +132,12 @@ const Home = ({navigation}: HomeProps) => {
       return [];
     }
   };
+
   const debouncedSearchProduct = useDebouncedCallback(getSearchProduct, 500);
 
   const handleMenuPress = (index: number, id: string) => {
     setActiveMenuIndex(index);
-    setSelectedCategory(id);
+    setIdCategory(id);
     getProducts(id);
   };
 
@@ -212,8 +215,7 @@ const Home = ({navigation}: HomeProps) => {
     await getProfile();
     await getPromotion();
     await getCategory();
-    await getProducts();
-    setSelectedCategory('');
+    await getProducts(idCategory);
     setTimeout(() => {
       setRefreshing(false);
     }, 500);
@@ -282,6 +284,7 @@ const Home = ({navigation}: HomeProps) => {
         onClose={() => setShowModalNotif(false)}
         titleModalNotif={titleModalNotif}
         errorFavorite={errorFavorite}
+        loadProduct={loadProduct}
       />
     </SafeAreaView>
   );
