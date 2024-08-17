@@ -22,7 +22,7 @@ const ImageWithNotData = ({style}: ImageWithNoDataProps) => {
         />
       </View>
       <Gap height={verticalScale(20)} width={0} />
-      <Text style={styles.text}>Maaf, data ini tidak ditemukan.</Text>
+      <Text style={styles.text}>Maaf, data ini kosong..</Text>
     </View>
   );
 };

@@ -13,7 +13,7 @@ import Text from './Text';
 import MenuButtons from './MenuButtons';
 import ImageWithNotFound from './ImageWithNotFound';
 import Shimmer from './Shimmer';
-import ImageWithNotData from './ImaageWithNotData';
+import ImageWithNotData from './ImageWithNotData';
 import ButtonLogin from './ButtonLogin';
 import ImageWithNotLogin from './ImageWithNotLogin';
 import CarouselImage from './CarouselImage';
