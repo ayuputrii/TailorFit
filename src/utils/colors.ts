@@ -15,4 +15,5 @@ export const colors = {
   basebg: '#F5F5F5',
   choco: '#9E616A',
   darkChoco: '#7E4741',
+  green: '#50B498',
 };
