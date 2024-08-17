@@ -1,8 +1,9 @@
 import React from 'react';
-import {FlatList} from 'react-native';
-import {ImageWithNotData} from '../../components';
+import {FlatList, View} from 'react-native';
+import {ImageWithNotData, Shimmer} from '../../components';
 import {ProductsTypes} from '../../types';
 import ProductsSections from '../Products';
+import {styles} from './styles';
 
 interface ProductHomeSectionsProps {
   filteredProducts: ProductsTypes[];
@@ -11,6 +12,7 @@ interface ProductHomeSectionsProps {
   isLogin: boolean | undefined;
   deleteFavorite: (id: string) => void;
   goDetailProduct: (item: ProductsTypes) => void;
+  loadProduct: boolean;
 }
 const ProductHomeSections = ({
   filteredProducts,
@@ -19,10 +21,25 @@ const ProductHomeSections = ({
   isLogin,
   deleteFavorite,
   goDetailProduct,
+  loadProduct,
 }: ProductHomeSectionsProps) => {
   return (
     <React.Fragment>
-      {Boolean(filteredProducts?.length) ? (
+      {loadProduct && (
+        <FlatList
+          data={[1, 2, 3, 4]}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          renderItem={({index}) => (
+            <View style={styles.productShimmerContainer}>
+              <Shimmer key={index} style={styles.productShimmer} />
+            </View>
+          )}
+          keyExtractor={(_item, index) => index.toString()}
+        />
+      )}
+      {!loadProduct && Boolean(filteredProducts?.length) ? (
         <FlatList
           data={filteredProducts}
           showsHorizontalScrollIndicator={false}
