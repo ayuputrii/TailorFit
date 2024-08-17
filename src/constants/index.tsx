@@ -96,3 +96,16 @@ export const DataStatus = [
     slug: 'CANCELED',
   },
 ];
+
+export const DataHistoryStatus = [
+  {
+    id: 1,
+    name: 'Completed',
+    slug: 'COMPLETED',
+  },
+  {
+    id: 2,
+    name: 'Canceled',
+    slug: 'CANCELED',
+  },
+];
