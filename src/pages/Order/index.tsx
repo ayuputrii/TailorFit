@@ -6,7 +6,7 @@ import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import styles from './styles';
 import {OrderProps} from '../../navigation';
 import {OrderSections} from '../../sections';
-import {ProductsTypes} from '../../types';
+import {Cart, OrderParam, Order as OrderType, ProductsTypes} from '../../types';
 import {API_ORDER, BASE_URL, getDataWithToken} from '../../api';
 import {getData} from '../../utils/async-storage';
 import {DataStatus} from '../../constants';
@@ -19,7 +19,7 @@ const Order = ({navigation}: OrderProps) => {
 
   const [activeMenuIndex, setActiveMenuIndex] = useState(0);
 
-  const [dataOrder, setDataOrder] = useState([]);
+  const [dataOrder, setDataOrder] = useState<OrderType[]>([]);
 
   const [categoryStatus, setCategoryStatus] = useState('UNPAID');
 
@@ -31,9 +31,10 @@ const Order = ({navigation}: OrderProps) => {
     getOrder(item?.slug as string);
   };
 
-  const goDetailTransaction = async (item: ProductsTypes) => {
+  const goDetailTransaction = async (item: OrderParam) => {
     navigation.navigate('DetailTransaction', {
       item,
+      titleParam: 'Order',
     });
   };
 
@@ -72,7 +73,7 @@ const Order = ({navigation}: OrderProps) => {
         barStyle="dark-content"
       />
       <BackHeader
-        title="Status Pesanan"
+        title="Pesanan Saya"
         goBack={() => navigation?.goBack()}
         icon={false}>
         {isLogin ? (

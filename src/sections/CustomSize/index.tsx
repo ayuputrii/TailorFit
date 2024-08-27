@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {View} from 'react-native';
 import {styles} from './styles';
 import {Buttons, Text} from '../../components';
-import {Size} from '../../types';
+import {Cart, Size} from '../../types';
 
 interface CustomSizeSectionsProps {
   item: {
@@ -45,7 +45,9 @@ const CustomSizeSections = ({
         <Text style={styles.txt}>-</Text>
       </Buttons>
       <View style={styles.flexCol}>
-        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.title}>
+          {customSize[item.name as keyof Cart['sizeDetail']].label}
+        </Text>
         <Text style={styles.subTitle}>
           {customSize[item.name as keyof Size['sizeDetail']].value} cm
         </Text>

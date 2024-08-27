@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import {Cart, ProductsTypes} from '../../types';
+import {Cart, CategoryTypes, Order, ProductsTypes} from '../../types';
 import {
   CardCommons,
   Gap,
@@ -13,20 +13,32 @@ import {moderateScale} from '../../utils/scale';
 import {styles} from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 import {formatIdr} from '../../utils/format-number';
+import CategoryOrderSections from '../Order/CategoryOrder';
 
 interface HistoryTransactionSectionsProps {
-  data: ProductsTypes[];
-  onPress: (item: ProductsTypes) => void;
+  data: Order[];
+  onPress: (item: Order) => void;
   loading: boolean;
+  category: CategoryTypes[];
+  activeMenuIndex: number;
+  handleMenuPress: any;
 }
 
 const HistoryTransactionSections = ({
   data,
   onPress,
   loading,
+  category,
+  activeMenuIndex,
+  handleMenuPress,
 }: HistoryTransactionSectionsProps) => {
   return (
-    <View>
+    <View style={styles.container}>
+      <CategoryOrderSections
+        category={category}
+        activeMenuIndex={activeMenuIndex}
+        handleMenuPress={handleMenuPress}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -46,20 +58,13 @@ const HistoryTransactionSections = ({
             data={data}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            numColumns={2}
             keyExtractor={(_item, index) => index.toString()}
-            renderItem={({
-              item,
-              index,
-            }: {
-              item: ProductsTypes;
-              index: number;
-            }) => {
+            renderItem={({item, index}: {item: Order; index: number}) => {
               return (
                 <React.Fragment key={index}>
                   {Boolean(item?.products) ? (
                     item?.products?.map((items: Cart, id: number) => {
-                      const products = items?.productId;
+                      const products = items.productId;
 
                       return (
                         <View
@@ -76,7 +81,7 @@ const HistoryTransactionSections = ({
                             onPress={() =>
                               onPress({
                                 ...item,
-                                products: item.products.filter(
+                                products: item.products?.filter(
                                   prod => prod._id === items._id,
                                 ),
                               })
@@ -86,7 +91,7 @@ const HistoryTransactionSections = ({
                               <View style={styles.boxProduct}>
                                 <ImageWithNotFound
                                   styleNoData={styles.notFound}
-                                  uri={products?.images[0]}
+                                  uri={(products as ProductsTypes)?.images[0]}
                                   style={{
                                     resizeMode: 'contain',
                                     width: moderateScale(50),
@@ -99,12 +104,16 @@ const HistoryTransactionSections = ({
 
                                 <View style={styles.viewDesc}>
                                   <Text style={styles.title}>
-                                    {products?.name ? products?.name : '-'}
+                                    {(products as ProductsTypes)?.name
+                                      ? (products as ProductsTypes)?.name
+                                      : '-'}
                                   </Text>
 
                                   <Text style={styles.textGraySemiBold}>
                                     {formatIdr(
-                                      products?.price ? products?.price : 0,
+                                      (products as ProductsTypes).price
+                                        ? (products as ProductsTypes).price || 0
+                                        : 0,
                                     )}
                                   </Text>
                                 </View>

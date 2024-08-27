@@ -20,6 +20,7 @@ export const API_GOOGLE_REGISTER_LOGIN = '/auth/google-login';
 export const API_CART = '/cart';
 export const API_SIZE = '/size';
 export const API_ORDER = '/order';
+export const API_RETURN = '/return-order';
 
 export const postDataWithToken = async (
   url: string,

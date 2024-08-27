@@ -12,7 +12,7 @@ const ContentProductCO = (cart: Cart) => {
     <View style={styles.contentAccordion}>
       <View style={styles.hr} />
       <Text style={styles.titleDelivery}>
-        Detail Size -{' '}
+        Detail Ukuran -{' '}
         {cart?.materialProvider +
           ' - ' +
           cart?.quality +
@@ -33,7 +33,9 @@ const ContentProductCO = (cart: Cart) => {
               return (
                 <React.Fragment key={index}>
                   <View style={styles.cardSize}>
-                    <Text style={styles.size}>{key}</Text>
+                    <Text style={styles.size}>
+                      {data[key as keyof Cart['sizeDetail']].label}
+                    </Text>
                     <Text style={styles.valueSize}>
                       {data[key as keyof Cart['sizeDetail']].value}
                     </Text>
@@ -46,13 +48,15 @@ const ContentProductCO = (cart: Cart) => {
 
         <View style={[styles.flexColumn]}>
           {Object.keys(data)
-            .slice(5)
+            .slice(0, 5)
             .map((key, index) => {
               return (
                 <React.Fragment key={index}>
                   <View
                     style={[styles.cardSize, {marginRight: moderateScale(8)}]}>
-                    <Text style={styles.size}>{key}</Text>
+                    <Text style={styles.size}>
+                      {data[key as keyof Cart['sizeDetail']].label}
+                    </Text>
                     <Text style={styles.valueSize}>
                       {data[key as keyof Cart['sizeDetail']].value}
                     </Text>

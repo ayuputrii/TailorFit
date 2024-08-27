@@ -26,6 +26,7 @@ import DetailTransaction from './DetailTransaction';
 import ChoosePayment from './ChoosePayment';
 import SizeInformation from './SizeInformation';
 import Order from './Order';
+import Return from './Return';
 
 export {
   SplashScreenPage,
@@ -56,4 +57,5 @@ export {
   ChoosePayment,
   SizeInformation,
   Order,
+  Return,
 };

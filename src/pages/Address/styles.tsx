@@ -7,7 +7,7 @@ const height = Dimensions.get('screen').height;
 
 const styles = StyleSheet.create({
   container: {
-    padding: moderateScale(16),
+    padding: moderateScale(14),
     position: 'relative',
   },
   scroll: {

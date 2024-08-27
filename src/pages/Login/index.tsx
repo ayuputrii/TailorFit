@@ -90,8 +90,6 @@ const Login = ({navigation}: LoginProps) => {
         setTitle('Login Belum Berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
-      setTitle('Login Belum Berhasil');
-      setMessage("Server is encountered with problem! We'll fix it soon.");
     } else {
       setLoading(false);
       setDisabled(false);
@@ -162,7 +160,7 @@ const Login = ({navigation}: LoginProps) => {
             showsVerticalScrollIndicator={false}>
             <View style={styles.content}>
               <HeaderNotLogin
-                title="Sign In"
+                title="Login"
                 subTitle="Harap masukkan email dan kata sandi Anda."
                 fontSizeSub={12}
                 subColor={colors.lightgray}

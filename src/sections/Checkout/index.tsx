@@ -1,6 +1,6 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
-import {Buttons, CardCommons, Gap, Text} from '../../components';
+import {Buttons, CardCommons, Gap, ModalBottom, Text} from '../../components';
 import styles from './styles';
 import {moderateScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
@@ -26,7 +26,9 @@ interface CheckoutSectionsProps {
   dataAddress: AddressTypes[];
   isFullPayment: boolean;
   setIsFullPayment: (v: boolean) => void;
+  refRBSheet: any;
 }
+
 const CheckoutSections = ({
   onPress,
   goPayment,
@@ -36,6 +38,7 @@ const CheckoutSections = ({
   dataAddress,
   isFullPayment,
   setIsFullPayment,
+  refRBSheet,
 }: CheckoutSectionsProps) => {
   const cartStore = useCartStore();
   const paymentTypeStore = usePaymentTypeStore();
@@ -101,11 +104,9 @@ const CheckoutSections = ({
             marginBottom: moderateScale(8),
           }}
         />
-      </ScrollView>
 
-      <Gap height={moderateScale(260)} width={0} />
+        <Gap height={moderateScale(8)} width={0} />
 
-      <View style={styles.viewBottom}>
         <CardCommons
           title={''}
           subTitle={''}
@@ -147,138 +148,147 @@ const CheckoutSections = ({
           subTitle={''}
           titleStyle={false}
           subTitleStyle={false}
-          onPress={() => {}}
-          disabled={true}
+          onPress={() => refRBSheet?.current?.open()}
           style={styles.card}>
-          <View>
+          <View style={styles.flexRowBetween}>
             <Text style={styles.titleDelivery}>
-              Pilih Tipe Penjemputan dan Pengiriman
+              Pilih Tipe Pesanan dan Lihat Total Pesanan
             </Text>
-
-            <View style={styles.hr} />
-
-            <View style={styles.flexRowBetween}>
-              <View style={styles.contentDelivery}>
-                <RadioButton
-                  value="FU"
-                  uncheckedColor={colors.choco}
-                  status={checked === 'first' ? 'checked' : 'unchecked'}
-                  onPress={() => setChecked('first')}
-                  color={colors.orange}
-                />
-
-                <Gap height={moderateScale(2)} width={0} />
-
-                <Text style={[styles.text, {color: colors.black}]}>
-                  Standard
-                </Text>
-              </View>
-              <Text style={styles.text}>Rp150.000</Text>
-            </View>
+            <Icon name={'keyboard-arrow-down'} size={24} color="#666" />
           </View>
-
-          <Text style={[styles.text, {color: colors.red}]}>
-            *We set the price at 150,000, but this amount may be reduced
-            depending on the distance. If the 150,000 is overcharged, the excess
-            will be refunded via GoPay. If the opposite occurs, an additional
-            charge will be applied according to the shortfall.
-          </Text>
-
-          <Gap height={moderateScale(8)} width={0} />
-          <View style={styles.hr} />
-
-          <View>
-            <Text style={styles.titleDelivery}>Pilih Tipe Pembayaran</Text>
-
-            <View style={styles.hr} />
-
-            <View style={styles.flexRowBetween}>
-              <View style={styles.contentDelivery}>
-                <RadioButton
-                  value="isFullPayment"
-                  uncheckedColor={colors.choco}
-                  status={isFullPayment ? 'checked' : 'unchecked'}
-                  onPress={() => setIsFullPayment(true)}
-                  color={colors.orange}
-                />
-
-                <Gap height={moderateScale(2)} width={0} />
-
-                <Text style={[styles.text, {color: colors.black}]}>
-                  Full Payment
+          <ModalBottom height={500} refRBSheet={refRBSheet} button={<></>}>
+            <View style={{padding: moderateScale(16)}}>
+              <View>
+                <Text style={styles.titleDelivery}>
+                  Pilih Tipe Penjemputan dan Pengiriman
                 </Text>
+
+                <View style={styles.hr} />
+
+                <View style={styles.flexRowBetween}>
+                  <View style={styles.contentDelivery}>
+                    <RadioButton
+                      value="FU"
+                      uncheckedColor={colors.choco}
+                      status={checked === 'first' ? 'checked' : 'unchecked'}
+                      onPress={() => setChecked('first')}
+                      color={colors.orange}
+                    />
+
+                    <Gap height={moderateScale(2)} width={0} />
+
+                    <Text style={[styles.text, {color: colors.black}]}>
+                      Standard
+                    </Text>
+                  </View>
+                  <Text style={styles.text}>Rp150.000</Text>
+                </View>
               </View>
-              <Text
-                style={[
-                  styles.text,
-                  {color: colors.orange, fontFamily: fonts.PoppinsBold},
-                ]}>
-                {formatIdr(total)}
+
+              <Text style={[styles.text, {color: colors.red}]}>
+                *We set the price at 150,000, but this amount may be reduced
+                depending on the distance. If the 150,000 is overcharged, the
+                excess will be refunded via GoPay. If the opposite occurs, an
+                additional charge will be applied according to the shortfall.
               </Text>
-            </View>
 
-            <View style={styles.flexRowBetween}>
-              <View style={styles.contentDelivery}>
-                <RadioButton
-                  value="isFullPayment"
-                  uncheckedColor={colors.choco}
-                  status={!isFullPayment ? 'checked' : 'unchecked'}
-                  onPress={() => setIsFullPayment(false)}
-                  color={colors.orange}
-                />
-
-                <Gap height={moderateScale(2)} width={0} />
-
-                <Text style={[styles.text, {color: colors.black}]}>
-                  Down Payment
-                </Text>
-              </View>
-              <Text
-                style={[
-                  styles.text,
-                  {color: colors.orange, fontFamily: fonts.PoppinsBold},
-                ]}>
-                {formatIdr(total / 2)}
-              </Text>
-            </View>
-          </View>
-
-          <Gap height={moderateScale(6)} width={0} />
-
-          {!isFullPayment && (
-            <React.Fragment>
+              <Gap height={moderateScale(8)} width={0} />
               <View style={styles.hr} />
+
+              <View>
+                <Text style={styles.titleDelivery}>Pilih Tipe Pembayaran</Text>
+
+                <View style={styles.hr} />
+
+                <View style={styles.flexRowBetween}>
+                  <View style={styles.contentDelivery}>
+                    <RadioButton
+                      value="isFullPayment"
+                      uncheckedColor={colors.choco}
+                      status={isFullPayment ? 'checked' : 'unchecked'}
+                      onPress={() => setIsFullPayment(true)}
+                      color={colors.orange}
+                    />
+
+                    <Gap height={moderateScale(2)} width={0} />
+
+                    <Text style={[styles.text, {color: colors.black}]}>
+                      Full Payment
+                    </Text>
+                  </View>
+                  <Text
+                    style={[
+                      styles.text,
+                      {color: colors.orange, fontFamily: fonts.PoppinsBold},
+                    ]}>
+                    {formatIdr(total)}
+                  </Text>
+                </View>
+
+                <View style={styles.flexRowBetween}>
+                  <View style={styles.contentDelivery}>
+                    <RadioButton
+                      value="isFullPayment"
+                      uncheckedColor={colors.choco}
+                      status={!isFullPayment ? 'checked' : 'unchecked'}
+                      onPress={() => setIsFullPayment(false)}
+                      color={colors.orange}
+                    />
+
+                    <Gap height={moderateScale(2)} width={0} />
+
+                    <Text style={[styles.text, {color: colors.black}]}>
+                      Down Payment
+                    </Text>
+                  </View>
+                  <Text
+                    style={[
+                      styles.text,
+                      {color: colors.orange, fontFamily: fonts.PoppinsBold},
+                    ]}>
+                    {formatIdr(total / 2)}
+                  </Text>
+                </View>
+              </View>
 
               <Gap height={moderateScale(6)} width={0} />
 
+              {!isFullPayment && (
+                <React.Fragment>
+                  <View style={styles.hr} />
+
+                  <Gap height={moderateScale(6)} width={0} />
+
+                  <View style={styles.flexRowBetween}>
+                    <Text style={styles.titleProduct}>Sisa Pembayaran:</Text>
+                    <Text style={styles.title}>
+                      {formatIdr(isFullPayment ? total : total / 2)}
+                    </Text>
+                  </View>
+                </React.Fragment>
+              )}
+              <Gap height={moderateScale(6)} width={0} />
+              <View style={styles.hr} />
+              <Gap height={moderateScale(6)} width={0} />
               <View style={styles.flexRowBetween}>
-                <Text style={styles.titleProduct}>Sisa Pembayaran:</Text>
-                <Text style={styles.title}>
-                  {formatIdr(isFullPayment ? total : total / 2)}
-                </Text>
+                <View>
+                  <Text style={styles.titleProduct}>Total</Text>
+                  <Text style={styles.title}>
+                    {formatIdr(isFullPayment ? total : total / 2)}
+                  </Text>
+                </View>
+
+                <Buttons
+                  disabled={false}
+                  style={styles.btnOrder}
+                  onPress={goPayment}>
+                  <Text style={styles.textOrder}>Pesan</Text>
+                </Buttons>
               </View>
-            </React.Fragment>
-          )}
-
-          <View style={styles.hr} />
-          <Gap height={moderateScale(6)} width={0} />
-          <View style={styles.flexRowBetween}>
-            <View>
-              <Text style={styles.titleProduct}>Total</Text>
-              <Text style={styles.title}>
-                {formatIdr(isFullPayment ? total : total / 2)}
-              </Text>
             </View>
-
-            <Buttons
-              disabled={false}
-              style={styles.btnOrder}
-              onPress={goPayment}>
-              <Text style={styles.textOrder}>Pesan</Text>
-            </Buttons>
-          </View>
+          </ModalBottom>
         </CardCommons>
-      </View>
+      </ScrollView>
     </View>
   );
 };

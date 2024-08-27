@@ -54,7 +54,7 @@ export interface ProductsTypes {
   label: string | undefined;
   favorite?: {
     _id?: string | undefined;
-    customerId?: string | undefined;
+    userId?: string | undefined;
     productId?: string | undefined;
   };
   total?: string | undefined;
@@ -78,7 +78,7 @@ export interface RatingTypes {
 export interface AddressTypes {
   isDefault?: boolean;
   _id?: string | undefined;
-  customerId?: string | undefined;
+  userId?: string | undefined;
   name?: string | undefined;
   phone?: string | undefined;
   addressDetail?: string | undefined;
@@ -107,7 +107,7 @@ export interface Size {
 }
 
 export interface Cart {
-  customerId: string;
+  userId: string;
   productId: string | ProductsTypes;
   quantity: number;
   quality: string;
@@ -118,6 +118,32 @@ export interface Cart {
   sizeDetail: SizeDetail;
   _id: string;
   materialProvider: string;
+}
+
+export interface Order {
+  _id: string;
+  userId: string;
+  addressId: AddressTypes;
+  status:
+    | 'UNPAID'
+    | 'MATERIAL_PICKUP'
+    | 'SEWING_PROCESS'
+    | 'ON_DELIVERY'
+    | 'RETURN'
+    | 'COMPLETED'
+    | 'CANCELED';
+  workingStatus: 'PENDIING' | 'WORKING' | 'DONE';
+  snapUrl: string;
+  token: string;
+  paymentType: 'GOPAY' | 'BCA';
+  amount: number;
+  totalAmount: number;
+  trxId: string;
+  products: Cart[];
+  isReceived: boolean;
+  reviewedProduct: string[];
+  expiredAt: Date;
+  isFullPayment: boolean;
 }
 
 interface SizeDetail {
@@ -137,3 +163,10 @@ interface Attribute {
   label: string;
   value: number;
 }
+
+export type OrderParam = Order & {
+  products: Cart[];
+  orderId: string;
+  isReceived: boolean;
+  reviewedProduct: string[];
+};

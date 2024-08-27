@@ -116,7 +116,7 @@ const RegisterSections = ({
       <View style={styles.viewList}>
         <View style={styles.borderTop} />
         <Text style={[styles.txt, styles.colorLightBlack]}>
-          Or Sign Up with
+          Atau Masuk dengan
         </Text>
         <View style={styles.borderTop} />
       </View>
@@ -130,7 +130,7 @@ const RegisterSections = ({
             <Text style={[styles.txt, styles.colorLightBlack]}>
               Sudah memiliki akun ?
             </Text>
-            <Text style={[styles.txt, styles.colorBoldBlack]}> Sign In</Text>
+            <Text style={[styles.txt, styles.colorBoldBlack]}> Login</Text>
           </React.Fragment>
         }
       />

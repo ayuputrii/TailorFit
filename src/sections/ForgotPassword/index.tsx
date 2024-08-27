@@ -58,7 +58,7 @@ const ForgotPasswordSections = ({
           <Buttons
             onPress={onLogin}
             style={styles.btnSignIn}
-            children={<Text style={styles.text}>Sign In</Text>}
+            children={<Text style={styles.text}>Login</Text>}
             disabled={disabled}
           />
         </React.Fragment>

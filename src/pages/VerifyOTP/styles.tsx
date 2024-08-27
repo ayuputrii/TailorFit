@@ -5,7 +5,9 @@ import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   container: {
-    margin: moderateScale(14),
+    padding: moderateScale(14),
+    backgroundColor: colors.basebg,
+    flex: 1,
   },
   scroll: {
     paddingHorizontal: moderateScale(42),

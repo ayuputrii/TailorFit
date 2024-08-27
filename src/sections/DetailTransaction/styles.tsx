@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
   },
   txtOrder: {
     fontFamily: fonts.PoppinsSemiBold,
-    color: colors.choco,
+    color: colors.black,
     fontSize: moderateScale(12),
   },
   txtRight: {
     fontFamily: fonts.PoppinsMedium,
     color: colors.darkgray,
-    fontSize: moderateScale(9),
+    fontSize: moderateScale(10),
     textTransform: 'capitalize',
   },
   hr: {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: colors.white,
-    width: moderateScale(120),
+    width: moderateScale(150),
     textAlign: 'center',
     padding: moderateScale(4),
     fontFamily: fonts.PoppinsBold,

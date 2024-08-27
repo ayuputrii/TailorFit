@@ -1,5 +1,5 @@
-import React, {useContext, useMemo, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import {colors} from '../../utils/colors';
 import {
   BackgroundWithImage,
@@ -19,17 +19,15 @@ import {
 import {images} from '../../assets';
 import {AuthContext} from '../../context/AuthContext';
 import {getData} from '../../utils/async-storage';
-import IconANT from 'react-native-vector-icons/AntDesign';
-import {moderateScale} from '../../utils/scale';
+import {useRoute} from '@react-navigation/native';
 
 const NewPassword = ({navigation}: NewPasswordProps) => {
   const ctx = useContext(AuthContext);
   const isLogin = ctx?.isLogin;
 
-  const email = useMemo(() => {
-    return navigation.getState().routes.find(item => item.name === 'VerifiyOTP')
-      ?.params?.email;
-  }, [navigation]);
+  const route = useRoute();
+
+  const email = route?.params?.email;
 
   const [password, setPassword] = useState<string | undefined>('');
   const [errorPassword, setErrorPassword] = useState<string>('');
@@ -67,15 +65,20 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Kata Sandi Baru Anda Berhasil di Ubah');
-          setMessage(response?.data?.message);
+          setTitle('Selamat, berhasil!');
+          setMessage(
+            response?.data?.message || 'Kata Sandi Baru Anda Berhasil di Ubah',
+          );
         } else {
           setIsError(true);
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Kata Sandi Baru Anda Belum Berhasil di Ubah');
-          setMessage(response?.data?.message);
+          setTitle('Mohon maaf, gagal');
+          setMessage(
+            response?.data?.message ||
+              'Kata Sandi Baru Anda Belum Berhasil di Ubah',
+          );
         }
       } catch (error: any) {
         setIsError(true);
@@ -91,17 +94,16 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
   return (
     <React.Fragment>
       {isLogin ? (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+          <StatusBar
+            animated={false}
+            backgroundColor={colors.basebg}
+            barStyle="dark-content"
+          />
           <BackHeader
             title="Ubah Kata Sandi"
             goBack={() => navigation?.goBack()}
-            icon={
-              <IconANT
-                name="logout"
-                color={colors.black}
-                size={moderateScale(20)}
-              />
-            }>
+            icon={false}>
             <NewPasswordSections
               password={password}
               setPassword={setPassword}
@@ -112,7 +114,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
               isLogin={isLogin}
             />
           </BackHeader>
-        </View>
+        </SafeAreaView>
       ) : (
         <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
           <ScrollView style={styles.scroll}>
@@ -146,10 +148,10 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
         textBtn={
           isLogin
             ? isError
-              ? 'Close'
-              : 'Back to Settings'
+              ? 'Tutup'
+              : 'Kembali ke Pengaturan'
             : isError
-            ? 'Close'
+            ? 'Tutup'
             : 'Login'
         }
         onSubmit={

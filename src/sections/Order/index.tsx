@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import {Cart, CategoryTypes, ProductsTypes} from '../../types';
+import {Cart, CategoryTypes, Order, ProductsTypes} from '../../types';
 import {
   CardCommons,
   Gap,
@@ -15,12 +15,18 @@ import {styles} from './styles';
 import CategoryOrderSections from './CategoryOrder';
 import {formatIdr} from '../../utils/format-number';
 
+type OrderParam = Order & {
+  products: Cart[];
+  orderId: string;
+  isReceived: boolean;
+  reviewedProduct: string[];
+};
 interface OrderSectionsProps {
-  data: ProductsTypes[];
+  data: Order[];
   category: CategoryTypes[];
   activeMenuIndex: number;
   handleMenuPress: any;
-  onPress: (item: ProductsTypes) => void;
+  onPress: (item: OrderParam) => void;
   loading: boolean;
 }
 
@@ -59,13 +65,7 @@ const OrderSections = ({
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyExtractor={(_item, index) => index.toString()}
-            renderItem={({
-              item,
-              index,
-            }: {
-              item: ProductsTypes;
-              index: number;
-            }) => {
+            renderItem={({item, index}: {item: Order; index: number}) => {
               return (
                 <React.Fragment key={index}>
                   {Boolean(item?.products) ? (
@@ -87,20 +87,22 @@ const OrderSections = ({
                             onPress={() =>
                               onPress({
                                 ...item,
-                                products: item.products.filter(
-                                  prod => prod._id === items._id,
-                                ),
-                                orderId: item._id,
-                                isReceived: item.isReceived,
-                                reviewedProduct: item.reviewedProduct,
-                              })
+                                products:
+                                  item?.products?.filter(
+                                    (prod: Cart) => prod._id === items._id,
+                                  ) || [],
+                                orderId: item._id || '',
+                                isReceived: item.isReceived || false,
+                                reviewedProduct: item.reviewedProduct || [],
+                                snapUrl: item.snapUrl,
+                              } as OrderParam)
                             }
                             style={styles.card}>
                             <View style={styles.flexJustifyBetween}>
                               <View style={styles.boxProduct}>
                                 <ImageWithNotFound
                                   styleNoData={styles.notFound}
-                                  uri={products?.images[0]}
+                                  uri={(products as ProductsTypes)?.images[0]}
                                   style={{
                                     resizeMode: 'contain',
                                     width: moderateScale(50),
@@ -113,12 +115,17 @@ const OrderSections = ({
 
                                 <View style={styles.viewDesc}>
                                   <Text style={styles.title}>
-                                    {products?.name ? products?.name : '-'}
+                                    {(products as ProductsTypes)?.name
+                                      ? (products as ProductsTypes)?.name
+                                      : '-'}
                                   </Text>
 
                                   <Text style={styles.textGraySemiBold}>
                                     {formatIdr(
-                                      products?.price ? products?.price : 0,
+                                      (products as ProductsTypes)?.price
+                                        ? ((products as ProductsTypes)
+                                            ?.price as number)
+                                        : 0,
                                     )}
                                   </Text>
                                 </View>

@@ -1,5 +1,11 @@
-import React, {useContext, useMemo, useState} from 'react';
-import {ActivityIndicator, ScrollView, View} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  View,
+} from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -28,24 +34,20 @@ import {moderateScale} from '../../utils/scale';
 import {VerifyOTPProps} from '../../navigation';
 import {images} from '../../assets';
 import {AuthContext} from '../../context/AuthContext';
-import IconANT from 'react-native-vector-icons/AntDesign';
 import {getData} from '../../utils/async-storage';
 import {useRoute} from '@react-navigation/native';
 
 const CELL_COUNT = 6;
 
 const VerifyOTP = ({navigation}: VerifyOTPProps) => {
-  const route = useRoute();
+  const route = useRoute<VerifyOTPProps['route']>();
 
   const ctx = useContext(AuthContext);
   const isLogin = ctx?.isLogin;
 
   const isChangeEmail = route?.params?.titleParam === 'ChangeEmail';
 
-  const email = useMemo(() => {
-    return navigation.getState().routes.find(item => item.name === 'VerifyOTP')
-      ?.params?.email;
-  }, [navigation]);
+  const email = route?.params?.email;
 
   const [value, setValue] = useState<string>('');
   const [title, setTitle] = useState<string>('');
@@ -92,14 +94,19 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
           setIsError(false);
           setShowModal(true);
           setTitle('Verifikasi OTP Berhasil');
-          setMessage(response?.data?.message);
+          setMessage(
+            response?.data?.message ||
+              'Berhasil memasukkan kode OTP yang benar!',
+          );
         } else {
           setLoading(false);
           setDisabled(false);
           setIsError(true);
           setShowModal(true);
           setTitle('Verifikasi OTP Belum Berhasil');
-          setMessage(response?.data?.message);
+          setMessage(
+            response?.data?.message || 'Mohon maaf, silakan coba lagi nanti...',
+          );
         }
       } catch (error: any) {
         setLoading(false);
@@ -134,7 +141,10 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
         setDisabled(false);
         setShowModalEmail(true);
         setTitle('Verifikasi Email Belum Berhasil');
-        setMessage(response?.data?.message);
+        setMessage(
+          response?.data?.message ||
+            "Server is encountered with problem! We'll fix it soon.",
+        );
       }
     } catch (error: any) {
       setLoadingReset(false);
@@ -148,7 +158,12 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
   return (
     <React.Fragment>
       {isLogin ? (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+          <StatusBar
+            animated={false}
+            backgroundColor={colors.basebg}
+            barStyle="dark-content"
+          />
           <BackHeader
             title={'Verifikasi OTP'}
             goBack={() => navigation?.goBack()}
@@ -167,7 +182,8 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
                   <Text
                     key={index}
                     style={[styles.cell, isFocused && styles.focusCell]}
-                    onLayout={getCellOnLayoutHandler(index)}>
+                    /*onLayout={getCellOnLayoutHandler(index)} */
+                  >
                     {symbol || (isFocused ? <Cursor /> : null)}
                   </Text>
                 )}
@@ -210,7 +226,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
               />
             </View>
           </BackHeader>
-        </View>
+        </SafeAreaView>
       ) : (
         <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
           <ScrollView style={styles.scroll}>
@@ -234,8 +250,7 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
               renderCell={({index, symbol, isFocused}) => (
                 <Text
                   key={index}
-                  style={[styles.cell, isFocused && styles.focusCell]}
-                  onLayout={getCellOnLayoutHandler(index)}>
+                  style={[styles.cell, isFocused && styles.focusCell]}>
                   {symbol || (isFocused ? <Cursor /> : null)}
                 </Text>
               )}
@@ -284,20 +299,24 @@ const VerifyOTP = ({navigation}: VerifyOTPProps) => {
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={isError ? 'Close' : 'OK'}
+        textBtn={isError ? 'Tutup' : 'OK'}
         onSubmit={
           isChangeEmail
             ? isError
               ? () => setShowModal(false)
               : () => {
                   setShowModal(false);
-                  navigation.navigate('NewEmail');
+                  navigation.navigate('NewEmail', {
+                    email,
+                  });
                 }
             : isError
             ? () => setShowModal(false)
             : () => {
                 setShowModal(false);
-                navigation.navigate('NewPassword');
+                navigation.navigate('NewPassword', {
+                  email,
+                });
               }
         }
         style={styles.modal}

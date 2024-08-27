@@ -11,7 +11,7 @@ import {colors} from '../../utils/colors';
 import {moderateScale, verticalScale} from '../../utils/scale';
 import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import styles from './styles';
-import {SettingsProps} from '../../navigation';
+import {NavigationParam, SettingsProps} from '../../navigation';
 import {AuthContext} from '../../context/AuthContext';
 import IconAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
@@ -73,7 +73,7 @@ const Settings = ({navigation}: SettingsProps) => {
     if (onLogout) {
       onLogout();
     }
-    navigation.replace('MainTabs');
+    navigation.jumpTo('MainTabs');
   };
 
   return (

@@ -14,7 +14,7 @@ import {
 } from '../../api';
 import {getData} from '../../utils/async-storage';
 import {useCartStore} from '../../store/useCartStore';
-import {Cart as CartType, ProductsTypes} from '../../types';
+import {ProductsTypes} from '../../types';
 import {useIsBuyStore} from '../../store/useIsBuyStore';
 import useCartConfig from '../../hooks/useCartConfig';
 import CartLogin from './CartLogin';
@@ -36,10 +36,6 @@ const Cart = ({navigation}: CartProps) => {
 
   const cartStore = useCartStore();
   const isBuyStore = useIsBuyStore();
-
-  useEffect(() => {
-    isBuyStore.setNotBuy();
-  }, []);
 
   const getDataCart = async () => {
     setLoading(true);
@@ -67,15 +63,6 @@ const Cart = ({navigation}: CartProps) => {
     }, 500);
   };
 
-  useEffect(() => {
-    getDataCart();
-    setRefreshing(false);
-  }, []);
-
-  useEffect(() => {
-    getDataCart();
-  }, []);
-
   const totalPrice = useMemo(() => {
     const selected = cartStore?.cart.filter(item =>
       cartStore?.selectedCart?.includes(item?._id),
@@ -95,7 +82,7 @@ const Cart = ({navigation}: CartProps) => {
     if (check) {
       cartStore?.setSelectedCart([]);
     } else {
-      cartStore?.setSelectedCart(cartStore?.cart.map(item => item._id));
+      cartStore?.setSelectedCart(cartStore?.cart.map(item => item?._id));
     }
   };
 
@@ -112,7 +99,7 @@ const Cart = ({navigation}: CartProps) => {
       );
       cartStore?.setCart(
         cartStore?.cart.filter(
-          item => !cartStore?.selectedCart.includes(item._id),
+          item => !cartStore?.selectedCart.includes(item?._id),
         ),
       );
       cartStore?.setSelectedCart([]);
@@ -140,6 +127,19 @@ const Cart = ({navigation}: CartProps) => {
     setCartId('');
   };
 
+  useEffect(() => {
+    getDataCart();
+    setRefreshing(false);
+  }, []);
+
+  useEffect(() => {
+    getDataCart();
+  }, []);
+
+  useEffect(() => {
+    isBuyStore.setNotBuy();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -148,7 +148,7 @@ const Cart = ({navigation}: CartProps) => {
         barStyle="dark-content"
       />
       <BackHeader
-        title="Keranjang Belanja"
+        title="Keranjang Saya"
         goBack={() => navigation?.goBack()}
         icon={false}>
         {isLogin ? (

@@ -5,8 +5,8 @@ import {colors} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    padding: moderateScale(16),
     flex: 1,
+    marginBottom: moderateScale(100),
   },
   card: {
     paddingTop: moderateScale(14),

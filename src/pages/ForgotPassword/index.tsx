@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {
   BackgroundWithImage,
@@ -90,7 +90,12 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
   return (
     <React.Fragment>
       {isLogin ? (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+          <StatusBar
+            animated={false}
+            backgroundColor={colors.basebg}
+            barStyle="dark-content"
+          />
           <BackHeader
             title="Ubah Kata Sandi"
             goBack={() => navigation?.goBack()}
@@ -106,7 +111,7 @@ const ForgotPassword = ({navigation}: ForgotPasswordProps) => {
               errorEmail={errorEmail}
             />
           </BackHeader>
-        </View>
+        </SafeAreaView>
       ) : (
         <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
           <ScrollView style={styles.scroll}>

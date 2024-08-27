@@ -9,11 +9,12 @@ export const colors = {
   gray: '#D3D3D3',
   grey: '#C3BFBF',
   blue: '#08a0e9',
-  darkblue: '#4267B2',
+  darkblue: '#003366',
   red: 'red',
   darkRed: '#B24141',
   basebg: '#F5F5F5',
   choco: '#9E616A',
   darkChoco: '#7E4741',
   green: '#50B498',
+  yellow: '#FFC107',
 };

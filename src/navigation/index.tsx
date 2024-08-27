@@ -5,6 +5,7 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
+import {NavigationContainerRef} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {
   ForgotPassword,
@@ -35,10 +36,19 @@ import {
   ChoosePayment,
   SizeInformation,
   Order,
+  Return,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
-import {ProductsTypes} from '../types';
+import {Cart as CartType, Order as OrderType, ProductsTypes} from '../types';
+
+type OrderParam = OrderType & {
+  products: CartType[];
+  orderId: string;
+  isReceived: boolean;
+  reviewedProduct: string[];
+  snapUrl?: string;
+};
 
 export type NavigationParam = {
   MainTabs: undefined;
@@ -46,17 +56,30 @@ export type NavigationParam = {
   ForgotPassword: undefined;
   Login: undefined;
   Register: undefined;
-  VerifyOTP: undefined;
-  NewPassword: undefined;
+  VerifyOTP: {
+    email: string;
+    titleParam: string;
+  };
+  NewPassword: {
+    email: string;
+  };
   ChangeEmail: undefined;
-  NewEmail: undefined;
+  NewEmail: {
+    email: string;
+  };
   Home: undefined;
   Settings: undefined;
   Profile: undefined;
   HistoryTransaction: undefined;
-  DetailTransaction: undefined;
+  DetailTransaction: {
+    item: OrderParam | OrderType;
+    titleParam?: string;
+  };
   FAQPage: undefined;
-  Rating: undefined;
+  Rating: {
+    idProduct: string;
+    orderId: string;
+  };
   Cart: undefined;
   Checkout: undefined;
   Chat: undefined;
@@ -72,6 +95,10 @@ export type NavigationParam = {
   CustomSize: undefined;
   SizeInformation: undefined;
   Order: undefined;
+  Return: {
+    idProduct: string;
+    orderId: string;
+  };
 };
 
 type MainTabsNavigationProp = BottomTabNavigationProp<
@@ -235,6 +262,13 @@ export type RatingProps = {
   route: RatingRouteProp;
 };
 
+type ReturnNavigationProp = StackNavigationProp<NavigationParam, 'Return'>;
+type ReturnRouteProp = RouteProp<NavigationParam, 'Return'>;
+export type ReturnProps = {
+  navigation: ReturnNavigationProp;
+  route: ReturnRouteProp;
+};
+
 type CartNavigationProp = BottomTabNavigationProp<NavigationParam, 'Cart'>;
 type CartRouteProp = RouteProp<NavigationParam, 'Cart'>;
 export type CartProps = {
@@ -339,12 +373,6 @@ export type OrderProps = {
   navigation: OrderNavigationProp;
   route: OrderRouteProp;
 };
-
-const navigationRef = React.createRef();
-
-export function navigate(name: string, params: string) {
-  navigationRef.current?.navigate(name, params);
-}
 
 const RootStack = createStackNavigator<NavigationParam>();
 
@@ -535,6 +563,14 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
+      name="Return"
+      component={Return}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
       name="Address"
       component={Address}
     />
@@ -591,7 +627,7 @@ const RootStackScreen = () => (
 
 const AppNavigation = () => {
   return (
-    <NavigationContainer independent={true} ref={navigationRef}>
+    <NavigationContainer independent={true}>
       <StatusBar
         animated={false}
         backgroundColor={colors.white}

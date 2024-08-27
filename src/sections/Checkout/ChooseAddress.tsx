@@ -47,7 +47,7 @@ const ChooseAddress = ({onPress, data, disabled}: ChooseAddressProps) => {
             </View>
           ) : (
             <View style={styles.contentProduct}>
-              <Text style={styles.txtAddressNoData}>Choose Address</Text>
+              <Text style={styles.txtAddressNoData}>Pilih Alamat</Text>
             </View>
           )}
         </View>

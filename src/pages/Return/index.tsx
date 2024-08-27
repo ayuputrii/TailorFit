@@ -2,19 +2,18 @@ import React, {useState} from 'react';
 import {BackHeader, Gap, ModalConfirmation} from '../../components';
 import {moderateScale} from '../../utils/scale';
 import {ScrollView, View} from 'react-native';
-import styles from './styles';
-import {RatingSections} from '../../sections';
+import {ReturnSections} from '../../sections';
 import {Asset} from 'react-native-image-picker';
-import {RatingProps} from '../../navigation';
+import {ReturnProps} from '../../navigation';
 import {useRoute} from '@react-navigation/native';
-import {API_REVIEW, BASE_URL, postFormData} from '../../api';
+import {API_RETURN, API_REVIEW, BASE_URL, postFormData} from '../../api';
 import {getData} from '../../utils/async-storage';
+import styles from './styles';
 
-const Rating = ({navigation}: RatingProps) => {
+const Return = ({navigation}: ReturnProps) => {
   const route = useRoute();
   const {idProduct, orderId} = route?.params;
 
-  const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
   const [file, setFile] = useState<(Asset | string)[]>([]);
 
@@ -33,10 +32,8 @@ const Rating = ({navigation}: RatingProps) => {
     try {
       const formData = new FormData();
       formData.append('productId', idProduct);
-      formData.append('rating', rating);
-      formData.append('comment', comment);
-      formData.append('dir', 'rating');
       formData.append('orderId', orderId);
+      formData.append('reason', comment);
       Array.from(file).forEach(fl => {
         formData.append('images', {
           uri: (fl as Asset)?.uri,
@@ -47,10 +44,11 @@ const Rating = ({navigation}: RatingProps) => {
 
       const token = await getData('ACCESS_TOKEN');
       const response = await postFormData(
-        BASE_URL + API_REVIEW,
+        BASE_URL + API_RETURN,
         formData,
         token,
       );
+      console.log('response return', response?.data);
 
       if (response?.data?.success) {
         setLoading(false);
@@ -59,9 +57,9 @@ const Rating = ({navigation}: RatingProps) => {
         setModalError(false);
         setTitle('Selamat, berhasil!');
         setMessage(
-          response?.data?.message || 'Penilaian Anda telah kami terima',
+          response?.data?.message ||
+            'Terimakasih, telah mengisi formulir pengembalian.',
         );
-        setRating(0);
         setComment('');
         setFile([]);
       } else {
@@ -69,32 +67,30 @@ const Rating = ({navigation}: RatingProps) => {
         setDisabled(false);
         setShowModal(true);
         setModalError(true);
-        setTitle('Mohon maaf, belum berhasil');
-        setMessage(response?.data?.message || 'Silakan coba lagi nanti...');
+        setTitle('Mohon maaf, permohonan anda tidak bisa kami buat');
+        setMessage(response?.data?.message || 'Silakan, coba lagi nanti!');
       }
     } catch (error) {
       setLoading(false);
       setDisabled(false);
       setShowModal(true);
       setModalError(true);
-      setTitle('Mohon maaf, belum berhasil');
-      setMessage('Silakan coba lagi nanti...');
+      setTitle('Mohon maaf, permohonan anda tidak bisa kami buat');
+      setMessage('Silakan, coba lagi nanti!');
     }
   };
 
   return (
     <View style={styles.container}>
       <BackHeader
-        title="Penilaian dan Komentar"
+        title="Pengembalian Barang"
         goBack={() => navigation?.goBack()}
         icon={false}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
           <Gap height={moderateScale(8)} width={0} />
-          <RatingSections
-            rating={rating}
-            setRating={setRating}
+          <ReturnSections
             comment={comment}
             setComment={setComment}
             file={file}
@@ -119,4 +115,4 @@ const Rating = ({navigation}: RatingProps) => {
   );
 };
 
-export default Rating;
+export default Return;

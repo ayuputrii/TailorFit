@@ -23,6 +23,7 @@ import CustomSizeSections from './CustomSize';
 import DetailTransactionSections from './DetailTransaction';
 import ChoosePaymentSections from './ChoosePayment';
 import OrderSections from './Order';
+import ReturnSections from './Return';
 
 export {
   Login,
@@ -50,4 +51,5 @@ export {
   DetailTransactionSections,
   ChoosePaymentSections,
   OrderSections,
+  ReturnSections,
 };

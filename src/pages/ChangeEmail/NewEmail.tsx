@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
-import {colors} from '../../utils/colors';
+import {SafeAreaView, StatusBar, View} from 'react-native';
 import {BackHeader, ModalConfirmation} from '../../components';
 import {ChangeEmailSections} from '../../sections';
 import styles from './styles';
 import {NewEmailProps} from '../../navigation';
 import {API_UPDATE_EMAIL, BASE_URL, putDataWithToken} from '../../api';
 import {getData} from '../../utils/async-storage';
-import IconANT from 'react-native-vector-icons/AntDesign';
-import {moderateScale} from '../../utils/scale';
+import {colors} from '../../utils/colors';
 
 const NewEmail = ({navigation}: NewEmailProps) => {
   const [email, setEmail] = useState<string | undefined>('');
@@ -48,57 +46,54 @@ const NewEmail = ({navigation}: NewEmailProps) => {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Create New Email Berhasil');
-          setMessage(response?.data?.message);
+          setTitle('Selamat,  berhasil!');
+          setMessage(response?.data?.message || 'Email berhasil diubah');
         } else {
           setIsError(true);
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Create New Email Belum Berhasil');
-          setMessage(response?.data?.message);
+          setTitle('Mohon maaf, belum berhasil');
+          setMessage(response?.data?.message || 'Email belum berhasil diubah');
         }
       } catch (error: any) {
         setIsError(true);
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Create New Email Belum Berhasil');
+        setTitle('Mohon maaf, belum berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
     }
   };
 
   return (
-    <React.Fragment>
-      <View style={styles.container}>
-        <BackHeader
-          title="Change Email"
-          goBack={() => navigation?.goBack()}
-          icon={
-            <IconANT
-              name="logout"
-              color={colors.black}
-              size={moderateScale(20)}
-            />
-          }>
-          <ChangeEmailSections
-            email={email}
-            setEmail={setEmail}
-            onSendEmail={onSendEmail}
-            errorEmail={errorEmail}
-            disabled={disabled}
-            loading={loading}
-          />
-        </BackHeader>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        animated={false}
+        backgroundColor={colors.basebg}
+        barStyle="dark-content"
+      />
+      <BackHeader
+        title="Ubah Email"
+        goBack={() => navigation?.goBack()}
+        icon={false}>
+        <ChangeEmailSections
+          email={email}
+          setEmail={setEmail}
+          onSendEmail={onSendEmail}
+          errorEmail={errorEmail}
+          disabled={disabled}
+          loading={loading}
+        />
+      </BackHeader>
 
       <ModalConfirmation
         isVisible={showModal}
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={isError ? 'Close' : 'Back to Settings'}
+        textBtn={isError ? 'Tutup' : 'Kembali ke Pengaturan'}
         onSubmit={
           isError
             ? () => setShowModal(false)
@@ -109,7 +104,7 @@ const NewEmail = ({navigation}: NewEmailProps) => {
         }
         style={undefined}
       />
-    </React.Fragment>
+    </SafeAreaView>
   );
 };
 

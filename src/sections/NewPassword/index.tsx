@@ -46,7 +46,7 @@ const NewPasswordSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.text}>Confirm Password</Text>
+            <Text style={styles.text}>Konfirmasi Password</Text>
           </View>
         }
         disabled={disabled}
@@ -57,7 +57,7 @@ const NewPasswordSections = ({
           <Buttons
             onPress={onLogin}
             style={styles.btnSignIn}
-            children={<Text style={styles.text}>Sign In</Text>}
+            children={<Text style={styles.text}>Login</Text>}
             disabled={disabled}
           />
         </React.Fragment>

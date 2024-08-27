@@ -6,6 +6,9 @@ import {ChangeEmailProps} from '../../navigation';
 import {API_CHANGE_EMAIL, BASE_URL, postDataWithToken} from '../../api';
 import {getData} from '../../utils/async-storage';
 import {CurrentEmailSections} from '../../sections';
+import {SafeAreaView} from 'react-native';
+import {StatusBar} from 'react-native';
+import {colors} from '../../utils/colors';
 
 const ChangeEmail = ({navigation}: ChangeEmailProps) => {
   const [email, setEmail] = useState<string | undefined>('');
@@ -74,33 +77,36 @@ const ChangeEmail = ({navigation}: ChangeEmailProps) => {
   };
 
   return (
-    <React.Fragment>
-      <View style={styles.container}>
-        <BackHeader
-          title="Ubah Email"
-          goBack={() => navigation?.goBack()}
-          icon={false}>
-          <CurrentEmailSections
-            email={email}
-            setEmail={setEmail}
-            onSendEmail={onSendEmail}
-            disabled={disabled}
-            loading={loading}
-            errorCurrentEmail={errorCurrentEmail}
-          />
-        </BackHeader>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        animated={false}
+        backgroundColor={colors.basebg}
+        barStyle="dark-content"
+      />
+      <BackHeader
+        title="Ubah Email"
+        goBack={() => navigation?.goBack()}
+        icon={false}>
+        <CurrentEmailSections
+          email={email}
+          setEmail={setEmail}
+          onSendEmail={onSendEmail}
+          disabled={disabled}
+          loading={loading}
+          errorCurrentEmail={errorCurrentEmail}
+        />
+      </BackHeader>
 
       <ModalConfirmation
         isVisible={showModal}
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={'Close'}
+        textBtn={'Tutup'}
         onSubmit={() => setShowModal(false)}
         style={modalError ? styles.modalError : null}
       />
-    </React.Fragment>
+    </SafeAreaView>
   );
 };
 

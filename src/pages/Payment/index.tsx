@@ -25,7 +25,7 @@ const Payment = ({navigation}: PaymentProps) => {
         title="Successfully"
         message="Successfully payment!"
         textBtn="Kembali ke Beranda"
-        onSubmit={() => navigation?.replace('MainTabs')}
+        onSubmit={() => navigation?.jumpTo('MainTabs')}
         style={undefined}
       />
     </View>

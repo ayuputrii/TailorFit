@@ -109,14 +109,14 @@ const LoginSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.loginText}>Sign In</Text>
+            <Text style={styles.loginText}>Login</Text>
           </View>
         }
       />
       <View style={styles.viewList}>
         <View style={styles.borderTop} />
         <Text style={[styles.txt, styles.colorLightBlack]}>
-          Or Sign In with
+          Atau Masuk dengan
         </Text>
         <View style={styles.borderTop} />
       </View>
@@ -130,7 +130,7 @@ const LoginSections = ({
             <Text style={[styles.txt, styles.colorLightBlack]}>
               Anda belum memiliki akun ?
             </Text>
-            <Text style={[styles.txt, styles.colorBoldBlack]}> Sign Up</Text>
+            <Text style={[styles.txt, styles.colorBoldBlack]}> Register</Text>
           </React.Fragment>
         }
       />

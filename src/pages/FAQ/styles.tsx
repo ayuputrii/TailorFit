@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native';
-import {moderateScale, verticalScale} from '../../utils/scale';
-import {fonts} from '../../utils/fonts';
+import {moderateScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
 
 const styles = StyleSheet.create({
   container: {
-    margin: moderateScale(14),
+    padding: moderateScale(14),
+    backgroundColor: colors.basebg,
+    flex: 1,
   },
 });
 

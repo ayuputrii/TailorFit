@@ -43,7 +43,7 @@ const ChangeEmailSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.text}>Change Email</Text>
+            <Text style={styles.text}>Ubah Email</Text>
           </View>
         }
         disabled={disabled}

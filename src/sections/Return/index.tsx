@@ -7,15 +7,12 @@ import {
   InputTextArea,
   Text,
 } from '../../components';
-import {styles} from './styles';
-import StarRating from 'react-native-star-rating-widget';
 import {moderateScale} from '../../utils/scale';
 import {Asset} from 'react-native-image-picker';
 import {colors} from '../../utils/colors';
+import {styles} from './styles';
 
-interface RatingSectionsProps {
-  rating: number;
-  setRating: Dispatch<SetStateAction<number>>;
+interface ReturnSectionsProps {
   comment: string;
   setComment: Dispatch<SetStateAction<string>>;
   onSubmit: () => void;
@@ -25,9 +22,7 @@ interface RatingSectionsProps {
   loading?: boolean;
 }
 
-const RatingSections = ({
-  rating,
-  setRating,
+const ReturnSections = ({
   comment,
   setComment,
   onSubmit,
@@ -35,31 +30,20 @@ const RatingSections = ({
   setFile,
   disabled,
   loading,
-}: RatingSectionsProps) => {
+}: ReturnSectionsProps) => {
   return (
     <View style={styles.content}>
-      <Text style={styles.txt}>Give us a star</Text>
-      <StarRating
-        rating={rating}
-        onChange={setRating}
-        starSize={moderateScale(48)}
-        color="#FFC806"
-        style={styles.centerRating}
-      />
-
-      <Gap height={moderateScale(16)} width={0} />
-
-      <Text style={styles.txt}>Tambahkan Foto</Text>
+      <Text style={styles.txt}>Tambahkan Bukti Foto</Text>
 
       <InputMultipleFile file={file} setFile={setFile} />
 
       <Gap height={moderateScale(16)} width={0} />
 
-      <Text style={styles.txt}>Komentar</Text>
+      <Text style={styles.txt}>Alasan Pengembalian</Text>
       <InputTextArea
         value={comment}
         onChangeText={setComment}
-        placeholder="Baju ini bagus..."
+        placeholder="Masukkan alasan..."
         placeholderTextColor={'#AFAFAF'}
         styleInput={undefined}
         styleText={undefined}
@@ -88,4 +72,4 @@ const RatingSections = ({
   );
 };
 
-export default RatingSections;
+export default ReturnSections;

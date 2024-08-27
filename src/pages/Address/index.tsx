@@ -134,7 +134,7 @@ const Address = ({navigation}: AddressProps) => {
         setShowModal(false);
         setShowModalInfo(true);
         setErrorModal(true);
-        setTitle('Add address is failed. Please try again!');
+        setTitle('Tambah alamat gagal, silakan coba lagi nanti.');
       }
     }
   };
@@ -249,7 +249,7 @@ const Address = ({navigation}: AddressProps) => {
   return (
     <View style={styles.container}>
       <BackHeader
-        title="Choose Address"
+        title="Pilih Alamat"
         goBack={() => navigation?.goBack()}
         icon={false}>
         <ScrollView
@@ -310,7 +310,7 @@ const Address = ({navigation}: AddressProps) => {
               size={moderateScale(16)}
             />
             <Gap width={moderateScale(10)} height={0} />
-            <Text style={styles.txt}>Add New Address</Text>
+            <Text style={styles.txt}>Tambah Alamat Baru</Text>
           </Buttons>
         </View>
       </BackHeader>
@@ -320,8 +320,8 @@ const Address = ({navigation}: AddressProps) => {
           clearInput();
           setShowModal(false);
         }}
-        title={isAdd ? 'Add New Address' : 'Change Address'}
-        textBtn={isAdd ? 'Add' : 'Change'}
+        title={isAdd ? 'Tambah Alamat Baru' : 'Ubah Alamat'}
+        textBtn={isAdd ? 'Tambah' : 'Ubah'}
         onSubmit={() => {
           isAdd ? addAddress() : changeAddress();
         }}

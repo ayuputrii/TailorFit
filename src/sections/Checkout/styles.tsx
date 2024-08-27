@@ -5,7 +5,6 @@ import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
     flex: 1,
     marginBottom: moderateScale(8),
   },

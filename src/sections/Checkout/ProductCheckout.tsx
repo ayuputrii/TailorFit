@@ -48,11 +48,17 @@ const ProductCheckout = (cart: Cart) => {
                     ) || 1 * cart.quantity}
               </Text>
               <View style={styles.flexRowCenter}>
-                <Text style={[styles.textPrice, {color: colors.orange}]}>
+                <Text style={[styles.textPrice, {color: colors.darkChoco}]}>
                   Pre Order, Min {(cart.productId as ProductsTypes)?.duration}{' '}
-                  Days
+                  Days {' - '}
                 </Text>
-                <Text style={[styles.textPrice, styles.mark]}>
+                <Text
+                  style={[
+                    styles.textPrice,
+                    {
+                      color: colors.darkChoco,
+                    },
+                  ]}>
                   {cart?.materialProvider ? cart?.materialProvider : '-'}
                 </Text>
               </View>

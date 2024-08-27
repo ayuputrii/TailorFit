@@ -159,7 +159,7 @@ const Register = ({navigation}: RegisterProps) => {
         showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <HeaderNotLogin
-            title="Sign Up"
+            title="Register"
             subTitle={`Harap masukkan nama lengkap, nomor handphone, ${'\n'} email, dan kata sandi Anda.`}
             fontSizeSub={12}
             subColor={colors.lightgray}
@@ -192,7 +192,7 @@ const Register = ({navigation}: RegisterProps) => {
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={errors ? 'Tutup' : 'Sign In'}
+        textBtn={errors ? 'Tutup' : 'Login'}
         onSubmit={() => {
           errors ? setShowModal(false) : navigation.replace('Login');
         }}

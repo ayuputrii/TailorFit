@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {BackHeader, LoadingDots} from '../../components';
 import {View, Alert} from 'react-native';
 import styles from './styles';
@@ -20,9 +20,16 @@ import {useIsBuyStore} from '../../store/useIsBuyStore';
 import {usePaymentTypeStore} from '../../store/usePaymentTypeStore';
 import {usePaymentSnapStore} from '../../store/usePaymentSnap';
 
+type RBSheetRef = {
+  open: () => void;
+  close: () => void;
+};
+
 const Checkout = ({navigation}: CheckoutProps) => {
   const [checked, setChecked] = useState('first');
   const isBuy = useIsBuyStore();
+
+  const refRBSheet = useRef<RBSheetRef | null>(null);
 
   const [dataAddress, setDataAdsress] = useState<AddressTypes[]>([]);
 
@@ -51,6 +58,8 @@ const Checkout = ({navigation}: CheckoutProps) => {
 
   const goPayment = async () => {
     setLoadingDots(true);
+    refRBSheet?.current?.close();
+
     try {
       const token = await getData('ACCESS_TOKEN');
       const response = await postDataWithToken(
@@ -100,6 +109,7 @@ const Checkout = ({navigation}: CheckoutProps) => {
 
   const removeCurrentCart = async () => {
     navigation.goBack();
+
     if (isBuy.isBuy) {
       try {
         const token = await getData('ACCESS_TOKEN');
@@ -132,6 +142,7 @@ const Checkout = ({navigation}: CheckoutProps) => {
           dataAddress={dataAddress}
           isFullPayment={isFullPayment}
           setIsFullPayment={setIsFullPayment}
+          refRBSheet={refRBSheet}
         />
       </BackHeader>
     </View>

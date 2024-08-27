@@ -13,7 +13,7 @@ interface ReviewSectionsProps {
 }
 
 const ReviewSections = ({data}: ReviewSectionsProps) => {
-  const customer = data?.customerId;
+  const customer = data?.userId;
 
   return (
     <View

@@ -25,7 +25,7 @@ const ProductHomeSections = ({
 }: ProductHomeSectionsProps) => {
   return (
     <React.Fragment>
-      {loadProduct && (
+      {loadProduct ? (
         <FlatList
           data={[1, 2, 3, 4]}
           showsHorizontalScrollIndicator={false}
@@ -38,33 +38,42 @@ const ProductHomeSections = ({
           )}
           keyExtractor={(_item, index) => index.toString()}
         />
-      )}
-      {!loadProduct && Boolean(filteredProducts?.length) ? (
-        <FlatList
-          data={filteredProducts}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          keyExtractor={(_item, index) => index.toString()}
-          renderItem={({item, index}: {item: ProductsTypes; index: any}) => {
-            return (
-              <ProductsSections
-                key={index}
-                goDetailProduct={() => goDetailProduct({...item})}
-                addFavorite={() => addFavorite(item?._id as string)}
-                deleteFavorite={() =>
-                  deleteFavorite(item?.favorite?._id as string)
-                }
-                data={item}
-                isLogin={isLogin}
-              />
-            );
-          }}
-        />
-      ) : isEmpty ? (
-        <ImageWithNotData style={{}} />
       ) : (
-        <ImageWithNotData style={{}} />
+        <React.Fragment>
+          {!loadProduct && Boolean(filteredProducts?.length) ? (
+            <FlatList
+              data={filteredProducts}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              numColumns={2}
+              keyExtractor={(_item, index) => index.toString()}
+              renderItem={({
+                item,
+                index,
+              }: {
+                item: ProductsTypes;
+                index: any;
+              }) => {
+                return (
+                  <ProductsSections
+                    key={index}
+                    goDetailProduct={() => goDetailProduct({...item})}
+                    addFavorite={() => addFavorite(item?._id as string)}
+                    deleteFavorite={() =>
+                      deleteFavorite(item?.favorite?._id as string)
+                    }
+                    data={item}
+                    isLogin={isLogin}
+                  />
+                );
+              }}
+            />
+          ) : isEmpty ? (
+            <ImageWithNotData style={{}} />
+          ) : (
+            <ImageWithNotData style={{}} />
+          )}
+        </React.Fragment>
       )}
     </React.Fragment>
   );
