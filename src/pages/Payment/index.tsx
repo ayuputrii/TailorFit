@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {BackHeader, ModalConfirmation} from '../../components';
 import styles from './styles';
@@ -15,7 +15,7 @@ const Payment = ({navigation}: PaymentProps) => {
     <View style={styles.container}>
       <BackHeader
         title="Payment"
-        goBack={() => navigation?.navigate('Home')}
+        goBack={() => navigation?.navigate('Order')}
         icon={false}>
         <WebView source={{uri: paymentSnapStore?.url}} style={{flex: 1}} />
       </BackHeader>

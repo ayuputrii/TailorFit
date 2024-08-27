@@ -10,7 +10,8 @@ import {colors} from '../../utils/colors';
 import {formatDate} from '../../utils/format-date';
 import {ProductsTypes} from '../../types';
 import {fonts} from '../../utils/fonts';
-import CountDown from 'react-native-countdown-component';
+// @ts-ignore
+import CountDown from 'react-native-countdown-fixed';
 import {DataStatus} from '../../constants';
 
 interface DetailProductTransactionProps {

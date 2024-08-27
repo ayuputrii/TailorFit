@@ -82,16 +82,16 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
     const now: any = new Date();
     setTimeDiff(Math.floor((expirationTime - now) / 1000));
 
-    const subscription = AppState.addEventListener(
+    const subscription = AppState?.addEventListener(
       'change',
       handleAppStateChange,
     );
 
     return () => {
-      subscription.remove();
+      subscription?.remove?.();
     };
   }, [detail?.item?.expiredAt]);
-
+  console.log('PAGE__', route?.params?.titleParam);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
