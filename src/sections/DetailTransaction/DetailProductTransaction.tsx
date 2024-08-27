@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {CardCommons, Gap, Text} from '../../components';
 import {TouchableOpacity, View} from 'react-native';

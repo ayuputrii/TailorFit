@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import {Cart, CategoryTypes, Order, ProductsTypes} from '../../types';
@@ -61,10 +62,11 @@ const OrderSections = ({
           />
         ) : Boolean(data?.length) ? (
           <FlatList
-            data={data}
+            data={data.filter(dt => dt.products.length)}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyExtractor={(_item, index) => index.toString()}
+            ListEmptyComponent={<ImageWithNotData />}
             renderItem={({item, index}: {item: Order; index: number}) => {
               return (
                 <React.Fragment key={index}>

@@ -6,12 +6,13 @@ import {ReturnSections} from '../../sections';
 import {Asset} from 'react-native-image-picker';
 import {ReturnProps} from '../../navigation';
 import {useRoute} from '@react-navigation/native';
-import {API_RETURN, API_REVIEW, BASE_URL, postFormData} from '../../api';
+import {API_RETURN, BASE_URL, postFormData} from '../../api';
 import {getData} from '../../utils/async-storage';
 import styles from './styles';
 
 const Return = ({navigation}: ReturnProps) => {
-  const route = useRoute();
+  const route = useRoute<ReturnProps['route']>();
+
   const {idProduct, orderId} = route?.params;
 
   const [comment, setComment] = useState<string>('');
@@ -48,7 +49,6 @@ const Return = ({navigation}: ReturnProps) => {
         formData,
         token,
       );
-      console.log('response return', response?.data);
 
       if (response?.data?.success) {
         setLoading(false);

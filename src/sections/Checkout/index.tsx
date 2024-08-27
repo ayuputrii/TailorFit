@@ -1,4 +1,5 @@
-import React, {useMemo, useRef, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useMemo, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {Buttons, CardCommons, Gap, ModalBottom, Text} from '../../components';
 import styles from './styles';
@@ -118,6 +119,7 @@ const CheckoutSections = ({
             <View
               style={[
                 styles.contentProduct,
+                // eslint-disable-next-line react-native/no-inline-styles
                 {marginTop: moderateScale(2), width: '50%'},
               ]}>
               <IconDollar />

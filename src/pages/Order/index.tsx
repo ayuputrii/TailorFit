@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useContext, useState} from 'react';
 import {BackHeader, Gap, ImageWithNotLogin} from '../../components';
 import {colors} from '../../utils/colors';
@@ -6,7 +7,7 @@ import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import styles from './styles';
 import {OrderProps} from '../../navigation';
 import {OrderSections} from '../../sections';
-import {Cart, OrderParam, Order as OrderType, ProductsTypes} from '../../types';
+import {OrderParam, Order as OrderType, ProductsTypes} from '../../types';
 import {API_ORDER, BASE_URL, getDataWithToken} from '../../api';
 import {getData} from '../../utils/async-storage';
 import {DataStatus} from '../../constants';
@@ -46,6 +47,10 @@ const Order = ({navigation}: OrderProps) => {
         BASE_URL + API_ORDER + `?status=${cat || categoryStatus}`,
         token,
       );
+      console.log(
+        'HIT',
+        BASE_URL + API_ORDER + `?status=${cat || categoryStatus}`,
+      );
       if (response?.data?.data.length) {
         setLoading(false);
         setDataOrder(response?.data?.data);
@@ -61,8 +66,8 @@ const Order = ({navigation}: OrderProps) => {
 
   useFocusEffect(
     useCallback(() => {
-      getOrder();
-    }, []),
+      getOrder(categoryStatus);
+    }, [categoryStatus]),
   );
 
   return (
@@ -74,7 +79,7 @@ const Order = ({navigation}: OrderProps) => {
       />
       <BackHeader
         title="Pesanan Saya"
-        goBack={() => navigation?.goBack()}
+        goBack={() => navigation.navigate('Home')}
         icon={false}>
         {isLogin ? (
           <ScrollView

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {BackHeader, Buttons, Gap, LoadingDots, Text} from '../../components';
 import {AppState, SafeAreaView, StatusBar} from 'react-native';
@@ -70,8 +71,8 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
     setLoadingDots(true);
 
     try {
-      navigation.navigate('Payment');
       paymentSnapStore.setPaymentSnap(details?.snapUrl);
+      navigation.navigate('Payment');
     } catch (err) {
       setLoadingDots(false);
     }
@@ -90,8 +91,9 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
     return () => {
       subscription?.remove?.();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detail?.item?.expiredAt]);
-  console.log('PAGE__', route?.params?.titleParam);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar

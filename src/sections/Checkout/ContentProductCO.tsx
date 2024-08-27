@@ -13,13 +13,9 @@ const ContentProductCO = (cart: Cart) => {
       <View style={styles.hr} />
       <Text style={styles.titleDelivery}>
         Detail Ukuran -{' '}
-        {cart?.materialProvider +
-          ' - ' +
-          cart?.quality +
-          ' - ' +
-          cart?.type +
-          ' - ' +
-          cart?.size}
+        {cart?.materialProvider === 'TAILOR'
+          ? cart?.quality + ' - ' + cart?.type + ' - ' + cart?.size
+          : cart?.type + ' - ' + cart?.size}
       </Text>
       <View style={styles.hr} />
 

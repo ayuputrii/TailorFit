@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
 import {View} from 'react-native';
 import {BackHeader, ModalConfirmation} from '../../components';
 import styles from './styles';

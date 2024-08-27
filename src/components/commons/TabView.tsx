@@ -65,7 +65,7 @@ const CustomTabBar = (props: TabBarProps<Route>) => {
       indicatorStyle={{
         backgroundColor: colors.orange,
         borderRadius: moderateScale(22),
-        height: moderateScale(45),
+        height: moderateScale(48),
       }}
       style={styles.contentTabBar}
       inactiveColor={colors.white}
