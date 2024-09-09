@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {LogBox} from 'react-native';
 import 'react-native-gesture-handler';
 import AppNavigation from './src/navigation';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import AuthProvider from './src/context/AuthContext';
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
@@ -13,22 +14,21 @@ export const navigationRef = React.createRef();
 export function navigate(name: string, params: string) {
   navigationRef.current?.navigate(name, params);
 }
+
 GoogleSignin.configure({
-  scopes: ['profile', 'email'],
+  scopes: ['https://www.googleapis.com/auth/drive'],
   webClientId:
     '1048141216024-kit5emhoc1vdu1rgekqu5994km9og4qd.apps.googleusercontent.com',
-  // offlineAccess: true,
-  // // hostedDomain: '',
-  // forceCodeForRefreshToken: true,
-  // // accountName: '',
-  // // iosClientId: '<FROM DEVELOPER CONSOLE>',
-  // // googleServicePlistPath: '',
-  // // openIdRealm: '',
-  // profileImageSize: 120,
+  offlineAccess: true,
+  forceCodeForRefreshToken: true,
 });
 
 const App = () => {
-  return <AppWrapper />;
+  return (
+    <AuthProvider>
+      <AppWrapper />
+    </AuthProvider>
+  );
 };
 
 const AppWrapper = () => {

@@ -1,18 +1,23 @@
 import React from 'react';
 import Buttons from './Buttons';
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Gap from './Gap';
 import Text from './Text';
 import {colors} from '../../utils/colors';
 import {moderateScale, verticalScale} from '../../utils/scale';
 import {fonts} from '../../utils/fonts';
-
+import {menu, Size} from '../../types';
 interface MenuButtonsProps {
   activeMenuIndex: number;
   setActiveMenuIndex: (index: number) => void;
   index: number;
-  item: any;
+  item: Size | menu;
   onPress: () => void;
+  disabled: boolean;
+  bgColor?: string;
+  bgColorInActive?: string;
+  txtColor?: string;
+  txtColorInActive?: string;
 }
 
 const MenuButtons = ({
@@ -21,15 +26,21 @@ const MenuButtons = ({
   index,
   item,
   onPress,
+  disabled,
+  bgColor = colors.black,
+  bgColorInActive = colors.white,
+  txtColor = colors.white,
+  txtColorInActive = colors.black,
 }: MenuButtonsProps) => {
   return (
-    <>
+    <React.Fragment>
       <Buttons
+        disabled={disabled}
         style={[
           styles.button,
           {
             backgroundColor:
-              activeMenuIndex === index ? colors.black : colors.white,
+              activeMenuIndex === index ? bgColor : bgColorInActive,
           },
         ]}
         onPress={() => {
@@ -40,30 +51,29 @@ const MenuButtons = ({
           style={[
             styles.text,
             {
-              color: activeMenuIndex === index ? colors.white : colors.black,
+              color: activeMenuIndex === index ? txtColor : txtColorInActive,
             },
           ]}>
-          {item?.label}
+          {item?.name}
         </Text>
       </Buttons>
+
       <Gap width={moderateScale(6)} height={0} />
-    </>
+    </React.Fragment>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    width: moderateScale(100),
+    width: moderateScale(120),
     borderRadius: moderateScale(20),
     justifyContent: 'center',
     alignItems: 'center',
-    height: verticalScale(Platform.OS === 'ios' ? 35 : 40),
-    marginBottom: moderateScale(Platform.OS === 'ios' ? 24 : 16),
+    height: verticalScale(35),
+    marginBottom: moderateScale(16),
   },
   text: {
-    fontSize: moderateScale(14),
-    width: moderateScale(80),
-    flexWrap: 'wrap',
+    fontSize: moderateScale(12),
     textAlign: 'center',
     fontFamily: fonts.PoppinsSemiBold,
   },

@@ -1,26 +1,38 @@
-import React, {useMemo, useState} from 'react';
-import {ScrollView} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import {colors} from '../../utils/colors';
 import {
   BackgroundWithImage,
+  BackHeader,
   HeaderNotLogin,
   ModalConfirmation,
 } from '../../components';
 import {NewPasswordSections} from '../../sections';
 import styles from './styles';
 import {NewPasswordProps} from '../../navigation';
-import {API_RESET_PASSWORD, BASE_URL, postData} from '../../api';
+import {
+  API_RESET_PASSWORD,
+  BASE_URL,
+  postData,
+  postDataWithToken,
+} from '../../api';
+import {images} from '../../assets';
+import {AuthContext} from '../../context/AuthContext';
+import {getData} from '../../utils/async-storage';
+import {useRoute} from '@react-navigation/native';
 
 const NewPassword = ({navigation}: NewPasswordProps) => {
-  const email = useMemo(() => {
-    return navigation.getState().routes.find(item => item.name === 'VerifyOTP')
-      ?.params?.email;
-  }, [navigation]);
+  const ctx = useContext(AuthContext);
+  const isLogin = ctx?.isLogin;
 
-  const [password, setPassword] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
+  const route = useRoute();
+
+  const email = route?.params?.email;
+
+  const [password, setPassword] = useState<string | undefined>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
   const [showModal, setShowModal] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -34,7 +46,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
     };
 
     if (password === '') {
-      setErrorPassword('Password is required');
+      setErrorPassword('Harap isi kata sandi baru Anda');
     } else {
       setErrorPassword('');
     }
@@ -44,67 +56,113 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
       setDisabled(true);
 
       try {
-        const response: any = await postData(
-          BASE_URL + API_RESET_PASSWORD,
-          data,
-        );
+        const token = await getData('ACCESS_TOKEN');
+        const response: any = isLogin
+          ? await postDataWithToken(BASE_URL + API_RESET_PASSWORD, data, token)
+          : await postData(BASE_URL + API_RESET_PASSWORD, data);
+
         if (response?.data?.success) {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Reset Password is Success');
-          setMessage(response?.data?.message);
+          setTitle('Selamat, berhasil!');
+          setMessage(
+            response?.data?.message || 'Kata Sandi Baru Anda Berhasil di Ubah',
+          );
         } else {
           setIsError(true);
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Reset Password is Failed');
-          setMessage(response?.data?.message);
+          setTitle('Mohon maaf, gagal');
+          setMessage(
+            response?.data?.message ||
+              'Kata Sandi Baru Anda Belum Berhasil di Ubah',
+          );
         }
       } catch (error: any) {
         setIsError(true);
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Reset Password is Failed');
+        setTitle('Kata Sandi Baru Anda Belum Berhasil di Ubah');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
     }
   };
 
   return (
-    <BackgroundWithImage
-      backgroundChildren={false}
-      src={require('../../assets/images/img-rainbow.png')}>
-      <ScrollView style={styles.scroll}>
-        <HeaderNotLogin
-          title="Create New Password"
-          subTitle={`Please enter your new password and ${'\n'} confirm password.`}
-          fontSizeSub={12}
-          subColor={colors.lightgray}
-          marginTop={0}
-        />
+    <React.Fragment>
+      {isLogin ? (
+        <SafeAreaView style={styles.container}>
+          <StatusBar
+            animated={false}
+            backgroundColor={colors.basebg}
+            barStyle="dark-content"
+          />
+          <BackHeader
+            title="Ubah Kata Sandi"
+            goBack={() => navigation?.goBack()}
+            icon={false}>
+            <NewPasswordSections
+              password={password}
+              setPassword={setPassword}
+              onConfirmPassword={onConfirmPassword}
+              errorPassowrd={errorPassword}
+              disabled={disabled}
+              loading={loading}
+              isLogin={isLogin}
+            />
+          </BackHeader>
+        </SafeAreaView>
+      ) : (
+        <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
+          <ScrollView style={styles.scroll}>
+            <HeaderNotLogin
+              title="Buat Kata Sandi Baru"
+              subTitle={`Harap isi kata sandi baru Anda dan ${'\n'} konfirmasi kata sandi.`}
+              fontSizeSub={12}
+              subColor={colors.lightgray}
+              marginTop={0}
+            />
 
-        <NewPasswordSections
-          password={password}
-          setPassword={setPassword}
-          onConfirmPassword={onConfirmPassword}
-          errorPassowrd={errorPassword}
-          disabled={disabled}
-          loading={loading}
-          onLogin={() => navigation.replace('Login')}
-        />
-      </ScrollView>
+            <NewPasswordSections
+              password={password}
+              setPassword={setPassword}
+              onConfirmPassword={onConfirmPassword}
+              errorPassowrd={errorPassword}
+              disabled={disabled}
+              loading={loading}
+              isLogin={isLogin}
+              onLogin={() => navigation.replace('Login')}
+            />
+          </ScrollView>
+        </BackgroundWithImage>
+      )}
 
       <ModalConfirmation
         isVisible={showModal}
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={isError ? 'Close' : 'Login'}
+        textBtn={
+          isLogin
+            ? isError
+              ? 'Tutup'
+              : 'Kembali ke Pengaturan'
+            : isError
+            ? 'Tutup'
+            : 'Login'
+        }
         onSubmit={
-          isError
+          isLogin
+            ? isError
+              ? () => setShowModal(false)
+              : () => {
+                  setShowModal(false);
+                  navigation.replace('Settings');
+                }
+            : isError
             ? () => setShowModal(false)
             : () => {
                 setShowModal(false);
@@ -113,7 +171,7 @@ const NewPassword = ({navigation}: NewPasswordProps) => {
         }
         style={undefined}
       />
-    </BackgroundWithImage>
+    </React.Fragment>
   );
 };
 

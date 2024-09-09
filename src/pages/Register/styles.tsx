@@ -3,9 +3,11 @@ import {moderateScale} from '../../utils/scale';
 
 const styles = StyleSheet.create({
   scroll: {
-    marginTop: moderateScale(70),
     zIndex: moderateScale(100),
-    marginBottom: moderateScale(20),
+    marginTop: moderateScale(10),
+  },
+  content: {
+    paddingTop: moderateScale(50),
     paddingHorizontal: moderateScale(16),
   },
 });

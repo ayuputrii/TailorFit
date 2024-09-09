@@ -3,7 +3,7 @@ import {moderateScale} from '../../utils/scale';
 
 const styles = StyleSheet.create({
   container: {
-    padding: moderateScale(16),
+    padding: moderateScale(14),
     flex: 1,
   },
 });

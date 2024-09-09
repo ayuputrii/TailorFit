@@ -1,4 +1,5 @@
 import Header from './Header';
+import HeaderReview from './HeaderReview';
 import HeaderNotLogin from './HeaderNotLogin';
 import PhotoWithNotFound from './PhotoWithNotFound';
 import CardCommons from './Card';
@@ -10,10 +11,21 @@ import BackgroundWithImage from './BackgroundWithImage';
 import SocialMedia from './SocialMedia';
 import Text from './Text';
 import MenuButtons from './MenuButtons';
-import ImageNotFound from './ImageNotFound';
+import ImageWithNotFound from './ImageWithNotFound';
+import Shimmer from './Shimmer';
+import ImageWithNotData from './ImageWithNotData';
+import ButtonLogin from './ButtonLogin';
+import ImageWithNotLogin from './ImageWithNotLogin';
+import CarouselImage from './CarouselImage';
+import TabViews from './TabView';
+import Calendar from './Calendar';
+import CollapsibleFAQ from './CollapsibleFAQ';
+import CollapsibleView from './Collpasible';
+import LoadingDots from './LoadingDots';
 
 export {
   Header,
+  HeaderReview,
   HeaderNotLogin,
   PhotoWithNotFound,
   CardCommons,
@@ -25,5 +37,15 @@ export {
   SocialMedia,
   Text,
   MenuButtons,
-  ImageNotFound,
+  ImageWithNotFound,
+  Shimmer,
+  ImageWithNotData,
+  ButtonLogin,
+  ImageWithNotLogin,
+  CarouselImage,
+  TabViews,
+  Calendar,
+  CollapsibleFAQ,
+  CollapsibleView,
+  LoadingDots,
 };

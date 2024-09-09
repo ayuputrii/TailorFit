@@ -5,7 +5,7 @@ import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   container: {
-    padding: moderateScale(16),
+    padding: moderateScale(14),
     flex: 1,
   },
   btn: {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     marginVertical: moderateScale(14),
   },

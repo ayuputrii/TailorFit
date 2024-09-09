@@ -1,9 +1,10 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import React, {Dispatch, SetStateAction, useRef} from 'react';
+import {ActivityIndicator, TextInput, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {
   Buttons,
   Gap,
+  InputNumber,
   InputPassword,
   InputText,
   SocialMedia,
@@ -13,19 +14,23 @@ import styles from './styles';
 import {moderateScale} from '../../utils/scale';
 
 interface RegisterSectionsProps {
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
-  fullName: string;
-  setFullName: Dispatch<SetStateAction<string>>;
-  password: string;
-  setPassword: Dispatch<SetStateAction<string>>;
+  email: string | undefined;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
+  fullName: string | undefined;
+  setFullName: Dispatch<SetStateAction<string | undefined>>;
+  phone: string | undefined;
+  setPhone: Dispatch<SetStateAction<string | undefined>>;
+  password: string | undefined;
+  setPassword: Dispatch<SetStateAction<string | undefined>>;
   navigation: any;
   onRegister: () => void;
   errorEmail: string;
   errorFullName: string;
+  errorPhone: string;
   errorPassword: string;
   disabled: boolean;
   loading: boolean;
+  onGoogle: () => void;
 }
 
 const RegisterSections = ({
@@ -33,42 +38,68 @@ const RegisterSections = ({
   setEmail,
   fullName,
   setFullName,
+  phone,
+  setPhone,
   password,
   setPassword,
   navigation,
   onRegister,
   errorEmail,
   errorFullName,
+  errorPhone,
   errorPassword,
   disabled,
   loading,
+  onGoogle,
 }: RegisterSectionsProps) => {
+  const refFullName = useRef<TextInput>(null);
+  const refEmail = useRef<TextInput>(null);
+  const refphone = useRef<TextInput>(null);
+  const refPassword = useRef<TextInput>(null);
+
   return (
     <View style={styles.content}>
       <InputText
+        ref={refFullName}
         value={fullName}
         onChangeText={setFullName}
-        placeholder="Fullname"
+        placeholder="Masukkan Nama Lengkap"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
         error={errorFullName}
+        onSubmitEditing={() => refEmail.current?.focus()}
+      />
+      <InputNumber
+        ref={refphone}
+        value={phone}
+        onChangeText={setPhone}
+        placeholder="Masukkan Nomor Handphone"
+        placeholderTextColor={colors.gray}
+        styleInput={undefined}
+        styleText={undefined}
+        error={errorPhone}
+        onSubmitEditing={() => refPassword.current?.focus()}
       />
       <InputText
+        ref={refEmail}
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder="Masukkan Email"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
         error={errorEmail}
+        onSubmitEditing={() => refphone.current?.focus()}
       />
       <InputPassword
+        ref={refPassword}
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder="Masukkan Kata Sandi"
         placeholderTextColor={colors.gray}
         error={errorPassword}
+        onSubmitEditing={onRegister}
       />
       <Buttons
         onPress={onRegister}
@@ -85,22 +116,22 @@ const RegisterSections = ({
       <View style={styles.viewList}>
         <View style={styles.borderTop} />
         <Text style={[styles.txt, styles.colorLightBlack]}>
-          Or Sign Up with
+          Atau Masuk dengan
         </Text>
         <View style={styles.borderTop} />
       </View>
-      <SocialMedia />
+      <SocialMedia onPress={onGoogle} />
       <Buttons
         style={styles.signIn}
         disabled={false}
         onPress={() => navigation.navigate('Login')}
         children={
-          <>
+          <React.Fragment>
             <Text style={[styles.txt, styles.colorLightBlack]}>
-              You have an account ?
+              Sudah memiliki akun ?
             </Text>
-            <Text style={[styles.txt, styles.colorBoldBlack]}> Sign In</Text>
-          </>
+            <Text style={[styles.txt, styles.colorBoldBlack]}> Login</Text>
+          </React.Fragment>
         }
       />
     </View>

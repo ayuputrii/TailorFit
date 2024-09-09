@@ -1,27 +1,38 @@
-import React, {useState} from 'react';
-import {ScrollView} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import {BackgroundWithImage, HeaderNotLogin} from '../../components/commons';
 import LoginSections from '../../sections/Login';
 import styles from './styles';
 import {LoginProps} from '../../navigation';
-import {API_LOGIN, BASE_URL, postData} from '../../api';
+import {
+  API_GOOGLE_REGISTER_LOGIN,
+  API_LOGIN,
+  BASE_URL,
+  postData,
+} from '../../api';
 import {ModalConfirmation} from '../../components';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {removeData, saveData} from '../../utils/async-storage';
+import {KeyboardAvoidingView} from 'react-native';
+import {AuthContext} from '../../context/AuthContext';
+import {images} from '../../assets';
 
 const Login = ({navigation}: LoginProps) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
+  const ctx = useContext(AuthContext);
+  const login = ctx?.onLogin;
 
-  const [showRemember, setShowRemember] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [email, setEmail] = useState<string | undefined>('');
+  const [password, setPassword] = useState<string | undefined>('');
+  const [title, setTitle] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
+  const [errorEmail, setErrorEmail] = useState<string>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
+
+  const [showRemember, setShowRemember] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const onLogin = async () => {
     const data = {
@@ -30,18 +41,19 @@ const Login = ({navigation}: LoginProps) => {
     };
 
     if (email === '') {
-      setErrorEmail('Email harap diisi');
+      setErrorEmail('Email harus diisi');
     } else {
       setErrorEmail('');
     }
     if (password === '') {
-      setErrorPassword('Password harap diisi');
+      setErrorPassword('Password harus diisi');
     } else {
       setErrorPassword('');
     }
 
     if (email && password) {
       setLoading(true);
+      setDisabled(true);
 
       try {
         const response: any = await postData(BASE_URL + API_LOGIN, data);
@@ -54,85 +66,137 @@ const Login = ({navigation}: LoginProps) => {
           } else {
             await removeData('USER_LOGIN');
           }
+          await saveData('USER_DATA_LOGIN', response?.data?.data);
           await saveData('ACCESS_TOKEN', response.data.data.accessToken);
+          if (login) {
+            login();
+          }
           navigation.replace('MainTabs');
         } else {
           setLoading(false);
           setDisabled(false);
           setShowModal(true);
-          setTitle('Login is Failed');
-          setMessage(response?.data?.message || response?.data?.error?.message);
+          setTitle('Login Belum Berhasil');
+          setMessage(
+            response?.data?.message ||
+              response?.data?.error?.message ||
+              "Server is encountered with problem! We'll fix it soon.",
+          );
         }
       } catch (error: any) {
-        console.log('ERROR__', error);
         setLoading(false);
         setDisabled(false);
         setShowModal(true);
-        setTitle('Login is Failed');
+        setTitle('Login Belum Berhasil');
         setMessage("Server is encountered with problem! We'll fix it soon.");
       }
+    } else {
+      setLoading(false);
+      setDisabled(false);
+      setShowModal(false);
     }
   };
 
-  const loginWithGoogle = async () => {
+  const onGoogle = async () => {
+    const userInfo = await GoogleSignin.signIn();
+
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo);
-      // setState({userInfo});
-    } catch (error) {
-      console.log('error', error);
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled the login flow
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   // operation (e.g. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
+      const data = {
+        fullName: userInfo?.user?.name,
+        email: userInfo?.user?.email,
+        profilePicture: userInfo?.user?.photo,
+      };
+
+      const response = await postData(
+        BASE_URL + API_GOOGLE_REGISTER_LOGIN,
+        data,
+      );
+      if (response?.data?.success) {
+        setLoading(false);
+        setDisabled(false);
+        setShowModal(false);
+        if (showRemember) {
+          await saveData('USER_LOGIN', JSON.stringify({email, password}));
+        } else {
+          await removeData('USER_LOGIN');
+        }
+        await saveData('USER_DATA_LOGIN', response?.data?.data);
+        await saveData('ACCESS_TOKEN', response.data.data.accessToken);
+        if (login) {
+          login();
+        }
+        navigation.replace('MainTabs');
+      } else {
+        setLoading(false);
+        setDisabled(false);
+        setShowModal(true);
+        setTitle('Login Belum Berhasil');
+        setMessage(
+          response?.data?.message ||
+            response?.data?.error?.message ||
+            "Server is encountered with problem! We'll fix it soon.",
+        );
+      }
+    } catch {
+      setLoading(false);
+      setDisabled(false);
+      setShowModal(true);
+      setTitle('Login Belum Berhasil');
+      setMessage("Server is encountered with problem! We'll fix it soon.");
     }
   };
 
   return (
-    <BackgroundWithImage
-      backgroundChildren={false}
-      src={require('../../assets/images/img-rainbow.png')}>
-      <ScrollView style={styles.scroll}>
-        <HeaderNotLogin
-          title="Sign In"
-          subTitle="Please enter your email and enter password."
-          fontSizeSub={12}
-          subColor={colors.lightgray}
-          marginTop={0}
-        />
-
-        <LoginSections
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          showRemember={showRemember}
-          setShowRemember={() => setShowRemember(!showRemember)}
-          navigation={navigation}
-          onLogin={onLogin}
-          loading={loading}
-          disabled={disabled}
-          errorEmail={errorEmail}
-          errorPassword={errorPassword}
-          loginWithGoogle={loginWithGoogle}
-        />
-      </ScrollView>
-      <ModalConfirmation
-        isVisible={showModal}
-        onClose={() => setShowModal(false)}
-        title={title}
-        message={message}
-        textBtn="Close"
-        onSubmit={() => setShowModal(false)}
-        style={undefined}
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        animated={false}
+        backgroundColor={colors.white}
+        barStyle="dark-content"
       />
-    </BackgroundWithImage>
+      <BackgroundWithImage backgroundChildren={false} src={images.imgRainbow}>
+        <KeyboardAvoidingView behavior={'height'} style={styles.container}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.content}>
+              <HeaderNotLogin
+                title="Login"
+                subTitle="Harap masukkan email dan kata sandi Anda."
+                fontSizeSub={12}
+                subColor={colors.lightgray}
+                marginTop={0}
+              />
+
+              <LoginSections
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                showRemember={showRemember}
+                setShowRemember={() => setShowRemember(!showRemember)}
+                navigation={navigation}
+                onLogin={onLogin}
+                loading={loading}
+                disabled={disabled}
+                errorEmail={errorEmail}
+                errorPassword={errorPassword}
+                loginWithGoogle={onGoogle}
+              />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+
+        <ModalConfirmation
+          isVisible={showModal}
+          onClose={() => setShowModal(false)}
+          title={title}
+          message={message}
+          textBtn="Tutup"
+          onSubmit={() => setShowModal(false)}
+          style={undefined}
+        />
+      </BackgroundWithImage>
+    </SafeAreaView>
   );
 };
 

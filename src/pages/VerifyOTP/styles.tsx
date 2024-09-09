@@ -4,8 +4,19 @@ import {moderateScale} from '../../utils/scale';
 import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
+  container: {
+    padding: moderateScale(14),
+    backgroundColor: colors.basebg,
+    flex: 1,
+  },
   scroll: {
     paddingHorizontal: moderateScale(42),
+    marginTop: moderateScale(120),
+    zIndex: moderateScale(100),
+    marginBottom: moderateScale(20),
+  },
+  scrollLogin: {
+    paddingHorizontal: moderateScale(24),
     marginTop: moderateScale(120),
     zIndex: moderateScale(100),
     marginBottom: moderateScale(20),
@@ -20,7 +31,7 @@ const styles = StyleSheet.create({
   btn: {
     width: '100%',
     backgroundColor: colors.orange,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     alignItems: 'center',
     justifyContent: 'center',
@@ -47,6 +58,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     flexDirection: 'row',
   },
+
   focusCell: {
     borderColor: colors.orange,
   },

@@ -5,22 +5,33 @@ import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
     flex: 1,
+    marginBottom: moderateScale(8),
   },
   scroll: {
     marginVertical: moderateScale(8),
+    marginBottom: moderateScale(40),
   },
   card: {
     width: '100%',
     backgroundColor: colors.white,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     paddingVertical: moderateScale(16),
+  },
+  cardPayment: {
+    width: '100%',
+    backgroundColor: colors.white,
+    borderRadius: moderateScale(10),
+    paddingVertical: moderateScale(8),
   },
   flexRowBetween: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  flexRowCenter: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   content: {
     flexDirection: 'row',
@@ -34,7 +45,7 @@ const styles = StyleSheet.create({
   contentDelivery: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '80%',
+    width: '25%',
   },
   title: {
     fontSize: moderateScale(12),
@@ -50,6 +61,12 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(12),
     fontFamily: fonts.PoppinsSemiBold,
     color: colors.choco,
+  },
+  txtTf: {
+    fontSize: moderateScale(10),
+    fontFamily: fonts.PoppinsSemiBold,
+    color: colors.choco,
+    marginTop: moderateScale(6),
   },
   text: {
     fontSize: moderateScale(10),
@@ -68,7 +85,7 @@ const styles = StyleSheet.create({
     left: moderateScale(0),
   },
   hr: {
-    borderWidth: 1,
+    borderWidth: moderateScale(0.6),
     width: '100%',
     borderColor: '#C3BFBF',
     opacity: moderateScale(0.6),
@@ -78,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orange,
     height: moderateScale(32),
     width: moderateScale(90),
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     justifyContent: 'center',
     alignItems: 'center',
     elevation: moderateScale(2),
@@ -94,6 +111,65 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fonts.PoppinsSemiBold,
     fontSize: moderateScale(12),
+  },
+  imgProduct: {
+    width: moderateScale(50),
+    height: moderateScale(50),
+    resizeMode: 'cover',
+    borderRadius: moderateScale(8),
+  },
+  notFound: {
+    width: moderateScale(50),
+    height: moderateScale(50),
+    resizeMode: 'cover',
+    borderRadius: moderateScale(8),
+  },
+  txtAddressNoData: {
+    color: colors.grey,
+    fontFamily: fonts.PoppinsBold,
+    fontSize: moderateScale(14),
+    marginTop: moderateScale(4),
+  },
+  contentAccordion: {
+    paddingHorizontal: moderateScale(16),
+    paddingBottom: moderateScale(24),
+  },
+  flexColumn: {
+    flexDirection: 'column',
+  },
+  cardSize: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: moderateScale(4),
+  },
+  size: {
+    fontSize: moderateScale(12),
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    color: colors.black,
+    textAlign: 'center',
+    marginBottom: moderateScale(4),
+  },
+  valueSize: {
+    fontSize: moderateScale(12),
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    color: colors.white,
+    textAlign: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: colors.orange,
+    borderRadius: moderateScale(16),
+    width: moderateScale(50),
+    paddingVertical: moderateScale(4),
+  },
+  mark: {
+    color: colors.white,
+    backgroundColor: colors.choco,
+    width: moderateScale(60),
+    textAlign: 'center',
+    marginLeft: moderateScale(8),
+    borderRadius: moderateScale(8),
   },
 });
 

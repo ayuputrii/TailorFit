@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     backgroundColor: colors.white,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     paddingVertical: moderateScale(16),
   },
   flexRowBetween: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     color: '#857E7E',
   },
   hr: {
-    borderWidth: 1,
+    borderWidth: moderateScale(1),
     width: '100%',
     borderColor: '#DEDEDE',
     opacity: moderateScale(0.6),

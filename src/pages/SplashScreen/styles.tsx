@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: moderateScale(0),
     shadowRadius: moderateScale(4),
+    width: moderateScale(400),
+    height: moderateScale(400),
   },
   viewRectangle: {
     position: 'absolute',

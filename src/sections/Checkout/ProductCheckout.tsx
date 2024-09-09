@@ -1,36 +1,78 @@
 import React from 'react';
-import {CardCommons, Gap, ImageNotFound, Text} from '../../components';
+import {CardCommons, Gap, ImageWithNotFound, Text} from '../../components';
 import {View} from 'react-native';
 import {moderateScale} from '../../utils/scale';
 import styles from './styles';
+import {Cart, ProductsTypes} from '../../types';
+import {formatIdr} from '../../utils/format-number';
+import {colors} from '../../utils/colors';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const ProductCheckout = () => {
+const ProductCheckout = (cart: Cart) => {
   return (
-    <CardCommons
-      title={''}
-      subTitle={''}
-      titleStyle={false}
-      subTitleStyle={false}
-      onPress={() => {}}
-      style={styles.card}>
-      <View style={styles.flexRowBetween}>
-        <View style={styles.contentProduct}>
-          <Gap height={0} width={moderateScale(8)} />
+    <View style={styles.container}>
+      <CardCommons
+        title={''}
+        subTitle={''}
+        titleStyle={false}
+        subTitleStyle={false}
+        onPress={() => {}}
+        disabled={true}
+        style={[styles.card, {marginBottom: moderateScale(-6)}]}>
+        <View style={styles.flexRowBetween}>
+          <View style={styles.contentProduct}>
+            <ImageWithNotFound
+              uri={
+                typeof cart.productId === 'string'
+                  ? cart.productId
+                  : cart.productId.images[0]
+              }
+              style={styles.imgProduct}
+              styleNoData={styles.notFound}
+            />
 
-          <ImageNotFound uri={false} style={{}} />
+            <Gap height={0} width={moderateScale(8)} />
 
-          <Gap height={0} width={moderateScale(8)} />
+            <View>
+              <Text style={styles.titleProduct}>
+                {typeof cart.productId === 'string'
+                  ? cart.productId
+                  : cart.productId?.name}
+              </Text>
 
-          <View>
-            <Text style={styles.titleProduct}>Kebaya Kelalawar</Text>
-            <Text style={styles.text}>Size: XL</Text>
-            <Text style={styles.textPrice}>Rp 50.000</Text>
+              <Text style={styles.textPrice}>
+                {typeof cart.productId === 'string'
+                  ? cart.productId
+                  : formatIdr(
+                      cart.productId?.price ? cart.productId?.price : 0,
+                    ) || 1 * cart.quantity}
+              </Text>
+              <View style={styles.flexRowCenter}>
+                <Text style={[styles.textPrice, {color: colors.darkChoco}]}>
+                  Pre Order, Min {(cart.productId as ProductsTypes)?.duration}{' '}
+                  Days {' - '}
+                </Text>
+                <Text
+                  style={[
+                    styles.textPrice,
+                    {
+                      color: colors.darkChoco,
+                    },
+                  ]}>
+                  {cart?.materialProvider ? cart?.materialProvider : '-'}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.flexRowBetween}>
+            {cart?.quantity && (
+              <Text style={styles.text}>x{cart.quantity}</Text>
+            )}
+            <Icon name={'keyboard-arrow-down'} size={20} color={'#857E7E'} />
           </View>
         </View>
-        <Text style={styles.text}>x1</Text>
-        <Gap height={0} width={moderateScale(0)} />
-      </View>
-    </CardCommons>
+      </CardCommons>
+    </View>
   );
 };
 

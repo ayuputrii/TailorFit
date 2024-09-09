@@ -1,86 +1,66 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {moderateScale, verticalScale} from '../../utils/scale';
 import {colors} from '../../utils/colors';
-import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
   scroll: {
-    marginVertical: moderateScale(8),
+    marginVertical: moderateScale(12),
+  },
+  viewImages: {
+    height: verticalScale(170),
+    borderRadius: moderateScale(12),
+    width: '98%',
+    paddingTop: moderateScale(6),
   },
   imgPromo: {
-    width: '92%',
-    height: verticalScale(100),
-    resizeMode: 'contain',
-  },
-  card: {
-    width: '100%',
-    backgroundColor: colors.basebg,
-    borderRadius: moderateScale(10),
-    elevation: moderateScale(2),
-    shadowOpacity: moderateScale(Platform.OS === 'ios' ? 0.2 : 0.8),
-    shadowRadius: moderateScale(Platform.OS === 'ios' ? 6 : 3),
-    shadowOffset: {
-      width: moderateScale(0),
-      height: verticalScale(Platform.OS === 'ios' ? -5 : -10),
-    },
-    shadowColor: colors.black,
-    position: 'relative',
-    padding: 0,
-  },
-  contentProduct: {
-    position: 'relative',
-    marginBottom: moderateScale(8),
-  },
-  imgProduct: {
-    height: moderateScale(200),
-    width: moderateScale(170),
+    width: '94%',
+    height: moderateScale(180),
     resizeMode: 'cover',
-    marginRight: moderateScale(16),
     borderRadius: moderateScale(8),
+    zIndex: moderateScale(100),
   },
-  imgRectangle: {
-    right: moderateScale(14),
-    position: 'absolute',
-    width: moderateScale(60),
-    height: moderateScale(60),
-  },
-  favorite: {
-    width: moderateScale(35),
-    height: moderateScale(35),
-    borderRadius: moderateScale(35),
-    right: moderateScale(16),
-    position: 'absolute',
+  imgNoData: {
+    width: '96%',
+    height: verticalScale(170),
+    resizeMode: 'contain',
+    borderRadius: moderateScale(8),
     backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: moderateScale(2),
-    shadowOpacity: moderateScale(Platform.OS === 'ios' ? 0.2 : 0.8),
-    shadowRadius: moderateScale(Platform.OS === 'ios' ? 6 : 3),
-    shadowOffset: {
-      width: moderateScale(0),
-      height: verticalScale(Platform.OS === 'ios' ? -5 : -10),
-    },
-    shadowColor: colors.black,
   },
-  imgRectangleBottom: {
-    bottom: moderateScale(-2),
-    left: moderateScale(0),
-    position: 'absolute',
+  imgShimmerPromo: {
+    width: '100%',
+    height: verticalScale(180),
+    resizeMode: 'cover',
+    borderRadius: moderateScale(8),
+    zIndex: moderateScale(100),
   },
-  price: {
-    backgroundColor: colors.black,
-    bottom: moderateScale(0),
-    left: moderateScale(2),
-    position: 'absolute',
-    borderRadius: moderateScale(10),
-    width: moderateScale(70),
-    height: moderateScale(30),
-    justifyContent: 'center',
+  flexRow: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  txtPrice: {
-    color: colors.white,
-    fontSize: moderateScale(12),
-    fontFamily: fonts.PoppinsSemiBold,
+  flexWrapRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  category: {
+    width: moderateScale(100),
+    borderRadius: moderateScale(20),
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: verticalScale(35),
+    marginBottom: moderateScale(16),
+  },
+  productShimmerContainer: {
+    marginRight: moderateScale(8),
+    marginBottom: moderateScale(8),
+    width: '48%',
+  },
+  productShimmer: {
+    height: verticalScale(170),
+    borderRadius: moderateScale(8),
+    width: '100%',
+  },
+  noData: {
+    marginTop: moderateScale(80),
   },
 });

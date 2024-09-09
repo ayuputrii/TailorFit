@@ -3,7 +3,8 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import IconIo from 'react-native-vector-icons/Ionicons';
-import {ImageBackground, Platform, StyleSheet, View} from 'react-native';
+import IconMaterial from 'react-native-vector-icons/MaterialIcons';
+import {Platform, StyleSheet, View} from 'react-native';
 import {moderateScale, verticalScale} from '../utils/scale';
 import {colors} from '../utils/colors';
 
@@ -11,7 +12,7 @@ const Tab = createBottomTabNavigator();
 
 interface BottomTabsProps {
   Home: any;
-  Chat: any;
+  Order: any;
   Favorite: any;
   Cart: any;
   Settings: any;
@@ -19,7 +20,7 @@ interface BottomTabsProps {
 
 const BottomTabs = ({
   Home,
-  Chat,
+  Order,
   Favorite,
   Cart,
   Settings,
@@ -47,6 +48,7 @@ const BottomTabs = ({
             height: verticalScale(Platform.OS === 'ios' ? -5 : -10),
           },
           shadowColor: colors.black,
+          paddingBottom: moderateScale(4),
           marginBottom: moderateScale(20),
           borderRadius: moderateScale(22),
           marginHorizontal: moderateScale(16),
@@ -58,77 +60,15 @@ const BottomTabs = ({
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
-                  <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
-                    style={styles.focused}>
-                    <View style={styles.viewIcon}>
-                      <IconAwesome name="home" size={28} color={colors.cream} />
-                    </View>
-                  </ImageBackground>
+                  <View style={styles.viewIcon}>
+                    <IconAwesome name="home" size={32} color={colors.black} />
+                  </View>
                 ) : (
-                  <IconAwesome name="home" size={28} color={color} />
+                  <IconAwesome name="home" size={24} color={color} />
                 )}
-              </>
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Chat"
-        component={Chat}
-        options={{
-          tabBarIcon: ({focused, color}) => {
-            return (
-              <>
-                {focused ? (
-                  <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
-                    style={styles.focused}>
-                    <View style={styles.viewIcon}>
-                      <IconIo
-                        name="chatbox-ellipses-outline"
-                        size={28}
-                        color={colors.cream}
-                      />
-                    </View>
-                  </ImageBackground>
-                ) : (
-                  <IconIo
-                    name="chatbox-ellipses-outline"
-                    size={28}
-                    color={color}
-                  />
-                )}
-              </>
-            );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Cart"
-        component={Cart}
-        options={{
-          tabBarIcon: ({focused, color}) => {
-            return (
-              <>
-                {focused ? (
-                  <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
-                    style={styles.focused}>
-                    <View style={styles.viewIcon}>
-                      <IconIo
-                        name="cart-outline"
-                        size={28}
-                        color={colors.cream}
-                      />
-                    </View>
-                  </ImageBackground>
-                ) : (
-                  <IconIo name="cart-outline" size={28} color={color} />
-                )}
-              </>
+              </React.Fragment>
             );
           },
         }}
@@ -139,50 +79,89 @@ const BottomTabs = ({
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
-                  <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
-                    style={styles.focused}>
-                    <View style={styles.viewIcon}>
-                      <IconAwesome
-                        name="heart-o"
-                        size={28}
-                        color={colors.cream}
-                      />
-                    </View>
-                  </ImageBackground>
+                  <View style={styles.viewIcon}>
+                    <IconAwesome
+                      name="heart-o"
+                      size={28}
+                      color={colors.black}
+                    />
+                  </View>
                 ) : (
-                  <IconAwesome name="heart-o" size={28} color={color} />
+                  <IconAwesome name="heart-o" size={24} color={color} />
                 )}
-              </>
+              </React.Fragment>
             );
           },
         }}
       />
+      <Tab.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          tabBarIcon: ({focused, color}) => {
+            return (
+              <React.Fragment>
+                {focused ? (
+                  <View style={styles.viewIcon}>
+                    <IconIo
+                      name="cart-outline"
+                      size={30}
+                      color={colors.black}
+                    />
+                  </View>
+                ) : (
+                  <IconIo name="cart-outline" size={24} color={color} />
+                )}
+              </React.Fragment>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Order"
+        component={Order}
+        options={{
+          tabBarIcon: ({focused, color}) => {
+            return (
+              <React.Fragment>
+                {focused ? (
+                  <View style={styles.viewIcon}>
+                    <IconMaterial
+                      name="edit-note"
+                      size={30}
+                      color={colors.black}
+                    />
+                  </View>
+                ) : (
+                  <IconMaterial name="edit-note" size={30} color={color} />
+                )}
+              </React.Fragment>
+            );
+          },
+        }}
+      />
+
       <Tab.Screen
         name="Settings"
         component={Settings}
         options={{
           tabBarIcon: ({focused, color}) => {
             return (
-              <>
+              <React.Fragment>
                 {focused ? (
-                  <ImageBackground
-                    source={require('../assets/images/img-rectangle-menu.png')}
-                    style={styles.focused}>
-                    <View style={styles.viewIcon}>
-                      <IconIo
-                        name="settings-outline"
-                        size={28}
-                        color={colors.cream}
-                      />
-                    </View>
-                  </ImageBackground>
+                  <View style={styles.viewIcon}>
+                    <IconIo
+                      name="settings-outline"
+                      size={30}
+                      color={colors.black}
+                    />
+                  </View>
                 ) : (
-                  <IconIo name="settings-outline" size={28} color={color} />
+                  <IconIo name="settings-outline" size={24} color={color} />
                 )}
-              </>
+              </React.Fragment>
             );
           },
         }}
@@ -193,29 +172,23 @@ const BottomTabs = ({
 
 const styles = StyleSheet.create({
   focused: {
-    width: moderateScale(80),
+    width: '100%',
     flex: 1,
-    height: moderateScale(80),
-    marginTop: moderateScale(-40),
+    height: moderateScale(70),
+    marginTop: moderateScale(-35),
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: moderateScale(Platform.OS === 'ios' ? 4 : 4),
-    shadowOpacity: moderateScale(Platform.OS === 'ios' ? 0.2 : 0.8),
-    shadowRadius: moderateScale(Platform.OS === 'ios' ? 6 : 3),
-    shadowOffset: {
-      width: moderateScale(0),
-      height: verticalScale(Platform.OS === 'ios' ? -5 : -10),
-    },
-    shadowColor: colors.black,
   },
   viewIcon: {
-    backgroundColor: colors.black,
-    width: moderateScale(50),
-    height: moderateScale(50),
-    marginBottom: moderateScale(20),
+    backgroundColor: colors.white,
+    width: moderateScale(65),
+    height: moderateScale(65),
+    marginBottom: moderateScale(55),
     borderRadius: moderateScale(50),
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: moderateScale(4),
+    borderWidth: moderateScale(1),
   },
 });
 

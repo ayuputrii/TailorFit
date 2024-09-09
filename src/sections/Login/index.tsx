@@ -1,5 +1,5 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import React, {Dispatch, SetStateAction, useRef} from 'react';
+import {ActivityIndicator, View, TextInput} from 'react-native';
 import {
   Buttons,
   Gap,
@@ -14,10 +14,10 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {moderateScale} from '../../utils/scale';
 
 interface LoginSectionsProps {
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
-  password: string;
-  setPassword: Dispatch<SetStateAction<string>>;
+  email: string | undefined;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
+  password: string | undefined;
+  setPassword: Dispatch<SetStateAction<string | undefined>>;
   showRemember: boolean;
   setShowRemember: Dispatch<SetStateAction<boolean>>;
   navigation: any;
@@ -44,23 +44,30 @@ const LoginSections = ({
   errorPassword,
   loginWithGoogle,
 }: LoginSectionsProps) => {
+  const refEmail = useRef<TextInput>(null);
+  const refPassword = useRef<TextInput>(null);
+
   return (
     <View style={styles.content}>
       <InputText
+        ref={refEmail}
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder="Masukkan Email"
         placeholderTextColor={colors.gray}
         styleInput={undefined}
         styleText={undefined}
         error={errorEmail}
+        onSubmitEditing={() => refPassword.current?.focus()}
       />
       <InputPassword
+        ref={refPassword}
         value={password}
         onChangeText={setPassword}
-        placeholder="Password"
+        placeholder="Masukkan Kata Sandi"
         placeholderTextColor={colors.gray}
         error={errorPassword}
+        onSubmitEditing={onLogin}
       />
       <View style={styles.viewRemember}>
         <Buttons
@@ -83,7 +90,7 @@ const LoginSections = ({
                 />
               )}
               <Gap width={8} height={0} />
-              <Text style={styles.txt}>Remember me</Text>
+              <Text style={styles.txt}>Ingat Saya</Text>
             </View>
           }
         />
@@ -91,7 +98,7 @@ const LoginSections = ({
           style={false}
           disabled={false}
           onPress={() => navigation.navigate('ForgotPassword')}
-          children={<Text style={styles.txt}>Forgot Password ? </Text>}
+          children={<Text style={styles.txt}>Lupa Kata Sandi ? </Text>}
         />
       </View>
       <Buttons
@@ -102,14 +109,14 @@ const LoginSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.loginText}>Sign In</Text>
+            <Text style={styles.loginText}>Login</Text>
           </View>
         }
       />
       <View style={styles.viewList}>
         <View style={styles.borderTop} />
         <Text style={[styles.txt, styles.colorLightBlack]}>
-          Or Sign In with
+          Atau Masuk dengan
         </Text>
         <View style={styles.borderTop} />
       </View>
@@ -119,12 +126,12 @@ const LoginSections = ({
         disabled={false}
         onPress={() => navigation.navigate('Register')}
         children={
-          <>
+          <React.Fragment>
             <Text style={[styles.txt, styles.colorLightBlack]}>
-              You Don’t have an account ?
+              Anda belum memiliki akun ?
             </Text>
-            <Text style={[styles.txt, styles.colorBoldBlack]}> Sign Up</Text>
-          </>
+            <Text style={[styles.txt, styles.colorBoldBlack]}> Register</Text>
+          </React.Fragment>
         }
       />
     </View>

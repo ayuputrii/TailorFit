@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {colors} from '../../utils/colors';
 import {moderateScale} from '../../utils/scale';
+import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   content: {
@@ -20,12 +21,12 @@ const styles = StyleSheet.create({
   },
   txt: {
     color: '#A39797',
-    fontFamily: 'Poppins-Regular',
+    fontFamily: fonts.PoppinsRegular,
   },
   btn: {
     width: '100%',
     backgroundColor: colors.orange,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     alignItems: 'center',
     justifyContent: 'center',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   loginText: {
     color: '#ffffff',
     fontWeight: 'bold',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: fonts.PoppinsBold,
     fontSize: moderateScale(16),
   },
   viewList: {
@@ -59,11 +60,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   colorLightBlack: {
-    fontFamily: 'Poppins-Light',
+    fontFamily: fonts.PoppinsLight,
     color: colors.black,
   },
   colorBoldBlack: {
-    fontFamily: 'Poppins-Bold',
+    fontFamily: fonts.PoppinsBold,
     color: colors.black,
     opacity: moderateScale(0.6),
   },

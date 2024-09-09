@@ -42,7 +42,6 @@ const BackgroundWithImage = ({
       {!isKeyboardVisible && (
         <View style={styles.viewRectangle}>
           <ImageBackground source={src} style={styles.imageBackground}>
-            {/* {children} */}
             {backgroundChildren}
           </ImageBackground>
         </View>

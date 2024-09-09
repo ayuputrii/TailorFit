@@ -29,7 +29,7 @@ const ModalConfirmation = ({
 }: ModalConfirmationProps) => {
   return (
     <Modal isVisible={isVisible}>
-      <View style={[style, styles.container]}>
+      <View style={[styles.container, style]}>
         <Buttons onPress={onClose} style={styles.btnClose} disabled={false}>
           <Icon
             name="closecircle"
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     zIndex: moderateScale(100),
     backgroundColor: 'white',
     borderRadius: moderateScale(20),
-    height: moderateScale(400),
+    height: moderateScale(420),
   },
   btnClose: {
     flexDirection: 'row',
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   btn: {
     width: '100%',
     backgroundColor: colors.orange,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     height: moderateScale(50),
     alignItems: 'center',
     justifyContent: 'center',

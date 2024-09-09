@@ -5,6 +5,7 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
+import {NavigationContainerRef} from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {
   ForgotPassword,
@@ -15,9 +16,8 @@ import {
   NewPassword,
   Home,
   Settings,
-  ChangePassword,
-  About,
   HistoryTransaction,
+  DetailTransaction,
   Rating,
   Cart,
   Checkout,
@@ -25,9 +25,30 @@ import {
   Favorite,
   Address,
   Payment,
+  Profile,
+  ProductDetail,
+  Review,
+  ChangeEmail,
+  NewEmail,
+  FAQPage,
+  Notification,
+  CustomSize,
+  ChoosePayment,
+  SizeInformation,
+  Order,
+  Return,
 } from '../pages';
 import BottomTabs from './BottomTabs';
 import {colors} from '../utils/colors';
+import {Cart as CartType, Order as OrderType, ProductsTypes} from '../types';
+
+type OrderParam = OrderType & {
+  products: CartType[];
+  orderId: string;
+  isReceived: boolean;
+  reviewedProduct: string[];
+  snapUrl?: string;
+};
 
 export type NavigationParam = {
   MainTabs: undefined;
@@ -35,20 +56,49 @@ export type NavigationParam = {
   ForgotPassword: undefined;
   Login: undefined;
   Register: undefined;
-  VerifyOTP: undefined;
-  NewPassword: undefined;
+  VerifyOTP: {
+    email: string;
+    titleParam: string;
+  };
+  NewPassword: {
+    email: string;
+  };
+  ChangeEmail: undefined;
+  NewEmail: {
+    email: string;
+  };
   Home: undefined;
   Settings: undefined;
-  ChangePassword: undefined;
-  About: undefined;
+  Profile: undefined;
   HistoryTransaction: undefined;
-  Rating: undefined;
+  DetailTransaction: {
+    item: OrderParam | OrderType;
+    titleParam?: string;
+  };
+  FAQPage: undefined;
+  Rating: {
+    idProduct: string;
+    orderId: string;
+  };
   Cart: undefined;
   Checkout: undefined;
   Chat: undefined;
   Favorite: undefined;
   Address: undefined;
   Payment: undefined;
+  ChoosePayment: undefined;
+  ProductDetail: Partial<ProductsTypes> & {
+    openBottomSheet: boolean | undefined;
+  };
+  Review: undefined;
+  Notification: undefined;
+  CustomSize: undefined;
+  SizeInformation: undefined;
+  Order: undefined;
+  Return: {
+    idProduct: string;
+    orderId: string;
+  };
 };
 
 type MainTabsNavigationProp = BottomTabNavigationProp<
@@ -81,6 +131,23 @@ export type ForgotPasswordProps = {
   route: ForgotPasswordRouteProp;
 };
 
+type ChangeEmailNavigationProp = StackNavigationProp<
+  NavigationParam,
+  'ChangeEmail'
+>;
+type ChangeEmailRouteProp = RouteProp<NavigationParam, 'ChangeEmail'>;
+export type ChangeEmailProps = {
+  navigation: ChangeEmailNavigationProp;
+  route: ChangeEmailRouteProp;
+};
+
+type NewEmailNavigationProp = StackNavigationProp<NavigationParam, 'NewEmail'>;
+type NewEmailRouteProp = RouteProp<NavigationParam, 'NewEmail'>;
+export type NewEmailProps = {
+  navigation: NewEmailNavigationProp;
+  route: NewEmailRouteProp;
+};
+
 type LoginNavigationProp = StackNavigationProp<NavigationParam, 'Login'>;
 type LoginRouteProp = RouteProp<NavigationParam, 'Login'>;
 export type LoginProps = {
@@ -105,14 +172,24 @@ export type SettingsProps = {
   route: SettingsRouteProp;
 };
 
-type ChangePasswordNavigationProp = StackNavigationProp<
+type ProfileNavigationProp = BottomTabNavigationProp<
   NavigationParam,
-  'ChangePassword'
+  'Profile'
 >;
-type ChangePasswordRouteProp = RouteProp<NavigationParam, 'ChangePassword'>;
-export type ChangePasswordProps = {
-  navigation: ChangePasswordNavigationProp;
-  route: ChangePasswordRouteProp;
+type ProfileRouteProp = RouteProp<NavigationParam, 'Profile'>;
+export type ProfileProps = {
+  navigation: ProfileNavigationProp;
+  route: ProfileRouteProp;
+};
+
+type FAQPageNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'FAQPage'
+>;
+type FAQPageRouteProp = RouteProp<NavigationParam, 'FAQPage'>;
+export type FAQPageProps = {
+  navigation: FAQPageNavigationProp;
+  route: FAQPageRouteProp;
 };
 
 type NewPasswordNavigationProp = StackNavigationProp<
@@ -132,6 +209,16 @@ export type HomeProps = {
   route: HomeRouteProp;
 };
 
+type ProductDetailNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'ProductDetail'
+>;
+type ProductDetailRouteProp = RouteProp<NavigationParam, 'ProductDetail'>;
+export type ProductDetailProps = {
+  navigation: ProductDetailNavigationProp;
+  route: ProductDetailRouteProp;
+};
+
 type VerifyOTPNavigationProp = StackNavigationProp<
   NavigationParam,
   'VerifyOTP'
@@ -140,13 +227,6 @@ type VerifyOTPRouteProp = RouteProp<NavigationParam, 'VerifyOTP'>;
 export type VerifyOTPProps = {
   navigation: VerifyOTPNavigationProp;
   route: VerifyOTPRouteProp;
-};
-
-type AboutNavigationProp = StackNavigationProp<NavigationParam, 'About'>;
-type AboutRouteProp = RouteProp<NavigationParam, 'About'>;
-export type AboutProps = {
-  navigation: AboutNavigationProp;
-  route: AboutRouteProp;
 };
 
 type HistoryTransactionNavigationProp = StackNavigationProp<
@@ -162,11 +242,31 @@ export type HistoryTransactionProps = {
   route: HistoryTransactionRouteProp;
 };
 
+type DetailTransactionNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'DetailTransaction'
+>;
+type DetailTransactionRouteProp = RouteProp<
+  NavigationParam,
+  'DetailTransaction'
+>;
+export type DetailTransactionProps = {
+  navigation: DetailTransactionNavigationProp;
+  route: DetailTransactionRouteProp;
+};
+
 type RatingNavigationProp = StackNavigationProp<NavigationParam, 'Rating'>;
 type RatingRouteProp = RouteProp<NavigationParam, 'Rating'>;
 export type RatingProps = {
   navigation: RatingNavigationProp;
   route: RatingRouteProp;
+};
+
+type ReturnNavigationProp = StackNavigationProp<NavigationParam, 'Return'>;
+type ReturnRouteProp = RouteProp<NavigationParam, 'Return'>;
+export type ReturnProps = {
+  navigation: ReturnNavigationProp;
+  route: ReturnRouteProp;
 };
 
 type CartNavigationProp = BottomTabNavigationProp<NavigationParam, 'Cart'>;
@@ -220,11 +320,59 @@ export type PaymentProps = {
   route: PaymentRouteProp;
 };
 
-const navigationRef = React.createRef();
+type ChoosePaymentNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'ChoosePayment'
+>;
+type ChoosePaymentRouteProp = RouteProp<NavigationParam, 'ChoosePayment'>;
+export type ChoosePaymentProps = {
+  navigation: ChoosePaymentNavigationProp;
+  route: ChoosePaymentRouteProp;
+};
 
-export function navigate(name: string, params: string) {
-  navigationRef.current?.navigate(name, params);
-}
+type ReviewNavigationProp = BottomTabNavigationProp<NavigationParam, 'Review'>;
+type ReviewRouteProp = RouteProp<NavigationParam, 'Review'>;
+export type ReviewProps = {
+  navigation: ReviewNavigationProp;
+  route: ReviewRouteProp;
+};
+
+type NotificationNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'Notification'
+>;
+type NotificationRouteProp = RouteProp<NavigationParam, 'Notification'>;
+export type NotificationProps = {
+  navigation: NotificationNavigationProp;
+  route: NotificationRouteProp;
+};
+
+type CustomSizeNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'CustomSize'
+>;
+type CustomSizeRouteProp = RouteProp<NavigationParam, 'CustomSize'>;
+export type CustomSizeProps = {
+  navigation: CustomSizeNavigationProp;
+  route: CustomSizeRouteProp;
+};
+
+type SizeInformationNavigationProp = BottomTabNavigationProp<
+  NavigationParam,
+  'SizeInformation'
+>;
+type SizeInformationRouteProp = RouteProp<NavigationParam, 'SizeInformation'>;
+export type SizeInformationProps = {
+  navigation: SizeInformationNavigationProp;
+  route: SizeInformationRouteProp;
+};
+
+type OrderNavigationProp = BottomTabNavigationProp<NavigationParam, 'Order'>;
+type OrderRouteProp = RouteProp<NavigationParam, 'Order'>;
+export type OrderProps = {
+  navigation: OrderNavigationProp;
+  route: OrderRouteProp;
+};
 
 const RootStack = createStackNavigator<NavigationParam>();
 
@@ -232,7 +380,7 @@ const MainTabs = () => {
   return (
     <BottomTabs
       Home={Home}
-      Chat={Chat}
+      Order={Order}
       Favorite={Favorite}
       Settings={Settings}
       Cart={Cart}
@@ -249,6 +397,14 @@ const RootStackScreen = () => (
       }}
       name="SplashScreenPage"
       component={SplashScreenPage}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="MainTabs"
+      component={MainTabs}
     />
     <RootStack.Screen
       options={{
@@ -295,8 +451,16 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
-      name="MainTabs"
-      component={MainTabs}
+      name="ChangeEmail"
+      component={ChangeEmail}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="NewEmail"
+      component={NewEmail}
     />
     <RootStack.Screen
       options={{
@@ -305,6 +469,14 @@ const RootStackScreen = () => (
       }}
       name="Chat"
       component={Chat}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="ProductDetail"
+      component={ProductDetail}
     />
     <RootStack.Screen
       options={{
@@ -327,6 +499,14 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
+      name="Order"
+      component={Order}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
       name="Checkout"
       component={Checkout}
     />
@@ -343,6 +523,14 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
+      name="Profile"
+      component={Profile}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
       name="HistoryTransaction"
       component={HistoryTransaction}
     />
@@ -351,16 +539,16 @@ const RootStackScreen = () => (
         headerShown: false,
         animationEnabled: false,
       }}
-      name="About"
-      component={About}
+      name="DetailTransaction"
+      component={DetailTransaction}
     />
     <RootStack.Screen
       options={{
         headerShown: false,
         animationEnabled: false,
       }}
-      name="ChangePassword"
-      component={ChangePassword}
+      name="FAQPage"
+      component={FAQPage}
     />
     <RootStack.Screen
       options={{
@@ -369,6 +557,14 @@ const RootStackScreen = () => (
       }}
       name="Rating"
       component={Rating}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="Return"
+      component={Return}
     />
     <RootStack.Screen
       options={{
@@ -386,14 +582,54 @@ const RootStackScreen = () => (
       name="Payment"
       component={Payment}
     />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="ChoosePayment"
+      component={ChoosePayment}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="Review"
+      component={Review}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="Notification"
+      component={Notification}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="CustomSize"
+      component={CustomSize}
+    />
+    <RootStack.Screen
+      options={{
+        headerShown: false,
+        animationEnabled: false,
+      }}
+      name="SizeInformation"
+      component={SizeInformation}
+    />
   </RootStack.Navigator>
 );
 
 const AppNavigation = () => {
   return (
-    <NavigationContainer independent={true} ref={navigationRef}>
+    <NavigationContainer independent={true}>
       <StatusBar
-        animated={true}
+        animated={false}
         backgroundColor={colors.white}
         barStyle="dark-content"
       />

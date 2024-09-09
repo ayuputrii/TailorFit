@@ -5,11 +5,35 @@ import {fonts} from '../../utils/fonts';
 
 const styles = StyleSheet.create({
   container: {
-    padding: moderateScale(16),
+    padding: moderateScale(14),
+    backgroundColor: colors.basebg,
     flex: 1,
   },
   scroll: {
     paddingVertical: moderateScale(8),
+  },
+  viewChoose: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: moderateScale(16),
+    alignItems: 'center',
+  },
+  chooseCard: {
+    backgroundColor: colors.white,
+    borderRadius: moderateScale(6),
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '35%',
+    height: moderateScale(35),
+  },
+  flexRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  txtChoose: {
+    color: colors.darkgrey,
+    fontFamily: fonts.PoppinsSemiBold,
+    fontSize: moderateScale(12),
   },
   flexRowBetween: {
     flexDirection: 'row',
@@ -33,7 +57,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: verticalScale(100),
     backgroundColor: colors.white,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
   },
   text1: {
     fontSize: moderateScale(12),
@@ -49,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orange,
     width: moderateScale(120),
     height: moderateScale(40),
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(8),
     justifyContent: 'center',
     alignItems: 'center',
     elevation: moderateScale(2),
@@ -65,6 +89,21 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fonts.PoppinsSemiBold,
     fontSize: moderateScale(12),
+  },
+  productShimmerContainer: {
+    marginRight: moderateScale(8),
+    marginBottom: moderateScale(8),
+    width: '100%',
+  },
+  productShimmer: {
+    height: verticalScale(100),
+    borderRadius: moderateScale(8),
+    width: '100%',
+  },
+  shimmerChoose: {
+    width: '35%',
+    borderRadius: moderateScale(6),
+    height: moderateScale(35),
   },
 });
 

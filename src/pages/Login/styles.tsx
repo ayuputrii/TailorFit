@@ -2,10 +2,12 @@ import {StyleSheet} from 'react-native';
 import {moderateScale} from '../../utils/scale';
 
 const styles = StyleSheet.create({
-  scroll: {
-    marginTop: moderateScale(120),
+  container: {
+    flex: 1,
     zIndex: moderateScale(100),
-    marginBottom: moderateScale(20),
+  },
+  content: {
+    paddingTop: moderateScale(100),
     paddingHorizontal: moderateScale(16),
   },
 });

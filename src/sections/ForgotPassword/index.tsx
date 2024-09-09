@@ -7,13 +7,14 @@ import styles from './styles';
 import {moderateScale} from '../../utils/scale';
 
 interface ForgotPasswordSectionsProps {
-  email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
+  email: string | undefined;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
   onLogin: () => {};
   onSendEmail: () => {};
   errorEmail: string;
   disabled: boolean;
   loading: boolean;
+  isLogin?: boolean | undefined;
 }
 
 const ForgotPasswordSections = ({
@@ -24,17 +25,19 @@ const ForgotPasswordSections = ({
   errorEmail,
   disabled,
   loading,
+  isLogin,
 }: ForgotPasswordSectionsProps) => {
   return (
     <View style={styles.content}>
       <InputText
         value={email}
         onChangeText={setEmail}
-        placeholder="Email"
+        placeholder="Masukkan Email Anda"
         placeholderTextColor={colors.gray}
         error={errorEmail}
         styleInput={undefined}
         styleText={undefined}
+        onSubmitEditing={onSendEmail}
       />
       <Gap height={6} width={0} />
       <Buttons
@@ -44,18 +47,22 @@ const ForgotPasswordSections = ({
           <View style={styles.flexRow}>
             {loading && <ActivityIndicator size="small" color={colors.white} />}
             <Gap width={moderateScale(3)} height={0} />
-            <Text style={styles.text}>Send Email</Text>
+            <Text style={styles.text}>Kirim Email</Text>
           </View>
         }
         disabled={disabled}
       />
-      <Gap height={12} width={0} />
-      <Buttons
-        onPress={onLogin}
-        style={styles.btnSignIn}
-        children={<Text style={styles.text}>Sign In</Text>}
-        disabled={disabled}
-      />
+      {!isLogin && (
+        <React.Fragment>
+          <Gap height={12} width={0} />
+          <Buttons
+            onPress={onLogin}
+            style={styles.btnSignIn}
+            children={<Text style={styles.text}>Login</Text>}
+            disabled={disabled}
+          />
+        </React.Fragment>
+      )}
     </View>
   );
 };
