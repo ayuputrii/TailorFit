@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export const BASE_URL = 'https://tailorfit-be.vercel.app';
+// export const BASE_URL =
+//   'https://5814-2001-448a-2092-2ac8-4483-f10e-3e7-cb8c.ngrok-free.app';
 export const API_REGISTER = '/auth/register';
 export const API_LOGIN = '/auth/login';
 export const API_FORGOT_PASSWORD = '/auth/forgot-password';

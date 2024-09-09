@@ -81,10 +81,8 @@ const Checkout = ({navigation}: CheckoutProps) => {
         ),
       );
       cartStore.setSelectedCart([]);
-      setTimeout(() => {
-        setLoadingDots(false);
-        navigation.replace('Payment');
-      }, 10000);
+      setLoadingDots(false);
+      navigation.replace('Payment');
     } catch (err) {
       setLoadingDots(false);
     }

@@ -46,6 +46,7 @@ const Order = ({navigation}: OrderProps) => {
         BASE_URL + API_ORDER + `?status=${cat || categoryStatus}`,
         token,
       );
+
       if (response?.data?.data.length) {
         setLoading(false);
         setDataOrder(response?.data?.data);
@@ -74,7 +75,7 @@ const Order = ({navigation}: OrderProps) => {
       />
       <BackHeader
         title="Pesanan Saya"
-        goBack={() => navigation?.goBack()}
+        goBack={() => navigation?.navigate('Home')}
         icon={false}>
         {isLogin ? (
           <ScrollView

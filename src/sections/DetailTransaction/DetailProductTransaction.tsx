@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {CardCommons, Gap, Text} from '../../components';
 import {TouchableOpacity, View} from 'react-native';
 import styles from './styles';
@@ -44,7 +44,7 @@ const DetailProductTransaction = ({
 
   return (
     <React.Fragment>
-      {Boolean(pathOrder && detail?.status === 'UNPAID') && (
+      {Boolean(pathOrder && detailProduct?.[0]?.status === 'UNPAID') && (
         <React.Fragment>
           <CardCommons
             disabled={true}
@@ -128,7 +128,7 @@ const DetailProductTransaction = ({
           const product = item?.productId;
 
           const status = DataStatus?.find(
-            items => items?.slug === detail?.status,
+            items => items?.slug === detailProduct?.[0]?.status,
           );
 
           return (
@@ -188,7 +188,7 @@ const DetailProductTransaction = ({
               </View>
 
               <View style={styles.hr} />
-              {detail?.status === 'SEWING_PROCESS' && (
+              {detailProduct?.status === 'SEWING_PROCESS' && (
                 <>
                   <View style={[styles.flexRowBetween, {width: '100%'}]}>
                     <Text style={styles.txtOrder}>Status Pengerjaan :</Text>

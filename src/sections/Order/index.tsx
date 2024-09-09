@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {ScrollView, View} from 'react-native';
 import {Cart, CategoryTypes, Order, ProductsTypes} from '../../types';
 import {
@@ -38,6 +38,13 @@ const OrderSections = ({
   onPress,
   loading,
 }: OrderSectionsProps) => {
+  console.log('DATA ORDER', JSON.stringify(data, null, 3));
+
+  const isProductAvailable = useMemo(() => {
+    const products = data.map(item => item.products).flat();
+    return !!products.length;
+  }, [data]);
+
   return (
     <View style={styles.container}>
       <CategoryOrderSections
@@ -59,7 +66,7 @@ const OrderSections = ({
               return <Shimmer style={styles.cardShimmer} />;
             }}
           />
-        ) : Boolean(data?.length) ? (
+        ) : Boolean(isProductAvailable) ? (
           <FlatList
             data={data}
             showsHorizontalScrollIndicator={false}
