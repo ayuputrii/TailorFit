@@ -65,7 +65,7 @@ const MenuButtons = ({
 
 const styles = StyleSheet.create({
   button: {
-    width: moderateScale(120),
+    paddingHorizontal: moderateScale(24),
     borderRadius: moderateScale(20),
     justifyContent: 'center',
     alignItems: 'center',

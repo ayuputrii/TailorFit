@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {CardCommons, Gap, Text} from '../../components';
 import {TouchableOpacity, View} from 'react-native';
 import styles from './styles';
@@ -8,14 +8,16 @@ import ProductCheckout from '../Checkout/ProductCheckout';
 import ContentProductCO from '../Checkout/ContentProductCO';
 import {colors} from '../../utils/colors';
 import {formatDate} from '../../utils/format-date';
-import {ProductsTypes} from '../../types';
+import {Cart, OrderParam, ProductsTypes} from '../../types';
 import {fonts} from '../../utils/fonts';
 // @ts-ignore
 import CountDown from 'react-native-countdown-fixed';
 import {DataStatus} from '../../constants';
+import {formatIdr} from '../../utils/format-number';
+import {DetailTransactionProps} from '../../navigation';
 
 interface DetailProductTransactionProps {
-  data: any;
+  data: DetailTransactionProps['route']['params'];
   timeDiff: number;
   pathOrder: boolean;
 }
@@ -54,7 +56,7 @@ const DetailProductTransaction = ({
             titleStyle={undefined}
             subTitleStyle={undefined}
             style={styles.card}>
-            {detailProduct?.map((item: ProductsTypes, index: number) => {
+            {detailProduct?.map((item: Cart, index: number) => {
               return (
                 <View
                   style={[styles.flexRowBetween, {width: '100%'}]}
@@ -124,9 +126,8 @@ const DetailProductTransaction = ({
         titleStyle={undefined}
         subTitleStyle={undefined}
         style={[styles.card, {marginTop: moderateScale(6)}]}>
-        {detailProduct?.map((item: ProductsTypes, index: number) => {
+        {detailProduct?.map((item: Cart, index: number) => {
           const product = item?.productId;
-
           const status = DataStatus?.find(
             items => items?.slug === detailProduct?.[0]?.status,
           );
@@ -145,7 +146,9 @@ const DetailProductTransaction = ({
                       fontSize: moderateScale(12),
                     },
                   ]}>
-                  {detail?.orderId ? '#' + detail?.orderId : '-'}
+                  {(detail as OrderParam)?.orderId
+                    ? '#' + (detail as OrderParam)?.orderId
+                    : '-'}
                 </Text>
               </View>
               <View style={styles.hr} />
@@ -166,7 +169,11 @@ const DetailProductTransaction = ({
               <View style={[styles.flexRowBetween, {width: '100%'}]}>
                 <Text style={styles.txtOrder}>Total Waktu Pengerjaan :</Text>
                 <Text style={styles.txtRight}>
-                  Pre Order {product?.duration ? product?.duration : 0} Days
+                  Pre Order{' '}
+                  {(product as ProductsTypes)?.duration
+                    ? (product as ProductsTypes)?.duration
+                    : 0}{' '}
+                  Days
                 </Text>
               </View>
 
@@ -188,7 +195,7 @@ const DetailProductTransaction = ({
               </View>
 
               <View style={styles.hr} />
-              {detailProduct?.status === 'SEWING_PROCESS' && (
+              {item?.status === 'SEWING_PROCESS' && (
                 <>
                   <View style={[styles.flexRowBetween, {width: '100%'}]}>
                     <Text style={styles.txtOrder}>Status Pengerjaan :</Text>
@@ -212,7 +219,7 @@ const DetailProductTransaction = ({
         titleStyle={undefined}
         subTitleStyle={undefined}
         style={[styles.card, {marginTop: moderateScale(6)}]}>
-        {detailProduct?.map((item: ProductsTypes, index: number) => {
+        {detailProduct?.map((item: Cart, index: number) => {
           return (
             <React.Fragment key={index}>
               <View style={[styles.flexRowBetween, {width: '100%'}]}>
@@ -238,13 +245,119 @@ const DetailProductTransaction = ({
                       fontFamily: fonts.PoppinsBold,
                       color: detail?.isFullPayment
                         ? colors.green
-                        : colors.orange,
+                        : colors.yellow,
                       fontSize: moderateScale(12),
                     },
                   ]}>
                   {detail?.isFullPayment ? 'Full Payment' : 'Down Payment'}
                 </Text>
               </View>
+            </React.Fragment>
+          );
+        })}
+      </CardCommons>
+
+      <Gap height={moderateScale(16)} width={0} />
+
+      <CardCommons
+        disabled={true}
+        onPress={() => {}}
+        title={''}
+        subTitle={''}
+        titleStyle={undefined}
+        subTitleStyle={undefined}
+        style={[styles.card, {marginTop: moderateScale(6)}]}>
+        {detailProduct?.map((item: Cart, index: number) => {
+          const price = (item?.productId as ProductsTypes)?.price;
+          const total = (price || 0) + 25000;
+
+          const status = DataStatus?.find(
+            items => items?.slug === detailProduct?.[0]?.status,
+          );
+
+          console.log('status', status);
+
+          return (
+            <React.Fragment key={index}>
+              <View style={[styles.flexRowBetween, {width: '100%'}]}>
+                <Text style={styles.txtOrder}>Biaya Lainnya :</Text>
+                <Text
+                  style={[
+                    styles.txtRight,
+                    {
+                      fontFamily: fonts.PoppinsBold,
+                      color: colors.black,
+                      fontSize: moderateScale(12),
+                    },
+                  ]}>
+                  {formatIdr(25000)}
+                </Text>
+              </View>
+              <View style={[styles.flexRowBetween, {width: '100%'}]}>
+                <Text style={styles.txtOrder}>Total :</Text>
+                <Text
+                  style={[
+                    styles.txtRight,
+                    {
+                      fontFamily: fonts.PoppinsBold,
+                      color: colors.red,
+                      fontSize: moderateScale(12),
+                    },
+                  ]}>
+                  {formatIdr(total)}
+                </Text>
+              </View>
+              {!detail?.isFullPayment && (
+                <React.Fragment>
+                  <View style={[styles.flexRowBetween, {width: '100%'}]}>
+                    <Text style={styles.txtOrder}>Jumlah di Bayar :</Text>
+                    <Text
+                      style={[
+                        styles.txtRight,
+                        {
+                          fontFamily: fonts.PoppinsBold,
+                          color: colors.black,
+                          fontSize: moderateScale(12),
+                        },
+                      ]}>
+                      {status?.slug === 'UNPAID' ? '0' : formatIdr(total / 2)}
+                    </Text>
+                  </View>
+                  {status?.slug !== 'COMPLETED' ? (
+                    <View style={[styles.flexRowBetween, {width: '100%'}]}>
+                      <Text style={styles.txtOrder}>Sisa Bayar :</Text>
+                      <Text
+                        style={[
+                          styles.txtRight,
+                          {
+                            fontFamily: fonts.PoppinsBold,
+                            color: colors.orange,
+                            fontSize: moderateScale(12),
+                          },
+                        ]}>
+                        {formatIdr(
+                          status?.slug === 'UNPAID' ? total : total / 2 || 0,
+                        )}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={[styles.flexRowBetween, {width: '100%'}]}>
+                      <Text style={styles.txtOrder}>Pembayaran :</Text>
+                      <Text
+                        style={[
+                          styles.txtRight,
+                          {
+                            fontFamily: fonts.PoppinsBold,
+                            color: colors.green,
+                            fontSize: moderateScale(12),
+                          },
+                        ]}>
+                        LUNAS
+                      </Text>
+                    </View>
+                  )}
+                </React.Fragment>
+              )}
             </React.Fragment>
           );
         })}

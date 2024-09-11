@@ -123,9 +123,13 @@ export const putDataWithToken = async (
   }
 };
 
-export const patchDataWithToken = async (url: string, token: string) => {
+export const patchDataWithToken = async (
+  url: string,
+  data: any,
+  token: string,
+) => {
   try {
-    let response = await axios.patch(url, undefined, {
+    let response = await axios.patch(url, data, {
       headers: {
         Authorization: token,
       },

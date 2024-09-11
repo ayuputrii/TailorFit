@@ -7,10 +7,10 @@ export const styles = StyleSheet.create({
     marginVertical: moderateScale(12),
   },
   viewImages: {
-    height: verticalScale(170),
+    height: verticalScale(150),
     borderRadius: moderateScale(12),
     width: '98%',
-    paddingTop: moderateScale(6),
+    marginTop: verticalScale(14),
   },
   imgPromo: {
     width: '94%',

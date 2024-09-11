@@ -111,7 +111,7 @@ const Rating = ({navigation}: RatingProps) => {
         onClose={() => setShowModal(false)}
         title={title}
         message={message}
-        textBtn={'Kembali ke Beranda'}
+        textBtn={'Kembali ke Pesanan Saya'}
         onSubmit={() => navigation.replace('Order')}
         style={modalError ? styles.modalError : null}
       />

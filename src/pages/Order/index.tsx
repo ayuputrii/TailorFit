@@ -6,7 +6,7 @@ import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import styles from './styles';
 import {OrderProps} from '../../navigation';
 import {OrderSections} from '../../sections';
-import {Cart, OrderParam, Order as OrderType, ProductsTypes} from '../../types';
+import {OrderParam, Order as OrderType, ProductsTypes} from '../../types';
 import {API_ORDER, BASE_URL, getDataWithToken} from '../../api';
 import {getData} from '../../utils/async-storage';
 import {DataStatus} from '../../constants';
@@ -63,7 +63,7 @@ const Order = ({navigation}: OrderProps) => {
   useFocusEffect(
     useCallback(() => {
       getOrder();
-    }, []),
+    }, [categoryStatus]),
   );
 
   return (

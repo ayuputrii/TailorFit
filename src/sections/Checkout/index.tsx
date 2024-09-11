@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {Buttons, CardCommons, Gap, ModalBottom, Text} from '../../components';
 import styles from './styles';
@@ -70,6 +70,18 @@ const CheckoutSections = ({
     return allPrice;
   }, [cartStore.cart, cartStore?.selectedCart]);
 
+  const deliveryCost = useMemo(() => {
+    const selected = cartStore?.cart.filter(item =>
+      cartStore?.selectedCart?.includes(item?._id),
+    );
+
+    const cost = selected.reduce((acc, cur) => {
+      return acc + 25000;
+    }, 0);
+
+    return cost;
+  }, [cartStore.cart, cartStore?.selectedCart]);
+
   const renderHeader = (item: any, _: any) => {
     return <ProductCheckout key={item?._id} {...item} />;
   };
@@ -78,7 +90,7 @@ const CheckoutSections = ({
     return <ContentProductCO key={item?._id} {...item} />;
   };
 
-  const total = totalPrice + 1e5;
+  const total = totalPrice + deliveryCost;
 
   return (
     <View style={styles.container}>
@@ -181,7 +193,7 @@ const CheckoutSections = ({
                       Standard
                     </Text>
                   </View>
-                  <Text style={styles.text}>Rp150.000</Text>
+                  <Text style={styles.text}>{formatIdr(deliveryCost)}</Text>
                 </View>
               </View>
 

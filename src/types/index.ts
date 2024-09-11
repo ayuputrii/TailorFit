@@ -1,4 +1,3 @@
-import {StylePropsWithArrayTransform} from 'react-native-reanimated/lib/typescript/reanimated2/layoutReanimation/animationBuilder/commonTypes';
 import {Asset} from 'react-native-image-picker';
 export interface menu {
   [x: string]: any;
@@ -118,6 +117,14 @@ export interface Cart {
   sizeDetail: SizeDetail;
   _id: string;
   materialProvider: string;
+  status:
+    | 'UNPAID'
+    | 'MATERIAL_PICKUP'
+    | 'SEWING_PROCESS'
+    | 'ON_DELIVERY'
+    | 'RETURN'
+    | 'COMPLETED'
+    | 'CANCELED';
 }
 
 export interface Order {
@@ -144,6 +151,7 @@ export interface Order {
   reviewedProduct: string[];
   expiredAt: Date;
   isFullPayment: boolean;
+  createdAt: string;
 }
 
 interface SizeDetail {

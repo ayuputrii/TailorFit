@@ -18,7 +18,7 @@ const ImageWithNotLogin = ({navigation}: ImageWithNotLoginProps) => {
       <View style={styles.content}>
         <IlustrationAccount
           width={'100%'}
-          height={moderateScale(250)}
+          height={moderateScale(220)}
           style={styles.image}
         />
       </View>

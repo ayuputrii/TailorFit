@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import Modal from 'react-native-modal';
 import IlustrationVerified from '../../assets/ilustration/il-verified.svg';
 import {colors} from '../../utils/colors';
-import {Buttons, Text} from '../commons';
+import {Buttons, Gap, Text} from '../commons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {moderateScale, verticalScale} from '../../utils/scale';
 import {fonts} from '../../utils/fonts';
@@ -62,14 +62,13 @@ const styles = StyleSheet.create({
     zIndex: moderateScale(100),
     backgroundColor: 'white',
     borderRadius: moderateScale(20),
-    height: moderateScale(420),
+    paddingVertical: moderateScale(16),
   },
   btnClose: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingVertical: verticalScale(4),
-    paddingBottom: moderateScale(24),
-    right: moderateScale(10),
+    paddingTop: verticalScale(2),
+    right: moderateScale(16),
   },
   content: {
     paddingHorizontal: moderateScale(24),

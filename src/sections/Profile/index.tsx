@@ -124,7 +124,6 @@ const ProfileSections = ({
           <PhotoWithNotFound
             loading={loading}
             image={typeof photo === 'string' ? photo : photo?.[0]?.uri || ''}
-            size={moderateScale(40)}
             width={moderateScale(50)}
             height={moderateScale(50)}
           />

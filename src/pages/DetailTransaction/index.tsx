@@ -20,7 +20,7 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
   const paymentSnapStore = usePaymentSnapStore();
 
   const [loadingDots, setLoadingDots] = useState(false);
-  const [isReview, setIsReview] = useState(() => detail?.item.isReceived);
+  const [isReceived, setIsReceived] = useState(() => detail?.item.isReceived);
 
   const [appState, setAppState] = useState(AppState.currentState);
   const [timeDiff, setTimeDiff] = useState(0);
@@ -36,13 +36,22 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
 
   const onReceive = async () => {
     try {
+      const raw = (detail?.item as OrderParam)?.products?.[0];
+      const cartId = (raw.productId as ProductsTypes)?._id;
+
       const orderId = (detail?.item as OrderParam)?.orderId;
       const token = await getData('ACCESS_TOKEN');
+
+      const data = {
+        cartId,
+      };
+
       const response = await patchDataWithToken(
         BASE_URL + API_ORDER + `/${orderId}`,
+        data,
         token,
       );
-      setIsReview(true);
+      setIsReceived(true);
       return response;
     } catch (error) {
       console.log(error);
@@ -91,7 +100,7 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
       subscription?.remove?.();
     };
   }, [detail?.item?.expiredAt]);
-  console.log('PAGE__', route?.params?.titleParam);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -130,7 +139,7 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
             )}
             {detail?.item?.status === 'ON_DELIVERY' && (
               <>
-                {isReview ? (
+                {isReceived ? (
                   <Buttons
                     onPress={() => goToReview()}
                     style={[styles.btn, {backgroundColor: colors.darkblue}]}>
@@ -150,6 +159,14 @@ const DetailTransaction = ({navigation}: DetailTransactionProps) => {
                   </React.Fragment>
                 )}
               </>
+            )}
+
+            {detail?.item?.status === 'COMPLETED' && (
+              <Buttons
+                onPress={() => goToReview()}
+                style={[styles.btn, {backgroundColor: colors.darkblue}]}>
+                <Text style={styles.txtBtn}>Beri Ulasan</Text>
+              </Buttons>
             )}
           </React.Fragment>
         )}

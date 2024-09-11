@@ -193,6 +193,7 @@ const ProductDetailSections = ({
                   })`}</Text>
                 </View>
               </View>
+              <Gap width={moderateScale(4)} height={0} />
               <View style={styles.viewTextRight}>
                 <Text style={styles.textPrice}>
                   {formatIdr(products?.price ? products?.price : 0)}

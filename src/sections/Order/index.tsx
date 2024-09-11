@@ -38,8 +38,6 @@ const OrderSections = ({
   onPress,
   loading,
 }: OrderSectionsProps) => {
-  console.log('DATA ORDER', JSON.stringify(data, null, 3));
-
   const isProductAvailable = useMemo(() => {
     const products = data.map(item => item.products).flat();
     return !!products.length;
@@ -109,7 +107,11 @@ const OrderSections = ({
                               <View style={styles.boxProduct}>
                                 <ImageWithNotFound
                                   styleNoData={styles.notFound}
-                                  uri={(products as ProductsTypes)?.images[0]}
+                                  uri={
+                                    (products as ProductsTypes)?.images[0]
+                                      ? (products as ProductsTypes)?.images[0]
+                                      : null
+                                  }
                                   style={{
                                     resizeMode: 'contain',
                                     width: moderateScale(50),
@@ -131,7 +133,7 @@ const OrderSections = ({
                                     {formatIdr(
                                       (products as ProductsTypes)?.price
                                         ? ((products as ProductsTypes)
-                                            ?.price as number)
+                                            ?.price as number) + 25000
                                         : 0,
                                     )}
                                   </Text>
